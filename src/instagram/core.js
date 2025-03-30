@@ -14,6 +14,7 @@ const tags = {
         commentZan: ['android.widget.ImageView', 'Like'],
         commentBottom: ['above_composer_views'],
         commentAreaSwipe: ['sticky_header_list'],
+        city: ['action_bar_large_title', 'Reels', 'context_menu_item_label', 'Nearby', 'action_bar_title', 'Nearby'],
     },
     user: {
         nickname: ['profile_header_full_name_above_vanity'],
@@ -483,6 +484,37 @@ const tiktok = {
         return true;
     },
 
+    intoCity() {
+        //判断是否在同城，是的话，不操作
+        const inCityTag = util.id(tags.index.city[4]).text(tags.index.city[5]).isVisibleToUser(true).filter(v => {
+            return v && v.bounds() && v.bounds().left > 0 && v.bounds().top > 0 && v.bounds().top < Device.height() * 0.75;
+        }).findOne();
+        if (inCityTag) {
+            util.log('在同城，无需操作');
+            return true;
+        }
+
+        const changeTag = util.id(tags.index.city[0]).text(tags.index.city[1]).isVisibleToUser(true).filter(v => {
+            return v && v.bounds() && v.bounds().left > 0 && v.bounds().top > 0 && v.bounds().top < Device.height() * 0.75;
+        }).findOne();
+
+        if (!changeTag) {
+            throw new Error('找不到切换按钮');
+        }
+        util.click(changeTag);
+        util.sleep(3000 + 2000 * Math.random());
+
+        const cityTag = util.id(tags.index.city[2]).text(tags.index.city[3]).isVisibleToUser(true).filter(v => {
+            return v && v.bounds() && v.bounds().left > 0 && v.bounds().top > 0 && v.bounds().top < Device.height() * 0.75;
+        }).findOne();
+
+        if (!cityTag) {
+            throw new Error('找不到同城按钮');
+        }
+        util.click(cityTag);
+        util.sleep(3000 + 2000 * Math.random());
+    },
+
     /**
      * 
      * @param {object} config 
@@ -491,11 +523,16 @@ const tiktok = {
     run(config, getMsg) {
         this.intoHome();
         this.intoVideo();
+        let checkCount = 0;
         while (true) {
             util.log('进入视频');
             if (!this.viewVideo(config, getMsg)) {
                 this.next();
                 continue;
+            }
+            if (checkCount++ > 10) {
+                checkCount = 0;
+                this.intoCity();
             }
 
             this.next();
@@ -549,6 +586,9 @@ const core = {
                     continue;
                 }
 
+                if (type === 1) {
+                    task.intoCity();
+                }
                 task.run(config);
             } catch (e) {
                 util.log("异常了：", e.stack);
