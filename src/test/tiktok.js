@@ -16,8 +16,18 @@
 // tag.scrollForward();
 // console.log(tag);
 
-if (UiSelector().text('LIVE').isVisibleToUser(true).filter(v => {
-    return v && v.bounds() && v.bounds().left > Device.width() * 0.75 && v.bounds().top > Device.height() * 0.3 && v.bounds().top < Device.height() * 0.7;
-}).exists()) {
-    console.log('直播中，下一个');
-}
+// if (UiSelector().text('LIVE').isVisibleToUser(true).filter(v => {
+//     return v && v.bounds() && v.bounds().left > Device.width() * 0.75 && v.bounds().top > Device.height() * 0.3 && v.bounds().top < Device.height() * 0.7;
+// }).exists()) {
+//     console.log('直播中，下一个');
+// }
+
+
+// let tags = UiSelector().id('com.zhiliaoapp.musically:id/hf6').isVisibleToUser(true).scrollable(true).findOne();
+// console.log(tags);
+// tags.scrollForward();
+
+let tags = UiSelector().id('com.zhiliaoapp.musically:id/l46').isVisibleToUser(true).scrollable(true).findOne();
+console.log(tags);
+tags.scrollForward();
+
