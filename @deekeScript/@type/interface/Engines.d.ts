@@ -19,6 +19,11 @@ interface Engines {
      * 关闭所有脚本
      */
     public closeAll(): void;
+
+    /**
+     * 关闭当前脚本之外的其他脚本
+     */
+    public closeOther(): void
 }
 
 export { };
