@@ -7,7 +7,7 @@ interface Engines {
      * 执行脚本
      * @param file 文件路径，相对根目录的路径
      */
-    public execScript(file: string): void;
+    public executeScript(file: string): void;
 
     /**
      * 执行脚本
