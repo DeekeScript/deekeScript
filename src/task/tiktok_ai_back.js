@@ -4,6 +4,7 @@ const util = require('../tiktok/util');
 const task = {
     /**
      * @param {number} type
+     * @param {string} msg
      */
     getMsg(type, msg) {
         util.log('对方的消息是：' + msg);
@@ -45,6 +46,10 @@ while (true) {
         Log.log(e);
     }
 
+    util.back(500 + 500 * Math.random());
+    util.back(500 + 500 * Math.random());
+    util.back(500 + 500 * Math.random());
+    util.back(500 + 500 * Math.random());
     util.backApp();
     util.sleep(5000);//休眠10秒
 
