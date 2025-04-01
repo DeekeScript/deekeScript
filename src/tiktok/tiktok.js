@@ -393,7 +393,7 @@ const tiktok = {
      * @param {*} getMsg 
      */
     messageDeal(config, getMsg) {
-        let scrollCount = 20;
+        let scrollCount = 10;
         while (scrollCount-- > 0) {
             let contains = util.id(tags.index.message[0]).isVisibleToUser(true).find();
             //评论内容或者私信
@@ -428,8 +428,9 @@ const tiktok = {
                         let replaies = util.id(tags.index.messageDetail[0]).isVisibleToUser(true).find();
                         let messageCount = 0;
                         for (let i in replaies) {
+                            util.log('replaies', replaies[i]);
                             let top = replaies[i].bounds().top;
-                            let bottom = replaies[i].bounds().top + contains[i].bounds().height();
+                            let bottom = replaies[i].bounds().top + replaies[i].bounds().height();
                             let tip = util.id(tags.index.messageDetail[1]).isVisibleToUser(true).filter(v => {
                                 return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
                             }).findOne();
@@ -440,47 +441,41 @@ const tiktok = {
                             }
 
                             messageCount++;
-                            let rTag = util.id(tags.index.messageDetail[2]).isVisibleToUser(true).filter(v => {
+                            let rTag = util.id(tags.index.messageDetail[2]).text(tags.index.messageDetail[3]).isVisibleToUser(true).filter(v => {
                                 return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
                             }).findOne();
                             if (!rTag) {
                                 util.log('没有找到回复按钮，不处理');
+                                continue;
                             }
-                            util.click(rTag);
-                            util.sleep(2000 + 2000 * Math.random());
 
-                            let iptTag = util.id(tags.index.messageDetail[3]).isVisibleToUser(true).findOne();
+                            let msgTag = util.id(tags.index.messageContent[0]).isVisibleToUser(true).filter(v => {
+                                return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
+                            }).findOne();
+                            let msg = msgTag.text();
+
+                            util.click(rTag);
+                            util.sleep(1000 + 1000 * Math.random());
+
+                            let iptTag = util.id(tags.index.messageDetail[4]).isVisibleToUser(true).findOne();
                             if (!iptTag) {
                                 util.log('没有找到输入按钮');
                                 throw new Error('没有找到输入按钮');
                             }
 
                             util.click(iptTag);
-                            util.sleep(1000 + 2000 * Math.random());
+                            util.sleep(1000 + 1000 * Math.random());
 
-                            let msg = '';
-                            let msgTag = util.id(tags.index.messageContent[0]).isVisibleToUser(true).filter(v => {
-                                return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
-                            }).findOne();
-                            if (msgTag && msgTag.text()) {
-                                msg = msgTag.text();
-                                //拿到真正的评论
-                                let arr = msg.split(tags.index.messageContent[1]);
-                                let startIndex = arr[0].length + arr[1].length + 1;
-                                let endIndex = msg.length - arr[msg.length - 1].length - 1;
-                                msg = msg.substring(startIndex, endIndex);
-                            }
-
-                            iptTag = util.id(tags.index.messageDetail[3]).isVisibleToUser(true).findOne();
+                            iptTag = util.id(tags.index.messageDetail[4]).isVisibleToUser(true).findOne();
                             iptTag.setText(getMsg(0, msg));
 
-                            let buttonTag = util.id(tags.index.messageDetail[4]).isVisibleToUser(true).findOne();
+                            let buttonTag = util.id(tags.index.messageDetail[5]).isVisibleToUser(true).findOne();
                             if (!buttonTag) {
                                 throw new Error('没有找到发送按钮');
                             }
 
                             util.click(buttonTag);
-                            util.sleep(1000 + 1000 * Math.random());
+                            util.sleep(1500 + 1000 * Math.random());
                         }
 
                         if (messageCount === 0) {
@@ -503,6 +498,10 @@ const tiktok = {
 
             if (config.ai_back_friend_private_switch) {
                 let privateContains = util.id(tags.index.message[4]).isVisibleToUser(true).find();
+                if (privateContains.length === 0) {
+                    util.log('没有私信内容了，中断');
+                    break;
+                }
                 //评论内容或者私信
                 for (let i in privateContains) {
                     let top = privateContains[i].bounds().top;
@@ -520,10 +519,20 @@ const tiktok = {
                     let tipTag = util.id(tags.index.message[6]).isVisibleToUser(true).filter(v => {
                         return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
                     }).findOne();
+
                     if (!tipTag) {
-                        util.log('没有评论消息');
+                        util.log('不是私信消息');
                         continue;
                     }
+
+                    let msgTag = UiSelector().className('android.view.View').filter(v => {
+                        return v && v.bounds() && v.bounds().left > tipTag.bounds().left && v.bounds().top > tipTag.bounds().top && v.bounds().top + v.bounds().height() < tipTag.bounds().top + tipTag.bounds().height();
+                    }).findOne();
+                    if (!msgTag) {
+                        util.log('不是私信消息2');
+                        continue;
+                    }
+                    util.log(msgTag);
 
                     util.click(privateContains[i]);
                     util.sleep(2000 + 2000 * Math.random());
@@ -546,7 +555,7 @@ const tiktok = {
                     if (latestPrivateMsgTag && latestPrivateMsgTag.text()) {
                         msg = latestPrivateMsgTag.text();
                     }
-                    this.privateUserMain((msg) => getMsg(1, msg));
+                    this.privateUserMain(() => getMsg(1, msg));
                 }
             }
 

@@ -6,7 +6,7 @@ const tags = {
         intoMessage: ['jwn', 'Inbox'],
         messageScroll: ['hf6'],
         message: ['o84', 'av9', 'Activity', 'j5o', 'p2_', 'tr_', 'e1y'],//分别是评论框，评论框内容，消息图标，私信和昵称， 私信消息图标外层容器（消息图标没有id）
-        messageDetail: ['l4_', 'av_', 'naw', 'cqz', 'bpu'],//外层container，消息控件，回复控件，输入框，发送按钮
+        messageDetail: ['l4_', 'av_', 'nba', 'Reply', 'cqz', 'bpu'],//外层container，消息控件，回复控件，输入框，发送按钮
         messageContent: ['l2v', ' '],
         messageDetailScroll: ['l46'],
         privatePage: ['moa', 'Got it'],//弹窗
