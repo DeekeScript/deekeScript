@@ -91,6 +91,11 @@ declare global {
         public children(): this;
 
         /**
+         * getChildren
+         */
+        public getChildren(index: number): UiObject;
+
+        /**
          * 获取当前控件的子控件数量，必须在children() 方法之后调用
          */
         public length(): number;
