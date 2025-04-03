@@ -1,144 +1,7 @@
-const tags = {
-    package: 'com.instagram.android',
-    index: {
-        intoHome: ['wrapper', 'android.view.ViewGroup'],
-        intoVideo: ['creation_tab', 'Create'],
-        videoChange: ['androidx.viewpager.widget.ViewPager', 'clips_viewer_view_pager'],
-        title: ['clips_author_username'],
-        desc: ['clips_caption_component'],
-        comment: ['comment_button', 'comment_count'],
-        zan: ['like_button'],
-        input: ['layout_comment_thread_edittext'],
-        inputButton: ['layout_comment_thread_post_button_icon'],
-        header: ['clips_author_profile_pic'],//注意ins不能点击头像进入用户中心，而是点击昵称
-        commentZan: ['android.widget.ImageView', 'Like'],
-        commentBottom: ['above_composer_views'],
-        commentAreaSwipe: ['sticky_header_list'],
-        city: ['action_bar_large_title', 'Reels', 'context_menu_item_label', 'Nearby', 'action_bar_title', 'Nearby'],
-    },
-    user: {
-        nickname: ['profile_header_full_name_above_vanity'],
-        focus: ['profile_header_follow_button', 'Follow'],
-        //hm_是输入框外层的id，hme是按钮外层的id
-        private: ['button_container', 'Message', 'row_thread_composer_edittext', 'row_thread_composer_send_button_background'],
-    }
-}
+const tags = require('./tags');
+const util = require('./util');
 
-const util = {
-    /**
-     * @param {string} filename
-     */
-    setLog(filename) {
-        Log.setFile(filename);
-    },
-
-    /**
-     * @param {...object} obj
-     */
-    log(...obj) {
-        console.log(obj);
-        Log.log(obj);
-    },
-
-    /**
-     * @param {number} millSecond
-     */
-    sleep(millSecond) {
-        System.sleep(millSecond);
-    },
-
-    openApp() {
-        let res = App.launch(tags.package);
-        this.sleep(8000);
-        //看看是不是主页
-        let times = 3;
-        while (!util.id(tags.index.intoHome[0]).isVisibleToUser(true).exists() && times-- > 0) {
-            this.back();
-            util.log('找不到主页，返回');
-        }
-        return res;
-    },
-
-    /**
-     * @param {string} id 
-    */
-    id(id) {
-        return UiSelector().id(tags.package + ':id/' + id);
-    },
-
-    /**
-     * @param {string} id 
-    */
-    textId(id) {
-        return UiSelector().id(id);
-    },
-
-    /**
-     * 
-     * @param {UiObject} tag 
-     * @param {number} millSecond
-     */
-    click(tag, millSecond = undefined) {
-        this.log('点击', tag);
-        const x = tag.bounds().left + tag.bounds().width() * Math.random();
-        const y = tag.bounds().top + tag.bounds().height() * Math.random();
-        const res = Gesture.click(x, y);
-        if (millSecond !== undefined) {
-            this.sleep(millSecond);
-        } else {
-            this.sleep(2000 + 1000 * Math.random());
-        }
-        return res;
-    },
-
-    /**
-     * 获取评论和赞的数量
-     * @param {string} text 
-     * @returns 
-     */
-    getNum(text) {
-        if (!text) {
-            return 0;
-        }
-
-        return text.match(/\d+/)[0] || 0;
-    },
-
-    /**
-     * 
-     * @param {string} base 
-     * @param {string} content 
-     */
-    contains(base, content) {
-        const arr = base.replace(/，/g, ',').split(',');
-        for (let str of arr) {
-            if (content.indexOf(str) !== -1) {
-                this.log('包含关键词：' + str);
-                return true;
-            }
-        }
-        return false;
-    },
-
-    /**
-     * 
-     * @param {number} millSecond 
-     */
-    back(millSecond = undefined) {
-        Gesture.back();
-        if (millSecond === undefined) {
-            this.sleep(500);
-        } else {
-            this.sleep(millSecond);
-        }
-    },
-
-    backApp() {
-        App.backApp();
-    },
-}
-
-const tiktok = {
+const instagram = {
     intoHome() {
         const tag = util.id(tags.index.intoHome[0]).className(tags.index.intoHome[1]).isVisibleToUser(true).findOne();
         if (!tag) {
@@ -379,6 +242,14 @@ const tiktok = {
         util.sleep(2000 + 2000 * Math.random());
         util.log('点击了Message按钮');
 
+        this.privateUserMain(getMsg);
+    },
+
+    /**
+     * 
+     * @param {Function} getMsg 
+     */
+    privateUserMain(getMsg) {
         const inputTag = util.id(tags.user.private[2]).isVisibleToUser(true).filter(v => {
             return v && v.bounds() && v.bounds().left >= 0 && v.bounds().top >= 0;
         }).findOne();
@@ -537,68 +408,158 @@ const tiktok = {
 
             this.next();
         }
-    }
-}
-
-const task = {
-    /**
-     * @param {number} type
-     */
-    getMsg(type) {
-        if (type == 0) {
-            return '视频拍的很好';//0评论，1私信
-        }
-
-        return 'hello, 😄';
     },
 
     /**
-     * @param {{ toker_view_video_second: number; //视频观看时间
-    toker_view_video_keywords: string; //关键词
-    toker_zan_rate: number; //点赞频率
-    toker_comment_rate: number; //评论频率
-    toker_focus_rate: number; //关注频率
-    toker_private_msg_rate: number; //私信频率
-    toker_comment_area_zan_rate: number; //评论区五连赞
-    toker_run_hour: number[]; }} config
+     * 
+     * @param {number} type 0消息，1私信
      */
-    run(config) {
-        tiktok.run(config, this.getMsg);
-    }
-}
+    intoMessage(type = 0) {
+        const homeTag = util.id(tags.index.intoMessage[type]).isVisibleToUser(true).findOne();
+        if (!homeTag) {
+            throw new Error('homeTag没有找到');
+        }
+        util.click(homeTag, 2000 + 2000 * Math.random());
 
-const core = {
+        const tag = util.id(tags.index.intoMessage[type]).isVisibleToUser(true).findOne();
+        if (!tag) {
+            throw new Error('找不到消息入口：' + (type === 0 ? '消息' : '私信'));
+        }
+        return util.click(tag, 2000 + 2000 * Math.random());
+    },
+
     /**
      * 
-     * @param {any} config 
+     * @param {*} config 
+     * @param {*} getMsg 
      * @param {number} type
      */
-    run(config, type = 0) {
-        Log.setFile('instagram.log');
-        while (true) {
-            try {
-                util.log(config);
-                util.openApp();
-                if (!config.toker_run_hour.includes(new Date().getHours())) {
-                    util.backApp();
-                    util.log('回到app');
-                    util.sleep(60 * 1000);//休眠一分钟
-                    continue;
+    messageDeal(config, getMsg, type) {
+        let scrollCount = 10;
+        if (type === 0 && config.ai_back_comment_switch) {
+            while (scrollCount-- > 0) {
+                let replaies = util.id(tags.index.message[0]).isVisibleToUser(true).find();
+                let messageCount = 0;
+                for (let i in replaies) {
+                    util.log('replaies', replaies[i]);
+                    let top = replaies[i].bounds().top;
+                    let bottom = replaies[i].bounds().top + replaies[i].bounds().height();
+                    let rTag = UiSelector().text(tags.index.message[1]).isVisibleToUser(true).filter(v => {
+                        return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
+                    }).findOne();
+                    if (!rTag) {
+                        util.log('没有找到回复按钮，不处理');
+                        continue;
+                    }
+
+                    let msgTag = UiSelector().className(tags.index.message[2]).isVisibleToUser(true).filter(v => {
+                        return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom && v.bounds().width() > Device.width() / 2;
+                    }).findOne();
+                    let msg = msgTag.text();
+
+                    util.click(rTag);
+                    util.sleep(1000 + 1000 * Math.random());
+
+                    let iptTag = util.id(tags.index.message[3]).isVisibleToUser(true).findOne();
+                    if (!iptTag) {
+                        util.log('没有找到输入按钮');
+                        throw new Error('没有找到输入按钮');
+                    }
+
+                    util.click(iptTag);
+                    util.sleep(1000 + 1000 * Math.random());
+
+                    iptTag = util.id(tags.index.message[3]).isVisibleToUser(true).findOne();
+                    iptTag.setText(getMsg(0, msg));
+
+                    let buttonTag = util.id(tags.index.message[4]).isVisibleToUser(true).findOne();
+                    if (!buttonTag) {
+                        throw new Error('没有找到发送按钮');
+                    }
+
+                    messageCount++;
+                    util.click(buttonTag);
+                    util.sleep(1500 + 1000 * Math.random());
                 }
 
-                if (type === 1) {
-                    task.intoCity();
+                if (messageCount === 0) {
+                    util.log('没有可以处理的消息');
+                    util.back();
+                    util.sleep(2000 + 2000 * Math.random());
+                    break;
                 }
-                task.run(config);
-            } catch (e) {
-                util.log("异常了：", e.stack);
-                util.sleep(3000);
+
+                util.log('一轮处理完毕');
+                let scrollTag = UiSelector().scrollable(true).isVisibleToUser(true).filter(v => {
+                    return v && v.id() === tags.index.messageScroll[0];
+                }).findOne();
+                if (scrollTag) {
+                    scrollTag.scrollForward();
+                    util.sleep(2000 + 2000 * Math.random());
+                    util.log('滑动');
+                }
             }
         }
+
+        if (type === 1 && config.ai_back_friend_private_switch) {
+            while (scrollCount-- > 0) {
+                let privateContains = util.id(tags.index.privateMessage[0]).isVisibleToUser(true).find();
+                if (privateContains.length === 0) {
+                    util.log('没有私信内容了，中断');
+                    break;
+                }
+                //评论内容或者私信
+                for (let i in privateContains) {
+                    let top = privateContains[i].bounds().top;
+                    let bottom = privateContains[i].bounds().top + privateContains[i].bounds().height();
+                    //开始处理内容
+                    let tipTag = util.id(tags.index.privateMessage[1]).isVisibleToUser(true).filter(v => {
+                        return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
+                    }).findOne();
+
+                    if (!tipTag) {
+                        util.log('不是私信消息');
+                        continue;
+                    }
+
+                    let headerTag = util.id(tags.index.privateMessage[2]).filter(v => {
+                        return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
+                    }).findOne();
+                    if (!headerTag) {
+                        util.log('没有头像');
+                        continue;
+                    }
+                    util.log(headerTag);
+
+                    util.click(headerTag);
+                    util.sleep(2000 + 2000 * Math.random());
+
+                    let latestPrivateMsgTag = util.id(tags.index.latestPrivateMsg[0]).isVisibleToUser(true).filter(v => {
+                        //必须是右边距大于左边距
+                        return v && v.bounds() && v.bounds().left < Device.width() - (v.bounds().left + v.bounds().width());
+                    }).findOne();
+                    let msg = '';
+                    if (latestPrivateMsgTag && latestPrivateMsgTag.text()) {
+                        msg = latestPrivateMsgTag.text();
+                    }
+                    this.privateUserMain(() => getMsg(1, msg));
+                }
+            }
+        }
+    },
+
+    /**
+     * @param {{ ai_back_comment_run_other_fun: number; ai_back_comment_switch: boolean; ai_back_friend_private_switch: boolean; ai_back_minitue: number; }} config
+     * @param {(type: number, msg: string) => "hello, 😄" | "hi, 😄"} getMsg
+     */
+    aiBack(config, getMsg) {
+        //进入消息页面
+        this.intoMessage(0);
+        this.messageDeal(config, getMsg, 0);
+
+        this.intoMessage(1);
+        this.messageDeal(config, getMsg, 1);
     }
 }
 
-// tiktok.commentVideo('😄');
-// tiktok.commentAreaZan(true, 5);
-
-module.exports = core;
+module.exports = instagram;

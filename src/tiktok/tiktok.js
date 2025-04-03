@@ -440,7 +440,6 @@ const tiktok = {
                                 continue;
                             }
 
-                            messageCount++;
                             let rTag = util.id(tags.index.messageDetail[2]).text(tags.index.messageDetail[3]).isVisibleToUser(true).filter(v => {
                                 return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
                             }).findOne();
@@ -476,6 +475,7 @@ const tiktok = {
 
                             util.click(buttonTag);
                             util.sleep(1500 + 1000 * Math.random());
+                            messageCount++;
                         }
 
                         if (messageCount === 0) {

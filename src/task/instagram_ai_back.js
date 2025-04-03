@@ -1,5 +1,5 @@
-const tiktok = require('../tiktok/tiktok');
-const util = require('../tiktok/util');
+const instagram = require('../instagram/instagram');
+const util = require('../instagram/util');
 
 const task = {
     /**
@@ -23,12 +23,12 @@ const task = {
     ai_back_minitue: number; }} config
      */
     run(config) {
-        tiktok.aiBack(config, this.getMsg);
+        instagram.aiBack(config, this.getMsg);
     }
 }
 
 const config = {
-    ai_back_comment_run_other_fun: 1,//0不选择，1推荐营销
+    ai_back_comment_run_other_fun: 1,//0不选择，1推荐营销，2同城营销
     ai_back_comment_switch: true,//评论回复
     ai_back_friend_private_switch: true,//私信回复（不包含陌生人）
     ai_back_private_switch: true,//陌生人私信回复
@@ -37,7 +37,7 @@ const config = {
 
 while (true) {
     try {
-        Log.setFile('tiktok_ai_back.log');
+        Log.setFile('instagram_ai_back.log');
         util.openApp();
         task.run(config);
         util.log('开始休眠');
@@ -59,7 +59,7 @@ while (true) {
     }
 
     let endTime = Date.parse(new Date().toString()) / 1000 + config.ai_back_minitue * 60;
-    let file = ['src/task/tiktok.js'][config.ai_back_comment_run_other_fun - 1];
+    let file = ['src/task/instagram.js', 'instagram_city.js'][config.ai_back_comment_run_other_fun - 1];
     util.log('开始执行');
     Engines.executeScript(file);
     util.log('执行过了');
