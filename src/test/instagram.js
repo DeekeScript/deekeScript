@@ -27,8 +27,22 @@
 // console.log(tag);
 // console.log(tag.scrollForward());
 
-let latestPrivateMsgTag = UiSelector().id('com.instagram.android:id/direct_text_message_text_view').isVisibleToUser(true).filter(v => {
-    //必须是右边距大于左边距
-    return v && v.bounds() && v.bounds().left < Device.width() - (v.bounds().left + v.bounds().width());
+// let latestPrivateMsgTag = UiSelector().id('com.instagram.android:id/direct_text_message_text_view').isVisibleToUser(true).filter(v => {
+//     //必须是右边距大于左边距
+//     return v && v.bounds() && v.bounds().left < Device.width() - (v.bounds().left + v.bounds().width());
+// }).findOne();
+// console.log(latestPrivateMsgTag);
+
+let replaies = UiSelector().className('android.view.View').filter(v => {
+    return v && v.id() === 'activity_feed_newsfeed_story_row';
+}).isVisibleToUser(true).findOne();
+let top = replaies.bounds().top;
+let bottom = replaies.bounds().top + replaies.bounds().height();
+
+let rTag = UiSelector().textContains('Reply').isVisibleToUser(true).filter(v => {
+    console.log(v);
+    return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() / 2 <= bottom;
 }).findOne();
-console.log(latestPrivateMsgTag);
+
+console.log(rTag);
+

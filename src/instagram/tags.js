@@ -2,7 +2,7 @@ const tags = {
     package: 'com.instagram.android',
     index: {
         intoHome: ['wrapper', 'android.view.ViewGroup'],
-        intoVideo: ['creation_tab', 'Create'],
+        intoVideo: ['clips_tab'],
         videoChange: ['androidx.viewpager.widget.ViewPager', 'clips_viewer_view_pager'],
         title: ['clips_author_username'],
         desc: ['clips_caption_component'],

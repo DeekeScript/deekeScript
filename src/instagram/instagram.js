@@ -11,7 +11,7 @@ const instagram = {
     },
 
     intoVideo() {
-        const tag = util.id(tags.index.intoVideo[0]).desc(tags.index.intoVideo[1]).isVisibleToUser(true).findOne();
+        const tag = util.id(tags.index.intoVideo[0]).isVisibleToUser(true).findOne();
         if (!tag) {
             throw new Error('找不到forYou');
         }
@@ -257,9 +257,9 @@ const instagram = {
             throw new Error('找不到输入框');
         }
         util.click(inputTag);
-        util.sleep(1000 + 2000 * Math.random());
+        util.sleep(2000 + 2000 * Math.random());
 
-        const inputTag2 = UiSelector().className(tags.user.private[2]).isVisibleToUser(true).filter(v => {
+        const inputTag2 = util.id(tags.user.private[2]).isVisibleToUser(true).filter(v => {
             return v && v.bounds() && v.bounds().left > 0 && v.bounds().top > 0 && v.bounds().top < Device.height() * 0.75;
         }).findOne();
 
@@ -415,13 +415,13 @@ const instagram = {
      * @param {number} type 0消息，1私信
      */
     intoMessage(type = 0) {
-        const homeTag = util.id(tags.index.intoMessage[type]).isVisibleToUser(true).findOne();
+        const homeTag = util.id(tags.index.intoMessage[0]).isVisibleToUser(true).findOne();
         if (!homeTag) {
             throw new Error('homeTag没有找到');
         }
         util.click(homeTag, 2000 + 2000 * Math.random());
 
-        const tag = util.id(tags.index.intoMessage[type]).isVisibleToUser(true).findOne();
+        const tag = util.id(tags.index.intoMessage[type + 1]).isVisibleToUser(true).findOne();
         if (!tag) {
             throw new Error('找不到消息入口：' + (type === 0 ? '消息' : '私信'));
         }
@@ -438,15 +438,19 @@ const instagram = {
         let scrollCount = 10;
         if (type === 0 && config.ai_back_comment_switch) {
             while (scrollCount-- > 0) {
-                let replaies = util.id(tags.index.message[0]).isVisibleToUser(true).find();
+                let replaies = UiSelector().className('android.view.View').filter(v => {
+                    return v && v.id() === tags.index.message[0];
+                }).isVisibleToUser(true).find();
                 let messageCount = 0;
                 for (let i in replaies) {
                     util.log('replaies', replaies[i]);
                     let top = replaies[i].bounds().top;
                     let bottom = replaies[i].bounds().top + replaies[i].bounds().height();
-                    let rTag = UiSelector().text(tags.index.message[1]).isVisibleToUser(true).filter(v => {
-                        return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom;
+                    let rTag = UiSelector().textContains(tags.index.message[1]).isVisibleToUser(true).filter(v => {
+                        return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() / 2 <= bottom;
                     }).findOne();
+
+                    util.log(rTag);
                     if (!rTag) {
                         util.log('没有找到回复按钮，不处理');
                         continue;
@@ -456,9 +460,14 @@ const instagram = {
                         return v && v.bounds() && v.bounds().top >= top && v.bounds().top + v.bounds().height() <= bottom && v.bounds().width() > Device.width() / 2;
                     }).findOne();
                     let msg = msgTag.text();
+                    util.log('消息：' + msg);
 
-                    util.click(rTag);
-                    util.sleep(1000 + 1000 * Math.random());
+                    //点击中间的20%，否则可能进入视频
+                    // const x = rTag.bounds().left + rTag.bounds().width() * (1 - 0.40) * Math.random();
+                    // const y = rTag.bounds().top + rTag.bounds().height() * (1 - 0.40) * Math.random();
+                    // util.log('x, y');
+                    Gesture.click(rTag.bounds().left + rTag.bounds().width() / 2, rTag.bounds().top + rTag.bounds().height() / 2);
+                    util.sleep(2000 + 2000 * Math.random());
 
                     let iptTag = util.id(tags.index.message[3]).isVisibleToUser(true).findOne();
                     if (!iptTag) {
@@ -467,10 +476,10 @@ const instagram = {
                     }
 
                     util.click(iptTag);
-                    util.sleep(1000 + 1000 * Math.random());
+                    util.sleep(2000 + 1000 * Math.random());
 
                     iptTag = util.id(tags.index.message[3]).isVisibleToUser(true).findOne();
-                    iptTag.setText(getMsg(0, msg));
+                    iptTag.setText(getMsg(0, iptTag.text() + msg));
 
                     let buttonTag = util.id(tags.index.message[4]).isVisibleToUser(true).findOne();
                     if (!buttonTag) {

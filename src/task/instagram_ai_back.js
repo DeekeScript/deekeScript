@@ -43,7 +43,7 @@ while (true) {
         util.log('开始休眠');
     } catch (e) {
         util.log('全局异常');
-        util.log(e);
+        util.log(e.stack);
     }
 
     util.back(500 + 500 * Math.random());
@@ -64,7 +64,7 @@ while (true) {
     Engines.executeScript(file);
     util.log('执行过了');
     do {
-        util.log('时间判断', Date.parse(new Date().toString()) / 1000, endTime)
+        util.log('时间判断', Date.parse(new Date().toString()) / 1000, endTime);
         if (Date.parse(new Date().toString()) / 1000 >= endTime) {
             Engines.closeOther();//关闭其他线程
             util.log('中断其他线程');

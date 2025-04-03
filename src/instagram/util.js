@@ -1,3 +1,4 @@
+const tags = require('./tags');
 const util = {
     /**
      * @param {string} filename

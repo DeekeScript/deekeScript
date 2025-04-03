@@ -1,5 +1,5 @@
 {
-  "name": "测试",
+  "name": "Deep Social",
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
@@ -10,19 +10,20 @@
   },
   "groups": [
     {
-      "title": "DY·万能引流",
+      "title": "TikTok·Interactive exposure",
       "titleHidden": false,
       "hidden": false,
       "methods": [
         {
-          "title": "推荐营销",
+          "title": "Recommend",
           "icon": "images/test/finger.png",
           "jsFile": "script/task/dy.js",
+          "columns": 12,
           "settingPage": {
             "params": [
               {
                 "type": "numberRange",
-                "label": "观看时长（秒）",
+                "label": "Viewing duration (seconds)",
                 "name": "toker_view_video_second",
                 "max": 60,
                 "min": 5,
@@ -31,14 +32,14 @@
               },
               {
                 "type": "textArea",
-                "label": "关键词筛选（多个使用逗号隔开）",
+                "label": "Keyword filtering (multiple separated by commas)",
                 "name": "toker_view_video_keywords",
                 "value": "",
-                "notice": "* 关键词不填则操作所有"
+                "notice": "* If keywords are not filled in, all operations will be performed"
               },
               {
                 "type": "numberRange",
-                "label": "点赞频率（%）",
+                "label": "Like frequency（%）",
                 "name": "toker_zan_rate",
                 "max": 100,
                 "min": 0,
@@ -47,7 +48,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "评论频率（%）",
+                "label": "Comment frequency（%）",
                 "name": "toker_comment_rate",
                 "max": 100,
                 "min": 0,
@@ -56,7 +57,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "关注频率（%）",
+                "label": "focus frequency（%）",
                 "name": "toker_focus_rate",
                 "max": 100,
                 "min": 0,
@@ -65,7 +66,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "私信频率（%）",
+                "label": "Private message frequency（%）",
                 "name": "toker_private_msg_rate",
                 "max": 100,
                 "min": 0,
@@ -74,7 +75,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "评论区五连赞频率（%）",
+                "label": "Five consecutive likes frequency（%）",
                 "name": "toker_comment_area_zan_rate",
                 "max": 100,
                 "min": 0,
@@ -83,68 +84,34 @@
               },
               {
                 "type": "checkboxGroup",
-                "label": "性别",
-                "name": "toker_run_sex",
-                "columnCount": 6,
-                "children": [
-                  "女",
-                  "男",
-                  "未知"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2"
-                ]
-              },
-              {
-                "type": "numberRange",
-                "label": "最小年龄",
-                "name": "toker_run_min_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 0
-              },
-              {
-                "type": "numberRange",
-                "label": "最大年龄",
-                "name": "toker_run_max_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 60
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "运行时间",
+                "label": "run time",
                 "name": "toker_run_hour",
                 "columnCount": 6,
                 "children": [
-                  "0时",
-                  "1时",
-                  "2时",
-                  "3时",
-                  "4时",
-                  "5时",
-                  "6时",
-                  "7时",
-                  "8时",
-                  "9时",
-                  "10时",
-                  "11时",
-                  "12时",
-                  "13时",
-                  "14时",
-                  "15时",
-                  "16时",
-                  "17时",
-                  "18时",
-                  "19时",
-                  "20时",
-                  "21时",
-                  "22时",
-                  "23时"
+                  "12 AM",
+                  "1 AM",
+                  "2 AM",
+                  "3 AM",
+                  "4 AM",
+                  "5 AM",
+                  "6 AM",
+                  "7 AM",
+                  "8 AM",
+                  "9 AM",
+                  "10 AM",
+                  "11 AM",
+                  "12 PM",
+                  "1 PM",
+                  "2 PM",
+                  "3 PM",
+                  "4 PM",
+                  "5 PM",
+                  "6 PM",
+                  "7 PM",
+                  "8 PM",
+                  "9 PM",
+                  "10 PM",
+                  "11 PM"
                 ],
                 "values": [
                   "0",
@@ -177,14 +144,200 @@
           }
         },
         {
-          "title": "同城营销",
-          "icon": "images/test/city.png",
-          "jsFile": "script/task/dyCity.js",
+          "title": "AI Reply",
+          "hidden": false,
+          "icon": "images/test/ai-back.png",
+          "jsFile": "tasks/task_dy_ai_back.js",
+          "columns": 12,
+          "settingPage": {
+            "params": [
+              {
+                "type": "radio",
+                "name": "ai_back_comment_run_other_fun",
+                "label": "Simultaneously activate the function",
+                "value": "0",
+                "options": [
+                  {
+                    "label": "--Please select--",
+                    "value": 0
+                  },
+                  {
+                    "label": "Recommend",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "switch",
+                "label": "Comment reply",
+                "name": "ai_back_comment_switch",
+                "value": true
+              },
+              {
+                "type": "switch",
+                "label": "Private message reply",
+                "name": "ai_back_friend_private_switch",
+                "value": true
+              },
+              {
+                "type": "number",
+                "label": "Operation interval (minutes)",
+                "name": "ai_back_minitue",
+                "value": 5
+              },
+              {
+                "type": "notice",
+                "title": "* The default is 5 minutes, which means that replies are processed every 5 minutes. Note that the larger the message volume, the smaller the operation interval should also be set. If \"other functions\" are enabled, it indicates the running time of other functions"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Instagram·Interactive exposure",
+      "titleHidden": false,
+      "hidden": false,
+      "columns": 8,
+      "methods": [
+        {
+          "title": "Recommend",
+          "icon": "images/test/finger.png",
+          "jsFile": "script/task/dy.js",
           "settingPage": {
             "params": [
               {
                 "type": "numberRange",
-                "label": "观看时长（秒）",
+                "label": "Viewing duration (seconds)",
+                "name": "toker_view_video_second",
+                "max": 60,
+                "min": 5,
+                "value": 12,
+                "step": 1
+              },
+              {
+                "type": "textArea",
+                "label": "Keyword filtering (multiple separated by commas)",
+                "name": "toker_view_video_keywords",
+                "value": "",
+                "notice": "* If keywords are not filled in, all operations will be performed"
+              },
+              {
+                "type": "numberRange",
+                "label": "Like frequency（%）",
+                "name": "toker_zan_rate",
+                "max": 100,
+                "min": 0,
+                "step": 1,
+                "value": 100
+              },
+              {
+                "type": "numberRange",
+                "label": "Comment frequency（%）",
+                "name": "toker_comment_rate",
+                "max": 100,
+                "min": 0,
+                "step": 1,
+                "value": 100
+              },
+              {
+                "type": "numberRange",
+                "label": "focus frequency（%）",
+                "name": "toker_focus_rate",
+                "max": 100,
+                "min": 0,
+                "step": 1,
+                "value": 1
+              },
+              {
+                "type": "numberRange",
+                "label": "Private message frequency（%）",
+                "name": "toker_private_msg_rate",
+                "max": 100,
+                "min": 0,
+                "step": 1,
+                "value": 1
+              },
+              {
+                "type": "numberRange",
+                "label": "Five consecutive likes frequency（%）",
+                "name": "toker_comment_area_zan_rate",
+                "max": 100,
+                "min": 0,
+                "step": 1,
+                "value": 100
+              },
+              {
+                "type": "checkboxGroup",
+                "label": "run time",
+                "name": "toker_run_hour",
+                "columnCount": 6,
+                "children": [
+                  "12 AM",
+                  "1 AM",
+                  "2 AM",
+                  "3 AM",
+                  "4 AM",
+                  "5 AM",
+                  "6 AM",
+                  "7 AM",
+                  "8 AM",
+                  "9 AM",
+                  "10 AM",
+                  "11 AM",
+                  "12 PM",
+                  "1 PM",
+                  "2 PM",
+                  "3 PM",
+                  "4 PM",
+                  "5 PM",
+                  "6 PM",
+                  "7 PM",
+                  "8 PM",
+                  "9 PM",
+                  "10 PM",
+                  "11 PM"
+                ],
+                "values": [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7",
+                  "8",
+                  "9",
+                  "10",
+                  "11",
+                  "12",
+                  "13",
+                  "14",
+                  "15",
+                  "16",
+                  "17",
+                  "18",
+                  "19",
+                  "20",
+                  "21",
+                  "22",
+                  "23"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "title": "Same City",
+          "icon": "images/test/city.png",
+          "jsFile": "script/task/dyCity.js",
+          "columns": 8,
+          "settingPage": {
+            "params": [
+              {
+                "type": "numberRange",
+                "label": "Viewing duration (seconds)",
                 "name": "toker_city_view_video_second",
                 "max": 30,
                 "min": 5,
@@ -193,14 +346,14 @@
               },
               {
                 "type": "textArea",
-                "label": "关键词筛选（多个使用逗号隔开）",
+                "label": "Keyword filtering (multiple separated by commas)",
                 "name": "toker_city_view_video_keywords",
                 "value": "",
-                "notice": "* 关键词不填则操作所有"
+                "notice": "* If keywords are not filled in, all operations will be performed"
               },
               {
                 "type": "numberRange",
-                "label": "点赞频率（%）",
+                "label": "Like frequency（%）",
                 "name": "toker_city_zan_rate",
                 "max": 100,
                 "min": 0,
@@ -209,7 +362,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "评论频率（%）",
+                "label": "Comment frequency（%）",
                 "name": "toker_city_comment_rate",
                 "max": 100,
                 "min": 0,
@@ -218,7 +371,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "关注频率（%）",
+                "label": "focus frequency（%）",
                 "name": "toker_city_focus_rate",
                 "max": 100,
                 "min": 0,
@@ -227,7 +380,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "私信频率（%）",
+                "label": "Private message frequency（%）",
                 "name": "toker_city_private_msg_rate",
                 "max": 100,
                 "min": 0,
@@ -236,7 +389,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "评论区五连赞频率（%）",
+                "label": "Five consecutive likes frequency（%）",
                 "name": "toker_city_comment_area_zan_rate",
                 "max": 100,
                 "min": 0,
@@ -244,78 +397,35 @@
                 "value": 100
               },
               {
-                "type": "numberRange",
-                "label": "同城距离（公里内）",
-                "name": "toker_city_distance",
-                "max": 100,
-                "min": 1,
-                "step": 1,
-                "value": 100
-              },
-              {
                 "type": "checkboxGroup",
-                "label": "性别",
-                "name": "toker_city_run_sex",
-                "columnCount": 6,
-                "children": [
-                  "女",
-                  "男",
-                  "未知"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2"
-                ]
-              },
-              {
-                "type": "numberRange",
-                "label": "最小年龄",
-                "name": "toker_city_run_min_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 0
-              },
-              {
-                "type": "numberRange",
-                "label": "最大年龄",
-                "name": "toker_city_run_max_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "运行时间",
+                "label": "run time",
                 "name": "toker_city_run_hour",
                 "columnCount": 6,
                 "children": [
-                  "0时",
-                  "1时",
-                  "2时",
-                  "3时",
-                  "4时",
-                  "5时",
-                  "6时",
-                  "7时",
-                  "8时",
-                  "9时",
-                  "10时",
-                  "11时",
-                  "12时",
-                  "13时",
-                  "14时",
-                  "15时",
-                  "16时",
-                  "17时",
-                  "18时",
-                  "19时",
-                  "20时",
-                  "21时",
-                  "22时",
-                  "23时"
+                  "12 AM",
+                  "1 AM",
+                  "2 AM",
+                  "3 AM",
+                  "4 AM",
+                  "5 AM",
+                  "6 AM",
+                  "7 AM",
+                  "8 AM",
+                  "9 AM",
+                  "10 AM",
+                  "11 AM",
+                  "12 PM",
+                  "1 PM",
+                  "2 PM",
+                  "3 PM",
+                  "4 PM",
+                  "5 PM",
+                  "6 PM",
+                  "7 PM",
+                  "8 PM",
+                  "9 PM",
+                  "10 PM",
+                  "11 PM"
                 ],
                 "values": [
                   "0",
@@ -348,66 +458,54 @@
           }
         },
         {
-          "title": "工具箱",
+          "title": "AI Reply",
           "hidden": false,
-          "icon": "images/test/tool.png",
-          "activity": {
-            "notice": "暂无功能~",
-            "title": "工具箱",
-            "minVersion": 10001,
-            "groups": [
+          "icon": "images/test/ai-back.png",
+          "jsFile": "tasks/task_dy_ai_back.js",
+          "columns": 8,
+          "settingPage": {
+            "params": [
               {
-                "title": "工具箱",
-                "titleHidden": true,
-                "methods": [
+                "type": "radio",
+                "name": "ai_back_comment_run_other_fun",
+                "label": "Simultaneously activate the function",
+                "value": "0",
+                "options": [
                   {
-                    "title": "一键取赞",
-                    "hidden": false,
-                    "icon": "images/test/cancel_zan.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "帮助你快速取消视频点赞~"
-                        }
-                      ]
-                    }
+                    "label": "--Please select--",
+                    "value": 0
                   },
                   {
-                    "title": "一键取关",
-                    "hidden": false,
-                    "icon": "images/test/cancel_focus.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "帮助你快速取消单向关注（你关注他，他没有关注你）的用户~"
-                        },
-                        {
-                          "type": "switch",
-                          "label": "互相关注取关",
-                          "name": "task_dy_cancel_focus_mutual_switch"
-                        }
-                      ]
-                    }
+                    "label": "Recommend",
+                    "value": 1
                   },
                   {
-                    "title": "粉丝回访",
-                    "hidden": false,
-                    "icon": "images/test/view_back.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "粉丝回访，能增加粉丝粘性~"
-                        }
-                      ]
-                    }
+                    "label": "Same City",
+                    "value": 2
                   }
                 ]
+              },
+              {
+                "type": "switch",
+                "label": "Comment reply",
+                "name": "ai_back_comment_switch",
+                "value": true
+              },
+              {
+                "type": "switch",
+                "label": "Private message reply",
+                "name": "ai_back_friend_private_switch",
+                "value": true
+              },
+              {
+                "type": "number",
+                "label": "Operation interval (minutes)",
+                "name": "ai_back_minitue",
+                "value": 5
+              },
+              {
+                "type": "notice",
+                "title": "* The default is 5 minutes, which means that replies are processed every 5 minutes. Note that the larger the message volume, the smaller the operation interval should also be set. If \"other functions\" are enabled, it indicates the running time of other functions"
               }
             ]
           }
@@ -417,51 +515,51 @@
   ],
   "bottomMenus": [
     {
-      "title": "{NAME}",
+      "title": "Home",
       "icon": "images/test/home.png",
       "banner": "images/test/home-top.png",
       "type": "home"
     },
     {
-      "title": "话术设置",
+      "title": "Response Settings",
       "icon": "images/test/speech.png",
       "type": "speech"
     },
     {
-      "title": "系统设置",
+      "title": "System Settings",
       "icon": "images/test/setting.png",
       "type": "setting"
     }
   ],
   "settingLists": [
     {
-      "title": "联系客服",
+      "title": "Contact Support",
       "icon": "images/test/kefu.png",
       "type": "customerService",
-      "description": "客服微信：DeekeScript",
+      "description": "Customer Service WeChat：DeekeScript",
       "hidden": false
     },
     {
-      "title": "功能说明",
+      "title": " Feature Guide",
       "icon": "images/test/manual.png",
       "type": "notice",
       "file": "script/task.html"
     },
     {
-      "title": "智能话术",
+      "title": "AI-Powered Responses",
       "icon": "images/test/ai.png",
       "type": "settingService",
       "settingPage": {
         "params": [
           {
             "type": "switch",
-            "label": "开启{NAME}智能AI话术",
+            "label": "Activate {NAME} intelligent AI script",
             "value": false,
             "name": "setting_baidu_wenxin_switch"
           },
           {
             "type": "radio",
-            "label": "请选择角色",
+            "label": "Please select a role",
             "name": "setting_baidu_wenxin_role",
             "value": "1",
             "dataFrom": "role",
@@ -470,32 +568,18 @@
           {
             "type": "text",
             "label": "{NAME} Key",
-            "value": "如：NZmgn5urWoHhKWe8XbGMdbUp",
+            "value": "eg:NZmgn5urWoHhKWe8XbGMdbUp",
             "name": "setting_baidu_wenxin_key"
           },
           {
             "type": "text",
             "label": "{NAME} Secret",
             "name": "setting_baidu_wenxin_secret",
-            "value": "如：brIq133KaAPNEkn109avxl7MXUHHW0kg"
+            "value": "eg:brIq133KaAPNEkn109avxl7MXUHHW0kg"
           },
           {
             "type": "notice",
-            "title": "如果开启超级霸屏，请配置账号收藏的表情图",
-            "hidden": true
-          },
-          {
-            "type": "numberRange",
-            "label": "超级霸屏(%)",
-            "name": "setting_comment_with_photo",
-            "value": 0,
-            "min": 0,
-            "max": 100,
-            "hidden": false
-          },
-          {
-            "type": "notice",
-            "title": "* 开启后，将使用{NAME}官方AI角色（可自定义）进行评论和私信，让拓客变得更简单~",
+            "title": "* After activation, {NAME} official AI characters (customizable) will be used for commenting and private messaging, making customer acquisition easier~",
             "textColor": "#AA0000",
             "textSize": 16
           }
@@ -504,31 +588,31 @@
       "hidden": false
     },
     {
-      "title": "数据统计",
+      "title": "Statistics",
       "icon": "images/test/statistics.png",
       "type": "statistics",
       "jsFile": "script/statistics/statistics.js"
     },
     {
-      "title": "上传日志",
+      "title": "Upload Logs",
       "icon": "images/test/upload.png",
       "type": "uploadLog",
       "url": "/dke/uploadLog"
     },
     {
-      "title": "系统升级",
+      "title": "System Update",
       "icon": "images/test/update.png",
       "type": "updateApp",
       "url": "/dke/updateApp"
     },
     {
-      "title": "清理数据",
+      "title": "Clear Data",
       "icon": "images/test/clear.png",
-      "description": "确定清理嘛？",
+      "description": "Are you sure about cleaning?",
       "type": "clear"
     },
     {
-      "title": "举报中心",
+      "title": "Report Center",
       "icon": "images/test/jubao.png",
       "type": "qiwei",
       "url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=910d7c7c-d74a-4ce5-a070-0f3383b1f6ee",
@@ -537,32 +621,32 @@
         "params": [
           {
             "type": "notice",
-            "title": "如果我们的代理商有侵犯到你的权益，请立即举报！",
+            "title": "If our agents infringe upon your rights, please report them immediately!",
             "hidden": false
           },
           {
             "type": "text",
-            "label": "举报人",
+            "label": "Your Full Name",
             "value": "",
             "name": "qiwei_name"
           },
           {
             "type": "text",
-            "label": "举报人手机号",
+            "label": "Your Mobile",
             "value": "",
             "name": "qiwei_mobile"
           },
           {
             "type": "text",
-            "label": "举报人身份证号码",
+            "label": "Your ID card No",
             "value": "",
             "name": "qiwei_card_no"
           },
           {
             "type": "text",
-            "label": "举报内容",
+            "label": "Report content",
             "value": "",
-            "hint": "请详细描述你举报该软件的原因，请不要恶意举报！",
+            "hint": "Please describe in detail the reason why you reported the software, and do not maliciously report it!",
             "name": "qiwei_content",
             "lines": 3
           }
