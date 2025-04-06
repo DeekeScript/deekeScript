@@ -57,7 +57,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "focus frequency（%）",
+                "label": "Focus frequency（%）",
                 "name": "toker_focus_rate",
                 "max": 100,
                 "min": 0,
@@ -84,7 +84,7 @@
               },
               {
                 "type": "checkboxGroup",
-                "label": "run time",
+                "label": "Run time",
                 "name": "toker_run_hour",
                 "columnCount": 6,
                 "children": [
@@ -158,7 +158,7 @@
                 "value": "0",
                 "options": [
                   {
-                    "label": "--Please select--",
+                    "label": "Please select",
                     "value": 0
                   },
                   {
@@ -242,7 +242,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "focus frequency（%）",
+                "label": "Focus frequency（%）",
                 "name": "toker_focus_rate",
                 "max": 100,
                 "min": 0,
@@ -269,7 +269,7 @@
               },
               {
                 "type": "checkboxGroup",
-                "label": "run time",
+                "label": "Run time",
                 "name": "toker_run_hour",
                 "columnCount": 6,
                 "children": [
@@ -371,7 +371,7 @@
               },
               {
                 "type": "numberRange",
-                "label": "focus frequency（%）",
+                "label": "Focus frequency（%）",
                 "name": "toker_city_focus_rate",
                 "max": 100,
                 "min": 0,
@@ -398,7 +398,7 @@
               },
               {
                 "type": "checkboxGroup",
-                "label": "run time",
+                "label": "Run time",
                 "name": "toker_city_run_hour",
                 "columnCount": 6,
                 "children": [
@@ -472,7 +472,7 @@
                 "value": "0",
                 "options": [
                   {
-                    "label": "--Please select--",
+                    "label": "Please select",
                     "value": 0
                   },
                   {
