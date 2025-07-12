@@ -1,5 +1,5 @@
 {
-  "name": "测试",
+  "name": "Deeke私信",
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
@@ -11,252 +11,112 @@
   },
   "groups": [
     {
-      "title": "DY·万能引流",
+      "title": "批量私信",
       "titleHidden": false,
       "hidden": false,
       "methods": [
         {
-          "title": "推荐营销",
-          "icon": "images/test/finger.png",
-          "jsFile": "script/task/dy.js",
+          "title": "某音私信",
+          "icon": "images/dy_uid.png",
+          "columns": 24,
+          "jsFile": "script/task/dy_uid.js",
           "settingPage": {
             "params": [
               {
+                "type": "textArea",
+                "label": "请输入uid（多个使用换行隔开）",
+                "name": "toker_dy_uids",
+                "lines": 5,
+                "value": "",
+                "notice": "* 关键词不填则操作所有"
+              },
+              {
+                "type": "checkboxGroup",
+                "label": "操作类型",
+                "name": "toker_dy_type",
+                "columnCount": 3,
+                "children": [
+                  "点赞首作品",
+                  "评论首作品",
+                  "关注用户",
+                  "私信用户"
+                ],
+                "values": [
+                  "0",
+                  "1",
+                  "2",
+                  "3"
+                ]
+              },
+              {
+                "type": "checkboxGroup",
+                "label": "性别",
+                "name": "toker_dy_sex",
+                "columnCount": 6,
+                "children": [
+                  "女",
+                  "男",
+                  "未知"
+                ],
+                "values": [
+                  "0",
+                  "1",
+                  "2"
+                ]
+              },
+              {
                 "type": "numberRange",
-                "label": "观看时长（秒）",
-                "name": "toker_view_video_second",
+                "label": "操作间隔（秒）",
+                "name": "toker_dy_second",
                 "max": 60,
-                "min": 5,
-                "value": 12,
-                "step": 1
-              },
-              {
-                "type": "textArea",
-                "label": "关键词筛选（多个使用逗号隔开）",
-                "name": "toker_view_video_keywords",
-                "value": "",
-                "notice": "* 关键词不填则操作所有"
-              },
-              {
-                "type": "numberRange",
-                "label": "点赞频率（%）",
-                "name": "toker_zan_rate",
-                "max": 100,
                 "min": 0,
                 "step": 1,
-                "value": 100
+                "value": 5
               },
               {
-                "type": "numberRange",
-                "label": "评论频率（%）",
-                "name": "toker_comment_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "关注频率（%）",
-                "name": "toker_focus_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "私信频率（%）",
-                "name": "toker_private_msg_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "评论区五连赞频率（%）",
-                "name": "toker_comment_area_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "性别",
-                "name": "toker_run_sex",
-                "columnCount": 6,
-                "children": [
-                  "女",
-                  "男",
-                  "未知"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2"
-                ]
-              },
-              {
-                "type": "numberRange",
-                "label": "最小年龄",
-                "name": "toker_run_min_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 0
-              },
-              {
-                "type": "numberRange",
-                "label": "最大年龄",
-                "name": "toker_run_max_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 60
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "运行时间",
-                "name": "toker_run_hour",
-                "columnCount": 6,
-                "children": [
-                  "0时",
-                  "1时",
-                  "2时",
-                  "3时",
-                  "4时",
-                  "5时",
-                  "6时",
-                  "7时",
-                  "8时",
-                  "9时",
-                  "10时",
-                  "11时",
-                  "12时",
-                  "13时",
-                  "14时",
-                  "15时",
-                  "16时",
-                  "17时",
-                  "18时",
-                  "19时",
-                  "20时",
-                  "21时",
-                  "22时",
-                  "23时"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "7",
-                  "8",
-                  "9",
-                  "10",
-                  "11",
-                  "12",
-                  "13",
-                  "14",
-                  "15",
-                  "16",
-                  "17",
-                  "18",
-                  "19",
-                  "20",
-                  "21",
-                  "22",
-                  "23"
-                ]
+                "type": "notice",
+                "title": "* 请先配置“话术设置”，确保评论和私信内容填写正确\n* 默认会过滤已操作的用户"
               }
             ]
           }
         },
         {
-          "title": "同城营销",
-          "icon": "images/test/city.png",
-          "jsFile": "script/task/dyCity.js",
+          "title": "小红薯私信",
+          "icon": "images/xhs_uid.png",
+          "jsFile": "script/task/xhs_uid.js",
+          "columns": 24,
           "settingPage": {
             "params": [
               {
-                "type": "numberRange",
-                "label": "观看时长（秒）",
-                "name": "toker_city_view_video_second",
-                "max": 30,
-                "min": 5,
-                "value": 12,
-                "step": 1
-              },
-              {
                 "type": "textArea",
-                "label": "关键词筛选（多个使用逗号隔开）",
-                "name": "toker_city_view_video_keywords",
+                "label": "请输入user_id（多个使用换行隔开）",
+                "name": "toker_xhs_uids",
                 "value": "",
+                "lines": 5,
                 "notice": "* 关键词不填则操作所有"
               },
               {
-                "type": "numberRange",
-                "label": "点赞频率（%）",
-                "name": "toker_city_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "评论频率（%）",
-                "name": "toker_city_comment_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "关注频率（%）",
-                "name": "toker_city_focus_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "私信频率（%）",
-                "name": "toker_city_private_msg_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "评论区五连赞频率（%）",
-                "name": "toker_city_comment_area_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "同城距离（公里内）",
-                "name": "toker_city_distance",
-                "max": 100,
-                "min": 1,
-                "step": 1,
-                "value": 100
+                "type": "checkboxGroup",
+                "label": "操作类型",
+                "name": "toker_xhs_type",
+                "columnCount": 3,
+                "children": [
+                  "点赞首作品",
+                  "评论首作品",
+                  "关注用户",
+                  "私信用户"
+                ],
+                "values": [
+                  "0",
+                  "1",
+                  "2",
+                  "3"
+                ]
               },
               {
                 "type": "checkboxGroup",
                 "label": "性别",
-                "name": "toker_city_run_sex",
+                "name": "toker_xhs_sex",
                 "columnCount": 6,
                 "children": [
                   "女",
@@ -271,144 +131,16 @@
               },
               {
                 "type": "numberRange",
-                "label": "最小年龄",
-                "name": "toker_city_run_min_age",
-                "max": 100,
+                "label": "操作间隔（秒）",
+                "name": "toker_xhs_second",
+                "max": 60,
                 "min": 0,
                 "step": 1,
-                "value": 0
+                "value": 5
               },
               {
-                "type": "numberRange",
-                "label": "最大年龄",
-                "name": "toker_city_run_max_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "运行时间",
-                "name": "toker_city_run_hour",
-                "columnCount": 6,
-                "children": [
-                  "0时",
-                  "1时",
-                  "2时",
-                  "3时",
-                  "4时",
-                  "5时",
-                  "6时",
-                  "7时",
-                  "8时",
-                  "9时",
-                  "10时",
-                  "11时",
-                  "12时",
-                  "13时",
-                  "14时",
-                  "15时",
-                  "16时",
-                  "17时",
-                  "18时",
-                  "19时",
-                  "20时",
-                  "21时",
-                  "22时",
-                  "23时"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "7",
-                  "8",
-                  "9",
-                  "10",
-                  "11",
-                  "12",
-                  "13",
-                  "14",
-                  "15",
-                  "16",
-                  "17",
-                  "18",
-                  "19",
-                  "20",
-                  "21",
-                  "22",
-                  "23"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "title": "工具箱",
-          "hidden": false,
-          "icon": "images/test/tool.png",
-          "activity": {
-            "notice": "暂无功能~",
-            "title": "工具箱",
-            "minVersion": 10001,
-            "groups": [
-              {
-                "title": "工具箱",
-                "titleHidden": true,
-                "methods": [
-                  {
-                    "title": "一键取赞",
-                    "hidden": false,
-                    "icon": "images/test/cancel_zan.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "帮助你快速取消视频点赞~"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "title": "一键取关",
-                    "hidden": false,
-                    "icon": "images/test/cancel_focus.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "帮助你快速取消单向关注（你关注他，他没有关注你）的用户~"
-                        },
-                        {
-                          "type": "switch",
-                          "label": "互相关注取关",
-                          "name": "task_dy_cancel_focus_mutual_switch"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "title": "粉丝回访",
-                    "hidden": false,
-                    "icon": "images/test/view_back.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "粉丝回访，能增加粉丝粘性~"
-                        }
-                      ]
-                    }
-                  }
-                ]
+                "type": "notice",
+                "title": "* 请先配置“话术设置”，确保评论和私信内容填写正确\n* 默认会过滤已操作的用户"
               }
             ]
           }
@@ -441,74 +173,6 @@
       "type": "customerService",
       "description": "客服微信：DeekeScript",
       "hidden": false
-    },
-    {
-      "title": "功能说明",
-      "icon": "images/test/manual.png",
-      "type": "notice",
-      "file": "script/task.html"
-    },
-    {
-      "title": "智能话术",
-      "icon": "images/test/ai.png",
-      "type": "settingService",
-      "settingPage": {
-        "params": [
-          {
-            "type": "switch",
-            "label": "开启{NAME}智能AI话术",
-            "value": false,
-            "name": "setting_baidu_wenxin_switch"
-          },
-          {
-            "type": "radio",
-            "label": "请选择角色",
-            "name": "setting_baidu_wenxin_role",
-            "value": "1",
-            "dataFrom": "role",
-            "options": []
-          },
-          {
-            "type": "text",
-            "label": "{NAME} Key",
-            "value": "如：NZmgn5urWoHhKWe8XbGMdbUp",
-            "name": "setting_baidu_wenxin_key"
-          },
-          {
-            "type": "text",
-            "label": "{NAME} Secret",
-            "name": "setting_baidu_wenxin_secret",
-            "value": "如：brIq133KaAPNEkn109avxl7MXUHHW0kg"
-          },
-          {
-            "type": "notice",
-            "title": "如果开启超级霸屏，请配置账号收藏的表情图",
-            "hidden": true
-          },
-          {
-            "type": "numberRange",
-            "label": "超级霸屏(%)",
-            "name": "setting_comment_with_photo",
-            "value": 0,
-            "min": 0,
-            "max": 100,
-            "hidden": false
-          },
-          {
-            "type": "notice",
-            "title": "* 开启后，将使用{NAME}官方AI角色（可自定义）进行评论和私信，让拓客变得更简单~",
-            "textColor": "#AA0000",
-            "textSize": 16
-          }
-        ]
-      },
-      "hidden": false
-    },
-    {
-      "title": "数据统计",
-      "icon": "images/test/statistics.png",
-      "type": "statistics",
-      "jsFile": "script/statistics/statistics.js"
     },
     {
       "title": "上传日志",
