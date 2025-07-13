@@ -79,13 +79,18 @@ let xhs = {
             return false;
         }
 
+        if (likeTag.desc().includes('已点赞')) {
+            Log.log('历史点赞过了');
+            return true;
+        }
+
         if (!likeTag.isSelected()) {
             Common.click(likeTag, 0.3);
             Common.sleep(1000 + 1000 * Math.random());
             Log.log('点赞了', likeTag.bounds());
         }
 
-        Log.log('历史点赞过了');
+        Log.log('历史点赞过了2');
         return true;
     },
 
