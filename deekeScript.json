@@ -414,6 +414,18 @@
           }
         }
       ]
+    },
+    {
+      "title": "其他功能",
+      "titleHidden": false,
+      "hidden": false,
+      "methods": [
+        {
+          "title": "直接运行",
+          "icon": "images/test/ai.png",
+          "jsFile": "script/task/redirect.js"
+        }
+      ]
     }
   ],
   "bottomMenus": [
