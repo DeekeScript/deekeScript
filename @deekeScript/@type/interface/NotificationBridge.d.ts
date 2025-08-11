@@ -18,6 +18,11 @@ interface notificationBridge {
         onNotification: (packageName: string, title: string, text: string) => void,
         onNotificationRemoved: (packageName: string, title: string, text: string) => void
     ): void;
+
+    /**
+     * 关闭服务
+     */
+    public stopService(): void;
 }
 
 export { };
