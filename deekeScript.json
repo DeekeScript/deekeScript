@@ -1,5 +1,5 @@
 {
-  "name": "测试",
+  "name": "测试测试",
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
@@ -11,12 +11,12 @@
   },
   "groups": [
     {
-      "title": "DY·万能引流",
+      "title": "DY·万能引流测试",
       "titleHidden": false,
       "hidden": false,
       "methods": [
         {
-          "title": "推荐营销",
+          "title": "推荐营销2",
           "icon": "images/test/finger.png",
           "jsFile": "script/task/dy.js",
           "settingPage": {
