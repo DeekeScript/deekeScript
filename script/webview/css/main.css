@@ -1,0 +1,19 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.btn1{
+    background-color: brown;
+    color: white;
+}
+
+.btn2{
+    background-color: blue;
+    color: white;
+}
+
+.btn3{
+    background-color: yellow;
+    color: blue;
+}

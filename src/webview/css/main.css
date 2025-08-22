@@ -1,0 +1,25 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+button{
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 3px 3px 3px #000000;
+    color: aliceblue;
+    margin: 12px;
+    font-size: 24px;
+}
+
+.btn1 {
+    background: red;
+}
+
+.btn2 {
+    background: green;
+}
+
+.btn3 {
+    background: blue;
+}

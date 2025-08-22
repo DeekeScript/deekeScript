@@ -441,6 +441,12 @@
       "type": "speech"
     },
     {
+      "title": "自定义",
+      "icon": "images/test/hot.png",
+      "type": "webView",
+      "webViewDir": "src/webview/index.html"
+    },
+    {
       "title": "系统设置",
       "icon": "images/test/setting.png",
       "type": "setting"
