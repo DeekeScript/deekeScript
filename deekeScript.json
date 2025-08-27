@@ -11,12 +11,12 @@
   },
   "groups": [
     {
-      "title": "批量私信",
+      "title": "某音系列",
       "titleHidden": false,
       "hidden": false,
       "methods": [
         {
-          "title": "某音私信",
+          "title": "精准私信",
           "icon": "images/dy_uid.png",
           "columns": 24,
           "jsFile": "script/task/dy_uid.js",
@@ -24,123 +24,110 @@
             "params": [
               {
                 "type": "textArea",
-                "label": "请输入uid（多个使用换行隔开）",
-                "name": "toker_dy_uids",
+                "label": "地址信息",
+                "name": "toker_dy_address",
                 "lines": 5,
                 "value": "",
-                "notice": "* 关键词不填则操作所有"
+                "notice": "* 提供随机搜索关键词，每行一个"
               },
-              {
-                "type": "checkboxGroup",
-                "label": "操作类型",
-                "name": "toker_dy_type",
-                "columnCount": 3,
-                "children": [
-                  "点赞首作品",
-                  "评论首作品",
-                  "关注用户",
-                  "私信用户"
-                ],
-                "values": [
-                  0,
-                  1,
-                  2,
-                  3
-                ]
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "性别",
-                "name": "toker_dy_sex",
-                "columnCount": 6,
-                "children": [
-                  "女",
-                  "男",
-                  "未知"
-                ],
-                "values": [
-                  0,
-                  1,
-                  2
-                ]
-              },
-              {
-                "type": "numberRange",
-                "label": "操作间隔（秒）",
-                "name": "toker_dy_second",
-                "max": 60,
-                "min": 0,
-                "step": 1,
-                "value": 5
-              },
-              {
-                "type": "notice",
-                "title": "* 请先配置“话术设置”，确保评论和私信内容填写正确\n* 默认会过滤已操作的用户"
-              }
-            ]
-          }
-        },
-        {
-          "title": "小红薯私信",
-          "icon": "images/xhs_uid.png",
-          "jsFile": "script/task/xhs_uid.js",
-          "columns": 24,
-          "settingPage": {
-            "params": [
               {
                 "type": "textArea",
-                "label": "请输入user_id（多个使用换行隔开）",
-                "name": "toker_xhs_uids",
-                "value": "",
+                "label": "行业信息",
+                "name": "toker_dy_shop",
                 "lines": 5,
-                "notice": "* 关键词不填则操作所有"
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "操作类型",
-                "name": "toker_xhs_type",
-                "columnCount": 3,
-                "children": [
-                  "点赞首作品",
-                  "评论首作品",
-                  "关注用户",
-                  "私信用户"
-                ],
-                "values": [
-                  0,
-                  1,
-                  2,
-                  3
-                ]
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "性别",
-                "name": "toker_xhs_sex",
-                "columnCount": 6,
-                "children": [
-                  "女",
-                  "男",
-                  "未知"
-                ],
-                "values": [
-                  0,
-                  1,
-                  2
-                ]
+                "value": "",
+                "notice": "* 提供随机搜索关键词，每行一个"
               },
               {
                 "type": "numberRange",
-                "label": "操作间隔（秒）",
-                "name": "toker_xhs_second",
-                "max": 60,
+                "label": "操作平均间隔",
+                "name": "toker_dy_second",
+                "max": "120",
+                "min": 0,
+                "value": "10"
+              },
+              {
+                "type": "numberRange",
+                "label": "私信次数",
+                "name": "toker_dy_private_count",
+                "max": 200,
+                "min": 1,
+                "value": 10
+              },
+              {
+                "type": "radio",
+                "label": "粉丝数量",
+                "name": "toker_dy_fans_count",
+                "columnCount": 3,
+                "options": [
+                  {
+                    "label": "1000以内",
+                    "value": 0
+                  },
+                  {
+                    "label": "1000-1万",
+                    "value": 1
+                  },
+                  {
+                    "label": "1万-10万",
+                    "value": 2
+                  },
+                  {
+                    "label": "10万-100万",
+                    "value": 3
+                  },
+                  {
+                    "label": "100万以上",
+                    "value": 4
+                  }
+                ],
+                "value": "0"
+              },
+              {
+                "type": "radio",
+                "label": "用户类型",
+                "name": "toker_dy_type",
+                "options": [
+                  {
+                    "label": "不限制",
+                    "value": 0
+                  },
+                  {
+                    "label": "普通用户",
+                    "value": 1
+                  },
+                  {
+                    "label": "企业认证",
+                    "value": 2
+                  },
+                  {
+                    "label": "个人认证",
+                    "value": 3
+                  }
+                ],
+                "value": "0"
+              },
+              {
+                "type": "numberRange",
+                "label": "运行时间（分钟）",
+                "name": "toker_dy_run_minute",
+                "max": 120,
+                "min": 0,
+                "step": 1,
+                "value": 10
+              },
+              {
+                "type": "numberRange",
+                "label": "每轮休息时间（分钟）",
+                "name": "toker_dy_sleep_minute",
+                "max": 120,
                 "min": 0,
                 "step": 1,
                 "value": 5
               },
               {
                 "type": "notice",
-                "title": "* 请先配置“话术设置”，确保评论和私信内容填写正确\n* 默认会过滤已操作的用户"
+                "title": "* 关键词将根据“地址信息”和“行业信息”随机生成，每轮休眠后自动切换新的关键词"
               }
             ]
           }
@@ -171,7 +158,7 @@
       "title": "联系客服",
       "icon": "images/test/kefu.png",
       "type": "customerService",
-      "description": "客服微信：DeekeScript",
+      "description": "客服微信：无",
       "hidden": false
     },
     {
