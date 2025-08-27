@@ -9,7 +9,7 @@ interface storage {
      * @param db 数据库名称
      * @return 返回当前实例，如果已存在则直接返回
      */
-    public create(db: string): Storage;
+    public create(db: string): storage;
 
     /**
      * 设置字符串

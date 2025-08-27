@@ -97,6 +97,12 @@ interface System {
      * @param content 
      */
     public getDataFrom(key: string, dataForm: string, content: string): string | null;
+
+    /**
+     * 是否显示时间悬浮窗窗口
+     * @param show 是否显示
+     */
+    public setTimeWindowShow(show: boolean);
 }
 
 export { };

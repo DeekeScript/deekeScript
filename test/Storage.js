@@ -1,0 +1,3 @@
+
+Storage.create('a').clear();
+

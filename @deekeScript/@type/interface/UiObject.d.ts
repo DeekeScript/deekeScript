@@ -81,6 +81,18 @@ declare global {
         public desc(): string;
 
         /**
+         * 设置描述内容
+         * @param desc 要设置的内容
+         */
+        public setDesc(desc: string): void;
+
+        /**
+         * 设置一个 辅助提示文本
+         * @param hintText 辅助文本
+         */
+        public setHintText(hintText: string): void;
+
+        /**
          * 获取控件的id
          */
         public id(): string;

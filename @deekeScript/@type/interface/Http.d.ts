@@ -32,10 +32,10 @@ interface Http {
     public getHeaders(url: string, headers: object): string | null;
 
     //下面的方法，暂时还没使用过
-    // public postFile(url: string, files: string[], params: object, httpCallback: {
-    //     success: (response: object) => void,
-    //     error: (response: object) => void
-    // }): boolean;
+    public postFile(url: string, files: string[], params: object, httpCallback: {
+        success: (response: any) => void,
+        fail: (response: any) => void
+    }): void;
 }
 
 export { };

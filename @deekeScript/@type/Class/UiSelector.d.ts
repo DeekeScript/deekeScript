@@ -124,6 +124,16 @@ declare global {
         public focusable(bool: boolean): UiSelector;
 
         /**
+         * @param bool 是否已聚焦
+         */
+        public focused(bool: boolean):UiSelector;
+
+        /**
+         * @param bool 是否可编辑
+         */
+        public editable(bool: boolean):UiSelector;
+
+        /**
          * 
          * @param bool 是否可见
          */

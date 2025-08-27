@@ -56,6 +56,16 @@ interface access {
      * 开启了截图录屏权限设置界面
      */
      public openMediaProjectionSetting(): void;
+
+     /** 
+      * 进入通知权限设置界面（用户可以开启通知权限）
+      */
+     public requestNotificationAccess(): void;
+
+     /**
+     * 是否开启读取通知权限
+     */
+     public hasNotificationAccess(): void;
 }
 
 export { };

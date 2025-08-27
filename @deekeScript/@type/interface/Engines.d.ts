@@ -16,14 +16,19 @@ interface Engines {
     public executeScriptStr(content: string): void;
 
     /**
-     * 关闭所有脚本
+     * 关闭当前线程和子线程所有脚本（包含定时器、socket、Hid等；不会关闭hooks脚本）
      */
     public closeAll(): void;
 
     /**
-     * 关闭当前脚本之外的其他脚本
+     * 关闭当前线程之外的其他线程和子线程（包含定时器、socket、Hid等；不会关闭hooks脚本）
      */
-    public closeOther(): void
+    public closeOther(): void;
+
+    /**
+     * 关闭hooks脚本
+     */
+    public closeHook(): void;
 }
 
 export { };
