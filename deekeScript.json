@@ -24,6 +24,14 @@
             "params": [
               {
                 "type": "textArea",
+                "label": "关键词",
+                "name": "toker_dy_keywords",
+                "lines": 5,
+                "value": "",
+                "notice": "* 每行一个，如果为空，则采用组合关键词"
+              },
+              {
+                "type": "textArea",
                 "label": "地址信息",
                 "name": "toker_dy_address",
                 "lines": 5,
@@ -65,20 +73,24 @@
                     "value": 0
                   },
                   {
-                    "label": "1000-1万",
+                    "label": "1000以内",
                     "value": 1
                   },
                   {
-                    "label": "1万-10万",
+                    "label": "1000-1万",
                     "value": 2
                   },
                   {
-                    "label": "10万-100万",
+                    "label": "1万-10万",
                     "value": 3
                   },
                   {
-                    "label": "100万以上",
+                    "label": "10万-100万",
                     "value": 4
+                  },
+                  {
+                    "label": "100万以上",
+                    "value": 5
                   }
                 ],
                 "value": "0"
