@@ -1,18 +1,17 @@
 let Common = require('../util/dy/Common');
 let machine = require('../common/machine');
-const { get } = require('../common/storage');
-const { config } = require('process');
+
 let dy = {
     showUserTag() {
         let scrollTag = UiSelector().className('android.widget.HorizontalScrollView').scrollable(true).findOne();
         let userTag;
         let i = 0;
         do {
-            let userTag = UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).filter(v => {
+            userTag = UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).filter(v => {
                 return v.bounds().left < Device.width() * 0.7;
             }).findOne();
             if (userTag) {
-                console.log(userTag);
+                Common.log(userTag);
                 break;
             }
             scrollTag.scrollForward();
@@ -28,7 +27,7 @@ let dy = {
         do {
             fansCountTag = UiSelector(false).text(text).isVisibleToUser(true).findOne();
             if (fansCountTag) {
-                console.log(fansCountTag);
+                Common.log(fansCountTag);
                 break;
             }
             scrollTags[0].scrollForward()
@@ -44,7 +43,7 @@ let dy = {
         do {
             userTypeTag = UiSelector(false).text(text).isVisibleToUser(true).findOne();
             if (userTypeTag) {
-                console.log(userTypeTag);
+                Common.log(userTypeTag);
                 break;
             }
             scrollTags[1].scrollForward()
@@ -55,19 +54,19 @@ let dy = {
         let searchTag = UiSelector().desc('搜索').isVisibleToUser(true).findOne();
         if (searchTag) {
             Common.click(searchTag, 0.2);
-            Common.sleep(2000 + 2000 * Math.random());
+            Common.sleep(1500 + 1000 * Math.random());
         }
 
         let iptTag = UiSelector().className('android.widget.EditText').isVisibleToUser(true).editable(true).findOne();
         if (iptTag) {
-            Common.click(iptTag, 0.1);
-            Common.sleep(2000 + 2000 * Math.random());
+            Common.click(iptTag, 0.25);
+            Common.sleep(1500 + 1000 * Math.random());
         }
 
         iptTag = UiSelector().className('android.widget.EditText').isVisibleToUser(true).editable(true).findOne();
         if (iptTag) {
             iptTag.setText(keyword);
-            Common.sleep(2000 + 2000 * Math.random());
+            Common.sleep(1500 + 1000 * Math.random());
         }
 
         let searchBtnTag = UiSelector().desc('搜索').isVisibleToUser(true).findOne();
@@ -121,7 +120,7 @@ let dy = {
             return v.desc() == '更多' && v.getHintText() == '按钮' && v.bounds().top < Device.height() / 4;
         }).isVisibleToUser(true).findOne();
         if (!moreTag) {
-            Log.log('没有更多按钮');
+            Common.log('没有更多按钮');
             return false;
         }
         Common.click(moreTag, 0.3);
@@ -131,7 +130,7 @@ let dy = {
             return v.bounds().top > Device.height() / 2;
         }).isVisibleToUser(true).findOne();
         if (!sendMsgTag) {
-            Log.log("没有找到发送私信按钮");
+            Common.log("没有找到发送私信按钮");
             return false;
         }
 
@@ -142,7 +141,7 @@ let dy = {
             return v.isEditable();
         }).isVisibleToUser(true).findOne();
         if (!iptTag) {
-            Log.log("没有找到发送私信输入框");
+            Common.log("没有找到发送私信输入框");
             return false;
         }
 
@@ -154,7 +153,7 @@ let dy = {
             return v.isEditable() && v.isFocused();
         }).isVisibleToUser(true).findOne();
         if (!iptTag) {
-            Log.log('没有找到点击后的输入框');
+            Common.log('没有找到点击后的输入框');
             return true;
         }
 
@@ -162,14 +161,21 @@ let dy = {
         Common.sleep(1000 + 1000 * Math.random());
         let btnTag = UiSelector().className('android.widget.ImageView').desc('发送').isVisibleToUser(true).findOne();
         if (!btnTag) {
-            Log.log('没有找到发送按钮');
+            Common.log('没有找到发送按钮');
             return false;
         }
         Common.click(btnTag, 0.25);
         Common.sleep(1000 + 1000 * Math.random());
         Common.back(2);
-        Log.log('消息已发送', msg);
+        Common.log('消息已发送', msg);
         return true;
+    },
+
+    userListForward() {
+        let tag = UiSelector().className('androidx.recyclerview.widget.RecyclerView').scrollable(true).isVisibleToUser(true).filter(v => {
+            return v.bounds().width() >= Device.width() - 10 && v.bounds().height() > Device.height() * 0.7;
+        }).findOne();
+        return tag.scrollForward();
     }
 }
 
@@ -193,39 +199,65 @@ let task = {
         }
     },
 
+    ops: [],
+
     opUserList(config) {
         let tag = UiSelector().text('搜索结果为空').isVisibleToUser(true).findOne();
         if (tag) {
             return false;
         }
 
-        let userListTag = UiSelector().className('com.lynx.tasm.behavior.ui.LynxFlattenUI').descContains('粉丝:').isVisibleToUser(true).find();
-        for (let i in userListTag) {
-            if (Date.parse(new Date()) / 1000 - this.startTime > config.runMinute * 60) {
-                Common.sleep(config.sleepMinute * 60 * 1000);
-                this.startTime = Date.parse(new Date()) / 1000;
-                return true;
-            }
+        while (true) {
+            let userListTag = UiSelector().className('com.lynx.tasm.behavior.ui.LynxFlattenUI').descContains('粉丝:').isVisibleToUser(true).find();
+            for (let i in userListTag) {
+                //检测是不是在列表页，不是则返回
+                let rp = 0;
+                while (!UiSelector().desc('搜索').isVisibleToUser(true).findOne()) {
+                    Common.back();
+                    if (rp++ > 3) {
+                        throw new Error('重新开始');
+                    }
+                }
 
-            let userTag = userListTag[i];
-            Common.click(userTag, 0.2);
-            Common.sleep(3000 + 3000 * Math.random());
+                Common.log(Date.parse(new Date()) / 1000 - this.startTime, config.runMinute * 60);
+                if (Date.parse(new Date()) / 1000 - this.startTime > config.runMinute * 60) {
+                    Common.sleep(config.sleepMinute * 60 * 1000);
+                    this.startTime = Date.parse(new Date()) / 1000;
+                    return true;
+                }
 
-            let tags = UiSelector().filter(v => {
-                return !!v.desc();
-            }).isVisibleToUser(true).find();
-            let douyinAccount = tag[2].desc();
-            if (Storage.getBoolean('dy_uid_' + douyinAccount)) {
+                let userTag = userListTag[i];
+                let title = userTag.text();
+                if ((config.userType == '2' || config.userType == '3') && title.indexOf('抖音号') != -1) {
+                    continue;
+                }
+                if (this.ops.includes(title)) {
+                    continue;
+                }
+                Common.click(userTag, 0.2);
+                Common.sleep(3000 + 3000 * Math.random());
+
+                let tags = UiSelector().filter(v => {
+                    return !!v.desc();
+                }).isVisibleToUser(true).find();
+                let douyinAccount = tags[2].desc();
+                if (Storage.getBoolean('dy_uid_' + douyinAccount)) {
+                    Common.back();
+                    continue;
+                }
+
+                dy.privateMsg(this.getMsg(1));
                 Common.back();
-                continue;
-            }
+                Common.log('返回到列表');
+                Storage.putBoolean('dy_uid_' + douyinAccount, true);
+                if (--config.privateCount <= 0) {
+                    return true;
+                }
 
-            dy.privateMsg(this.getMsg(1).msg);
-            Storage.putBoolean('dy_uid_' + douyinAccount, true);
-            if (--config.privateCount <= 0) {
-                return true;
+                this.ops.push(title);
+                Common.sleep((config + config * Math.random()) * 1000);
             }
-            Common.sleep((config + config * Math.random()) * 1000);
+            dy.userListForward();
         }
     },
 
@@ -240,13 +272,14 @@ let task = {
     run() {
         let config = task.getConfig();
         let keyword = this.getKeyword(config);
-        Log.log('配置', config, keyword);
+        Common.log('配置', config, keyword);
+        Common.log('私信内容', this.getMsg(1));
         System.toast("即将搜索关键词：" + keyword);
         System.sleep(2000);
 
         Common.openApp();
         dy.searchUser(keyword, config);
-        this.opUserList();
+        this.opUserList(config);
     }
 }
 
@@ -254,6 +287,7 @@ while (true) {
     try {
         task.run();
     } catch (e) {
-        Log.log('出错了', e);
+        Common.backHomeOnly();
+        Common.log('出错了', e.stack);
     }
 }

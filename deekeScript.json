@@ -19,7 +19,7 @@
           "title": "精准私信",
           "icon": "images/dy_uid.png",
           "columns": 24,
-          "jsFile": "script/task/dy_uid.js",
+          "jsFile": "src/task/dy_uid.js",
           "settingPage": {
             "params": [
               {
