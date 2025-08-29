@@ -5,8 +5,5 @@ function btn_func(_this) {
         age: 2,
     }
 
-    DeekeScriptWebView.run((json) => {
-        console.log(json);
-        console.log(json.name);
-    }, json);
+    DeekeScriptWebView.run("src/task/webview.js", JSON.stringify(json));
 }
