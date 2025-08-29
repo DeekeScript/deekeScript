@@ -232,7 +232,8 @@ let task = {
             for (let i in userListTag) {
                 //检测是不是在列表页，不是则返回
                 let rp = 0;
-                while (!UiSelector().desc('搜索').isVisibleToUser(true).findOne() || !UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).findOne()) {
+                let userTabTag = UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).findOne();
+                while (!UiSelector().desc('搜索').isVisibleToUser(true).findOne() || !userTabTag) {
                     Common.back();
                     Common.log('不在列表页面，返回');
                     if (rp++ > 3) {
@@ -260,7 +261,17 @@ let task = {
                     Common.log('重复用户');
                     continue;
                 }
-                Common.click(userTag, 0.2);
+
+                let bottom = userTabTag.parent().parent().bounds().top + userTabTag.parent().parent().bounds().height();
+                if (userTag.bounds().top <= bottom) {
+                    if (userTag.bounds().top + userTag.bounds().height() > bottom + 10) {
+                        Gesture.click(userTag.bounds().left + Math.random() * userTag.bounds().width(), bottom + 1 + 10 * Math.random());
+                    } else {
+                        continue;
+                    }
+                } else {
+                    Common.click(userTag, 0.2);
+                }
                 if (UiSelector().desc('搜索').isVisibleToUser(true).findOne() && UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).findOne()) {
                     Common.log('没有进入用户主页');
                     Common.sleep(1000 + 1000 * Math.random());
