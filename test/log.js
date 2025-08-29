@@ -8,3 +8,4 @@ Log.log(10);
 
 // let filename = Log.setFile("myfile.log");
 // console.log(filename);
+console.log(322);

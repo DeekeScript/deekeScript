@@ -119,6 +119,7 @@ const Common = {
     log() {
         //这里需要做日志记录处理
         Log.log(arguments);
+        console.log(arguments);
     },
 
     back(i, time, randTime) {
