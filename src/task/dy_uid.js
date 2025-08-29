@@ -82,9 +82,9 @@ let dy = {
             Common.sleep(2000 + 2000 * Math.random());
         }
 
-        let filterTag = UiSelector().desc('筛选，按钮').isVisibleToUser(true).findOne();
+        let filterTag = UiSelector().descContains('筛选').findOne();
         if (filterTag) {
-            Common.click(filterTag, 0.2);
+            Common.click(filterTag, 0.3);
             Common.sleep(2000 + 2000 * Math.random());
             return true;
         }
@@ -108,9 +108,9 @@ let dy = {
             Common.sleep(2000 + 2000 * Math.random());
         }
 
-        let filterTag = UiSelector().desc('筛选，按钮').isVisibleToUser(true).findOne();
+        let filterTag = UiSelector().descContains('筛选').findOne();
         if (filterTag) {
-            Common.click(filterTag, 0.2);
+            Common.click(filterTag, 0.3);
             Common.sleep(2000 + 2000 * Math.random());
         }
     },
@@ -177,6 +177,13 @@ let task = {
     startTime: Date.parse(new Date()) / 1000,
     getMsg(type) {
         return machine.getMsg(type) || false;//永远不会结束
+    },
+
+    log() {
+        let d = new Date();
+        let file = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        let allFile = "log/log-dy-uid-" + file + ".txt";
+        Log.setFile(allFile);
     },
 
     getConfig() {
@@ -252,6 +259,7 @@ let task = {
 
 while (true) {
     try {
+        task.log();
         task.run();
     } catch (e) {
         Log.log('出错了', e);

@@ -47,11 +47,9 @@
                 "value": "10"
               },
               {
-                "type": "numberRange",
+                "type": "number",
                 "label": "私信次数",
                 "name": "toker_dy_private_count",
-                "max": 200,
-                "min": 1,
                 "value": 10
               },
               {
@@ -108,12 +106,9 @@
                 "value": "0"
               },
               {
-                "type": "numberRange",
+                "type": "number",
                 "label": "运行时间（分钟）",
                 "name": "toker_dy_run_minute",
-                "max": 120,
-                "min": 0,
-                "step": 1,
                 "value": 10
               },
               {
