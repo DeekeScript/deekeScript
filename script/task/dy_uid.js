@@ -40,6 +40,9 @@ let dy = {
             Common.sleep(500 + 500 * Math.random());
             Common.log('没有找到fansCountTag，滑动');
         } while (!fansCountTag || i++ < 3);
+        if (!fansCountTag) {
+            throw new Error('没有找到fansCountTag');
+        }
         return fansCountTag;
     },
 
@@ -58,6 +61,9 @@ let dy = {
             Common.sleep(500 + 500 * Math.random());
             Common.log('没有找到userTypeTag，滑动');
         } while (!userTypeTag || i++ < 3);
+        if (!userTypeTag) {
+            throw new Error('没有找到userTypeTag');
+        }
         return userTypeTag;
     },
     searchKeyword(keyword) {
@@ -124,7 +130,13 @@ let dy = {
             Common.click(userTypeTag, 0.2);
             Common.sleep(2000 + 2000 * Math.random());
             Gesture.click(Device.width() * (0.2 + 0.6 * Math.random()), Device.height() * (0.6 + 0.3 * Math.random()));
+            //判断是否点击成功，如果没有成功，再点击一次
             Common.sleep(1000 + 1000 * Math.random());
+            if (UiSelector(false).text('用户类型').isVisibleToUser(true).findOne()) {
+                Common.log('没有点击成功，再来一次');
+                Gesture.click(Device.width() * (0.2 + 0.6 * Math.random()), Device.height() * (0.6 + 0.3 * Math.random()));
+                Common.sleep(1000 + 1000 * Math.random());
+            }
         }
     },
 
@@ -192,7 +204,9 @@ let dy = {
     },
 
     userListForward() {
-        let tag = UiSelector().className('androidx.recyclerview.widget.RecyclerView').scrollable(true).findOne();
+        let tag = UiSelector().className('androidx.recyclerview.widget.RecyclerView').filter(v => {
+            return v.bounds().width() > Device.width() / 2;
+        }).scrollable(true).findOne();
         Common.log('滑动列表');
         return tag.scrollForward();
     }
@@ -210,13 +224,28 @@ let task = {
             keywords: Storage.getString('toker_dy_keywords'),
             address: Storage.getString('toker_dy_address'),
             shops: Storage.getString('toker_dy_shop'),
-            second: Storage.getArray('toker_dy_second'),
+            second: Storage.getInteger('toker_dy_second'),
             privateCount: Storage.getInteger('toker_dy_private_count'),
             fansType: Storage.getString("toker_dy_fans_count"),
             userType: Storage.getString("toker_dy_type"),
             runMinute: Storage.getInteger('toker_dy_run_minute'),
             sleepMinute: Storage.getInteger('toker_dy_sleep_minute'),
         }
+    },
+
+    backList() {
+        let rp = 0;
+        let userTabTag = UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).findOne();
+        while (!userTabTag) {
+            Common.back();
+            Common.log('不在列表页面，返回', !userTabTag);
+            if (rp++ > 3) {
+                throw new Error('重新开始');
+            }
+            Common.sleep(1200 + 800 * Math.random());
+            userTabTag = UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).findOne();
+        }
+        return userTabTag;
     },
 
     ops: [],
@@ -231,20 +260,13 @@ let task = {
             let userListTag = UiSelector().className('com.lynx.tasm.behavior.ui.LynxFlattenUI').descContains('粉丝:').isVisibleToUser(true).find();
             for (let i in userListTag) {
                 //检测是不是在列表页，不是则返回
-                let rp = 0;
-                let userTabTag = UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).findOne();
-                while (!UiSelector().desc('搜索').isVisibleToUser(true).findOne() || !userTabTag) {
-                    Common.back();
-                    Common.log('不在列表页面，返回');
-                    if (rp++ > 3) {
-                        throw new Error('重新开始');
-                    }
-                    Common.sleep(1000);
-                }
+                Common.log('执行第N个', i);
+                let userTabTag = this.backList();
 
                 Common.log(Date.parse(new Date()) / 1000 - this.startTime, config.runMinute * 60);
                 if (Date.parse(new Date()) / 1000 - this.startTime > config.runMinute * 60) {
                     Common.sleep(config.sleepMinute * 60 * 1000);
+                    Common.log('休眠');
                     this.startTime = Date.parse(new Date()) / 1000;
                     return 1;
                 }
@@ -264,20 +286,26 @@ let task = {
 
                 let bottom = userTabTag.parent().parent().bounds().top + userTabTag.parent().parent().bounds().height();
                 if (userTag.bounds().top <= bottom) {
-                    if (userTag.bounds().top + userTag.bounds().height() > bottom + 10) {
-                        Gesture.click(userTag.bounds().left + Math.random() * userTag.bounds().width(), bottom + 1 + 10 * Math.random());
+                    let btn = userTag.bounds().top + userTag.bounds().height();
+                    if (btn > bottom + 10) {
+                        Gesture.click(userTag.bounds().left + Math.random() * userTag.bounds().width(), btn - 10 * Math.random());
+                        Common.log('点击用户1');
                     } else {
+                        Common.log('超出范围');
                         continue;
                     }
                 } else {
                     Common.click(userTag, 0.2);
+                    Common.log('点击用户2');
                 }
-                if (UiSelector().desc('搜索').isVisibleToUser(true).findOne() && UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).findOne()) {
+
+                Common.sleep(3000 + 3000 * Math.random());
+                if (UiSelector().id('android:id/text1').text('用户').isVisibleToUser(true).findOne()) {
                     Common.log('没有进入用户主页');
                     Common.sleep(1000 + 1000 * Math.random());
                     continue;
                 }
-                Common.sleep(3000 + 3000 * Math.random());
+
                 if (!UiSelector().text('本店团购').isVisibleToUser(true).findOne()) {
                     Common.log('没有团购');
                     Common.back();
@@ -305,11 +333,21 @@ let task = {
                 }
 
                 this.ops.push(title);
-                Common.sleep((config + config * Math.random()) * 1000);
+                if (config.second == 0) {
+                    config.second = 1;
+                }
+                Common.log('开始停顿', config.second);
+                Common.sleep((config.second + config.second * Math.random()) * 1000);
+                Common.log('停顿结束');
             }
+
+            this.backList();
+            Common.sleep(1000 + 1000 * Math.random());
+
             if (!dy.userListForward()) {
                 throw new Error("滑动失败");
             }
+            Common.log('列表滑动成功');
             Common.sleep(2000 + 1200 * Math.random());
         }
     },
