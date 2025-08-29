@@ -192,9 +192,7 @@ let dy = {
     },
 
     userListForward() {
-        let tag = UiSelector().className('androidx.recyclerview.widget.RecyclerView').scrollable(true).isVisibleToUser(true).filter(v => {
-            return v.bounds().width() >= Device.width() - 10 && v.bounds().height() > Device.height() * 0.7;
-        }).findOne();
+        let tag = UiSelector().className('androidx.recyclerview.widget.RecyclerView').scrollable(true).findOne();
         Common.log('滑动列表');
         return tag.scrollForward();
     }
@@ -298,7 +296,9 @@ let task = {
                 this.ops.push(title);
                 Common.sleep((config + config * Math.random()) * 1000);
             }
-            dy.userListForward();
+            if (!dy.userListForward()) {
+                throw new Error("滑动失败");
+            }
             Common.sleep(2000 + 1200 * Math.random());
         }
     },
