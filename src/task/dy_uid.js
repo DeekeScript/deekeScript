@@ -96,10 +96,10 @@ let dy = {
             Common.sleep(2000 + 2000 * Math.random());
         }
 
-        let filterTag = UiSelector().desc('筛选，按钮').isVisibleToUser(true).findOne();
+        let filterTag = UiSelector().descContains('筛选').findOne();
         if (filterTag) {
             Common.log('找到了筛选按钮');
-            Common.click(filterTag, 0.2);
+            Common.click(filterTag, 0.3);
             Common.sleep(2000 + 2000 * Math.random());
             return true;
         }
