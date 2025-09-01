@@ -393,7 +393,7 @@ let task = {
     run() {
         let config = task.getConfig();
         let keyword = this.getKeyword(config);
-        Common.log('配置', config, keyword);
+        Common.log('配置', keyword);
         System.toast("即将搜索关键词：" + keyword);
         System.sleep(2000);
 
