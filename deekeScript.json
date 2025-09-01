@@ -127,7 +127,7 @@
                 "type": "numberRange",
                 "label": "每轮休息时间（分钟）",
                 "name": "toker_dy_sleep_minute",
-                "max": 120,
+                "max": 1000,
                 "min": 0,
                 "step": 1,
                 "value": 5
