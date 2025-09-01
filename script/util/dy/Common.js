@@ -11,7 +11,7 @@ const Common = {
     },
 
     sleep(time) {
-        time > 200 ? Log.log("js休眠时间：" + time) : null;
+        time > 200 ? this.log("js休眠时间：" + time) : null;
         System.sleep(time);
     },
 
