@@ -39,7 +39,7 @@ let dy = {
             scrollTags[0].scrollForward();
             Common.sleep(500 + 500 * Math.random());
             Common.log('没有找到fansCountTag，滑动');
-        } while (!fansCountTag || i++ < 3);
+        } while (!fansCountTag && i++ < 3);
         if (!fansCountTag) {
             throw new Error('没有找到fansCountTag');
         }
@@ -60,7 +60,7 @@ let dy = {
             scrollTags[1].scrollForward();
             Common.sleep(500 + 500 * Math.random());
             Common.log('没有找到userTypeTag，滑动');
-        } while (!userTypeTag || i++ < 3);
+        } while (!userTypeTag && i++ < 3);
         if (!userTypeTag) {
             throw new Error('没有找到userTypeTag');
         }
