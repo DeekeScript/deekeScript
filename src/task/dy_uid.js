@@ -21,7 +21,7 @@ let dy = {
             Gesture.swipe(Device.width() * (0.7 + 0.1 * Math.random()), scrollTag.bounds().centerY() + 20 * Math.random(), scrollTag.bounds().left + Device.width() * (0.2 + 0.1 * Math.random()), scrollTag.bounds().centerY(), 400 + 100 * Math.random());
             Common.sleep(500 + 500 * Math.random());
             Common.log('没有找到”用户“tab，滑动');
-        } while (!userTag || i++ < 3);
+        } while (!userTag && i++ < 3);
         return userTag;
     },
 
@@ -100,27 +100,20 @@ let dy = {
             Common.log('找到了用户tab');
             Common.click(userTag, 0.2);
             Common.sleep(2000 + 2000 * Math.random());
+        }
 
+        let filterTag = UiSelector().descContains('筛选').isVisibleToUser(true).findOne();
+        if (!filterTag) {
+            Common.sleep(2000 + 2000 * Math.random());
+            filterTag = UiSelector().descContains('筛选').isVisibleToUser(true).findOne();
+        }
 
-            let parent = userTag.parent().parent().parent();
-            Log.log(parent);
-
-            let width = parent.bounds().left + parent.bounds().width();
-            let left = width + (1 / 3 + 1 / 3 * Math.random()) * (Device.width() - width);
-            let top = parent.bounds().top + (Math.random() / 3 + 1 / 3) * parent.bounds().height();
-            console.log(Math.floor(left), Math.floor(top));
-            Gesture.click(Math.floor(left), Math.floor(top));
+        if (filterTag) {
+            Common.log('找到了筛选按钮');
+            Common.click(filterTag, 0.3);
             Common.sleep(2000 + 2000 * Math.random());
             return true;
         }
-
-        // let filterTag = UiSelector().descContains('筛选').findOne();
-        // if (filterTag) {
-        //     Common.log('找到了筛选按钮');
-        //     Common.click(filterTag, 0.3);
-        //     Common.sleep(2000 + 2000 * Math.random());
-        //     return true;
-        // }
 
         return false;
     },
@@ -230,7 +223,7 @@ let task = {
         return machine.getMsg(type) || false;//永远不会结束
     },
 
-     log(){
+    log() {
         let d = new Date();
         let file = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
         let allFile = "log/log-dy-uid-" + file + ".txt";
