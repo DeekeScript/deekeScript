@@ -111,6 +111,7 @@ let dy = {
             console.log(Math.floor(left), Math.floor(top));
             Gesture.click(Math.floor(left), Math.floor(top));
             Common.sleep(2000 + 2000 * Math.random());
+            return true;
         }
 
         // let filterTag = UiSelector().descContains('筛选').findOne();
