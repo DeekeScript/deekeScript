@@ -100,15 +100,27 @@ let dy = {
             Common.log('找到了用户tab');
             Common.click(userTag, 0.2);
             Common.sleep(2000 + 2000 * Math.random());
-        }
 
-        let filterTag = UiSelector().descContains('筛选').findOne();
-        if (filterTag) {
-            Common.log('找到了筛选按钮');
-            Common.click(filterTag, 0.3);
+
+            let parent = userTag.parent().parent().parent();
+            Log.log(parent);
+
+            let width = parent.bounds().left + parent.bounds().width();
+            let left = width + (1 / 3 + 1 / 3 * Math.random()) * (Device.width() - width);
+            let top = parent.bounds().top + (Math.random() / 3 + 1 / 3) * parent.bounds().height();
+            console.log(Math.floor(left), Math.floor(top));
+            Gesture.click(Math.floor(left), Math.floor(top));
             Common.sleep(2000 + 2000 * Math.random());
             return true;
         }
+
+        // let filterTag = UiSelector().descContains('筛选').findOne();
+        // if (filterTag) {
+        //     Common.log('找到了筛选按钮');
+        //     Common.click(filterTag, 0.3);
+        //     Common.sleep(2000 + 2000 * Math.random());
+        //     return true;
+        // }
 
         return false;
     },
@@ -216,6 +228,13 @@ let task = {
     startTime: Date.parse(new Date()) / 1000,
     getMsg(type) {
         return machine.getMsg(type) || false;//永远不会结束
+    },
+
+     log(){
+        let d = new Date();
+        let file = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        let allFile = "log/log-dy-uid-" + file + ".txt";
+        Log.setFile(allFile);
     },
 
     getConfig() {
@@ -380,6 +399,7 @@ let task = {
 
 while (true) {
     try {
+        task.log();
         let res = task.run();
         if (res === true) {
             FloatDialogs.show('任务完成');
