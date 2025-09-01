@@ -204,6 +204,13 @@ let task = {
         return machine.getMsg(type) || false;//永远不会结束
     },
 
+     log(){
+        let d = new Date();
+        let file = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        let allFile = "log/log-dy-uid-" + file + ".txt";
+        Log.setFile(allFile);
+    },
+
     getConfig() {
         //console.log(Storage.getString('toker_dy_uids'));
         return {
@@ -342,6 +349,7 @@ let task = {
 
 while (true) {
     try {
+        task.log();
         let res = task.run();
         if (res === true) {
             FloatDialogs.show('任务完成');
