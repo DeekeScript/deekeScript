@@ -162,6 +162,7 @@ let dy = {
         }).isVisibleToUser(true).findOne();
         if (!moreTag) {
             Common.log('没有更多按钮');
+            Common.back();
             return false;
         }
         Common.click(moreTag, 0.3);
@@ -171,6 +172,7 @@ let dy = {
             return v.bounds().top > Device.height() / 2;
         }).isVisibleToUser(true).findOne();
         if (!sendMsgTag) {
+            Common.back();
             Common.log("没有找到发送私信按钮");
             return false;
         }
@@ -182,6 +184,7 @@ let dy = {
             return v.isEditable();
         }).isVisibleToUser(true).findOne();
         if (!iptTag) {
+            Common.back(2);
             Common.log("没有找到发送私信输入框");
             return false;
         }
