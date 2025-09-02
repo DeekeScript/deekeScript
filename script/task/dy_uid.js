@@ -255,6 +255,7 @@ let task = {
             userType: Storage.getString("toker_dy_type"),
             runMinute: Storage.getInteger('toker_dy_run_minute'),
             sleepMinute: Storage.getInteger('toker_dy_sleep_minute'),
+            errorTimes: Storage.getInteger('toker_dy_error_time')
         }
     },
 
@@ -393,7 +394,7 @@ let task = {
     run() {
         let config = task.getConfig();
         let keyword = this.getKeyword(config);
-        Common.log('配置', config, keyword);
+        Common.log('配置', keyword);
         System.toast("即将搜索关键词：" + keyword);
         System.sleep(2000);
 
@@ -403,6 +404,7 @@ let task = {
     }
 }
 
+let errorTimes = Storage.getInteger('toker_dy_error_time');
 while (true) {
     try {
         task.log();
@@ -418,5 +420,9 @@ while (true) {
     } catch (e) {
         Common.backHomeOnly();
         Common.log('出错了', e.stack);
+        Common.log('errorTimes', errorTimes);
+        if (--errorTimes <= 0) {
+            FloatDialogs.show('异常次数使用完了');
+        }
     }
 }

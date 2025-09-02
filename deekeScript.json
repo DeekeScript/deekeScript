@@ -124,13 +124,16 @@
                 "value": 10
               },
               {
-                "type": "numberRange",
+                "type": "number",
                 "label": "每轮休息时间（分钟）",
                 "name": "toker_dy_sleep_minute",
-                "max": 1000,
-                "min": 0,
-                "step": 1,
                 "value": 5
+              },
+               {
+                "type": "number",
+                "label": "最大异常次数",
+                "name": "toker_dy_error_time",
+                "value": 10
               },
               {
                 "type": "notice",
