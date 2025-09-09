@@ -4,15 +4,15 @@ declare global {
 
 interface Device {
     /**
-     * 保持屏幕常亮（需要在当前App界面）
-     * @param second 屏幕保持亮屏时间，单位秒
+     * 息屏后，保持 CPU 唤醒，延时释放
+     * @param second 保持 CPU 唤醒，延时释放，单位秒
      */
-    public keepScreenOn(second: number): void;
+    public keepCpuAwake(second: number): void;
 
     /**
-     * 关闭屏幕
+     * 关闭CPU唤醒状态
      */
-    public closeScreenLight(): void;
+    public releaseCpuWakeLock(): void;
 
     /**
      * 获取屏幕宽度
