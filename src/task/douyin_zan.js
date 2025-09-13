@@ -1,7 +1,7 @@
 
 let newTask = {
     comment() {
-        let tag = UiSelector().id('com.ss.android.ugc.aweme:id/comment_container').findOne();
+        let tag = UiSelector().id('com.ss.android.ugc.aweme:id/comment_container').isVisibleToUser(true).findOne();
         console.log(tag);
         Gesture.click(tag.bounds().left + Math.random() * tag.bounds().width(), tag.bounds().centerY());
         console.log('打开评论窗口');
@@ -26,37 +26,58 @@ let newTask = {
         Gesture.back();
         System.sleep(500);
     },
+
+    backHome() {
+        console.log('开始返回主页');
+        let homeTag;
+        let backMaxCount = 5;
+        do {
+            homeTag = UiSelector().id('com.ss.android.ugc.aweme:id/x_t').isVisibleToUser(true).findOne();
+            if (homeTag) {
+                console.log('在首页');
+            }
+            Gesture.back();
+            console.log('返回');
+            System.sleep(1000);
+        } while (!homeTag && --backMaxCount >= 0);
+    },
+
     run() {
         console.log('开始进入应用');
         App.launch('com.ss.android.ugc.aweme');
-        System.sleep(8000);
+        System.sleep(2000);
         let zanCount = Storage.getInteger('task_douyin_zan_count');
         let commentCount = Storage.getInteger('task_douyin_zan_comment');
 
         console.log('配置：' + zanCount + ' 赞，' + commentCount + ' 评论');
         while (zanCount > 0 || commentCount > 0) {
-            console.log('zanCount: ' + zanCount + ' commentCount: ' + commentCount);
-            if (--zanCount >= 0) {
-                let tag = UiSelector().id('com.ss.android.ugc.aweme:id/fd9').findOne();
-                Gesture.click(tag.bounds().left + Math.random() * tag.bounds().width(), tag.bounds().centerY());
-                System.sleep(1000);
-                console.log('点赞完成');
+            try {
+                console.log('zanCount: ' + zanCount + ' commentCount: ' + commentCount);
+                if (--zanCount >= 0) {
+                    let tag = UiSelector().id('com.ss.android.ugc.aweme:id/fd9').isVisibleToUser(true).findOne();
+                    console.log('点赞tag', tag);
+                    Gesture.click(tag.bounds().left + Math.random() * tag.bounds().width(), tag.bounds().centerY());
+                    System.sleep(1000);
+                    console.log('点赞完成');
+                }
 
+                if (--commentCount >= 0) {
+                    this.comment();
+                    System.sleep(1000);
+                }
+
+
+                let tag = UiSelector().id('com.ss.android.ugc.aweme:id/viewpager').desc('视频').scrollable(true).findOne();
+                tag.scrollForward();
+                System.sleep(3000);
+            } catch (e) {
+                console.log(e);
+                this.backHome();
             }
-
-            if (--commentCount >= 0) {
-                this.comment();
-                System.sleep(1000);
-            }
-
-
-            let tag = UiSelector().id('com.ss.android.ugc.aweme:id/viewpager').desc('视频').scrollable(true).findOne();
-            tag.scrollForward();
-            System.sleep(3000);
         }
     },
 }
 
-
+Log.setFile("douyin_zan.js.log");
 newTask.run();
 FloatDialogs.show('抖音任务完成');
