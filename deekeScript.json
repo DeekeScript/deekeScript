@@ -433,7 +433,34 @@
       "hidden": false,
       "methods": [
         {
-          "title": "直接运行",
+          "title": "直接运行1",
+          "columns": 8,
+          "icon": "images/test/score.png",
+          "jsFile": "src/task/douyin_zan.js",
+          "settingPage": {
+            "params": [
+              {
+                "type": "numberRange",
+                "label": "点赞次数",
+                "name": "task_douyin_zan_count",
+                "max": 60,
+                "min": 5,
+                "value": 5,
+                "step": 1
+              },
+              {
+                "type": "number",
+                "label": "评论次数",
+                "name": "task_douyin_zan_comment",
+                "value": 5
+              }
+            ]
+          }
+        },
+        {
+          "title": "手动运行",
+          "columns": 16,
+          "runType": "floatSwitch",
           "icon": "images/test/score.png",
           "jsFile": "src/task/douyin_zan.js",
           "settingPage": {
