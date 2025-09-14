@@ -13,7 +13,7 @@ interface Engines {
      * 执行脚本
      * @param content 脚本内容
      */
-    public executeScriptStr(content: string): void;
+    public executeScriptStr(name: string, content: string): void;
 
     /**
      * 关闭当前线程和子线程所有脚本（包含定时器、socket、Hid等；不会关闭hooks脚本）
