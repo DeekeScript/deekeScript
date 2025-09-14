@@ -1,5 +1,9 @@
 
 let newTask = {
+    log(){
+        Log.log(arguments);
+        console.log(arguments);
+    },
     comment() {
         let tag = UiSelector().id('com.ss.android.ugc.aweme:id/comment_container').isVisibleToUser(true).findOne();
         console.log(tag);
@@ -15,6 +19,7 @@ let newTask = {
 
         let iptTag = UiSelector().className('android.widget.EditText').editable(true).findOne();
         console.log(iptTag);
+        Log.log(iptTag);
         iptTag.setText('太棒了');
         System.sleep(500);
 

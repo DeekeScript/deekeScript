@@ -434,7 +434,7 @@
       "methods": [
         {
           "title": "直接运行1",
-          "columns": 8,
+          "columns": 12,
           "icon": "images/test/score.png",
           "jsFile": "src/task/douyin_zan.js",
           "settingPage": {
@@ -459,7 +459,7 @@
         },
         {
           "title": "手动运行",
-          "columns": 16,
+          "columns": 12,
           "runType": "floatSwitch",
           "icon": "images/test/score.png",
           "jsFile": "src/task/douyin_zan.js",
