@@ -283,7 +283,9 @@ let task = {
         }
 
         while (true) {
-            let userListTag = UiSelector().className('com.lynx.tasm.behavior.ui.LynxFlattenUI').descContains('粉丝:').isVisibleToUser(true).find();
+            let userListTag = UiSelector().className('com.lynx.tasm.behavior.ui.LynxFlattenUI').descContains('粉丝:').filter(v => {
+                return v.bounds().width() < Device.width() * 0.7;
+            }).isVisibleToUser(true).find();
             for (let i in userListTag) {
                 //检测是不是在列表页，不是则返回
                 Common.log('执行第N个', i);
@@ -298,7 +300,14 @@ let task = {
                 }
 
                 let userTag = userListTag[i];
-                let title = userTag.text();
+                let title = userTag.desc();
+                // if (title) {
+                //     let titles = title.split('，');
+                //     if (titles.length > 0) {
+                //         title = titles[0];
+                //     }
+                // }
+
                 if ((config.userType == '2' || config.userType == '3') && title.indexOf('抖音号') != -1) {
                     Common.sleep(1000 + 1000 * Math.random());
                     Common.log('带有抖音号的用户');
