@@ -5,6 +5,7 @@ let newTask = {
         console.log(arguments);
     },
     comment() {
+        //注释
         let tag = UiSelector().id('com.ss.android.ugc.aweme:id/comment_container').isVisibleToUser(true).findOne();
         console.log(tag);
         Gesture.click(tag.bounds().left + Math.random() * tag.bounds().width(), tag.bounds().centerY());

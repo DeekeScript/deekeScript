@@ -1,7 +1,7 @@
-const dyApp = {
-    getName(){
+let e = {
+    getName() {
         return "appName";
     }
-}
+};
 
-module.exports = dyApp;
+module.exports = e;
