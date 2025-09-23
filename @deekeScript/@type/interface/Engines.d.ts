@@ -29,6 +29,11 @@ interface Engines {
      * 关闭hooks脚本
      */
     public closeHook(): void;
+
+    /**
+     * 返回所有子脚本的数量
+     */
+    public childScriptCount(): number;
 }
 
 export { };
