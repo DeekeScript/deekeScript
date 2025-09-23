@@ -15,6 +15,11 @@ interface FloatDialogs {
      * @param content 弹窗内容
      */
     public show(content: string): void;
+
+    /**
+     * 关闭FloatDialogs开启的所有弹窗
+     */
+    public closeAll(): boolean;
 }
 
 export { };

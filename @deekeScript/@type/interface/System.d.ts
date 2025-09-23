@@ -103,6 +103,11 @@ interface System {
      * @param show 是否显示
      */
     public setTimeWindowShow(show: boolean);
+
+    /**
+     * 是否有任务在运行
+     */
+    public isRunning():boolean;
 }
 
 export { };
