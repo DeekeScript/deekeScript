@@ -25,7 +25,7 @@ interface Encrypt {
      * base64 encode
      * @param input 
      */
-    public base64Encode(input: string): string;
+    public base64Encode(input: string|byte[]): string;
 
     /**
      * base64 decode

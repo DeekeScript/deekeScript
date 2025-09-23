@@ -108,6 +108,33 @@ declare global {
         public length(): number;
 
         /**
+         * 获取多个子控件
+         * @param uiSelector 查询条件
+         */
+        public findChildren(uiSelector: UiSelector): UiObject[];
+
+        /**
+         * 获取一个子控件
+         * @param uiSelector 查询条件
+         */
+        public findChild(uiSelector: UiSelector): UiObject;
+
+        /**
+         * 获取子控件数量
+         */
+        public childCount(): number;
+
+        /**
+         * 获取父控件
+         */
+        public parent(): UiObject;
+
+        /**
+         * 获取控件的层级
+         */
+        public depth(): number;
+
+        /**
          * 获取控件的绘制顺序
          */
         public getDrawingOrder(): number;
@@ -118,21 +145,24 @@ declare global {
         public isSelected(): boolean;
 
         /**
+        * 判断控件是否可以点击
+        */
+        public isClickable(): boolean;
+
+        /**
          * 判断控件是否可以长按
          */
         public isLongClickable(): boolean;
 
         /**
-         * 判断控件是否可以点击
-         */
-        public isClickable(): boolean;
+        * 判断控件是否可以选中
+        */
+        public isCheckable(): boolean;
 
         /**
-         * 判断控件是否可以编辑
-         */
-        public isEditable(): boolean;
-
-        // public isFocusable(): boolean;
+        * 判断控件是否被选中
+        */
+        public isChecked(): boolean;
 
         /**
          * 判断控件是否可用
@@ -140,96 +170,121 @@ declare global {
         public isEnabled(): boolean;
 
         /**
-         * 判断控件是否是密码控件
+        * 判断控件是否获得焦点
+        */
+        public isFocusable(): boolean;
+
+        /**
+         * 获取控件是否获得焦点
          */
-        public isPassword(): boolean;
+        public isFocused(): boolean;
+
 
         /**
          * 判断控件是否可以滚动
          */
         public isScrollable(): boolean;
 
+
         /**
          * 判断控件是否对用户可见
          */
         public isVisibleToUser(): boolean;
 
-        /**
-         * 判断控件是否被选中
-         */
-        public isChecked(): boolean;
 
         /**
-         * 判断控件是否可以选中
+         * 判断控件是否可以编辑
          */
-        public isCheckable(): boolean;
+        public isEditable(): boolean;
+
+        /**
+         * 判断控件是否是密码控件
+         */
+        public isPassword(): boolean;
+
+        /**
+         * 获取控件的className
+         */
+        public className(): string;
+
+        /**
+         * 获取控件的包名
+         */
+        public getPackageName(): string;
+
 
         /**
          * 设置控件是否可以点击
          * @param clickable 是否可以点击
          */
-        public setClickable(clickable: boolean): boolean;
+        public setClickable(clickable: boolean): UiObject;
 
         /**
          * 设置控件是否可以被长按
          * @param longClickable 是否可以长按
          */
-        public setLongClickable(longClickable: boolean): boolean;
+        public setLongClickable(longClickable: boolean): UiObject;
 
         /**
          * 设置控件是否可以编辑
          * @param editable 是否可以编辑
          */
-        public setEditable(editable: boolean): boolean;
+        public setEditable(editable: boolean): UiObject;
 
         /**
          * 设置控件是否可用
          * @param enabled 是否可用
          */
-        public setEnabled(enabled: boolean): boolean;
+        public setEnabled(enabled: boolean): UiObject;
 
-        //public setCheckable(checkable: boolean): boolean
+        /**
+         * 设置控件是否可以选中
+         * @param checkable 是否可以选中
+         */
+        public setCheckable(checkable: boolean): boolean
 
         /**
          * 设置控件是否选中
          * @param checked 是否选中
          */
-        public setChecked(checked: boolean): boolean
+        public setChecked(checked: boolean): UiObject
+
+        /**
+         * 设置控件是否选中
+         * @param selected 是否选中
+         */
+        public setSelected(selected: boolean): UiObject
 
         /**
          * 设置控件是否获得焦点
          * @param focusable 是否可获得焦点
          */
-        public setFocusable(focusable: boolean): boolean
+        public setFocusable(focusable: boolean): UiObject
 
         /**
-         * 设置是否用户可见
-         * @param visibleToUser 是否对用户可见
+         * 设置控件是否获得焦点
+         * @param focusable 是否获得焦点
          */
-        public setVisibleToUser(visibleToUser: boolean): boolean
+        public setFocused(focusable: boolean): UiObject
 
         /**
-         * 设置是否获得焦点
-         * @param focused 是否获得焦点
+         * 设置控件是否可以滚动
+         * @param scrollable 是否可以滚动
          */
-        public setFocused(focused: boolean): boolean
-
-        //public setScrollable(scrollable: boolean): boolean
-
-        /**
-         * 设置是否选中
-         * @param selected 是否选中
-         */
-        public setSelected(selected: boolean): boolean
+        public setScrollable(scrollable: boolean): UiObject
 
         /**
          * 
          * 设置是否是密码控件
          * @param password 是否是密码控件
          */
-        public setPassword(password: boolean): boolean
+        public setPassword(password: boolean): UiObject
 
-        //public setContentDescription(contentDescription: string): boolean
+        /**
+         * 设置是否用户可见
+         * @param visibleToUser 是否对用户可见
+         */
+        public setVisibleToUser(visibleToUser: boolean): UiObject
     }
 }
 export { };
