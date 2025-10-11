@@ -17,6 +17,16 @@ interface FloatDialogs {
     public show(content: string): void;
 
     /**
+     * toast 吐司，与System.toast区别是，可以后台弹出消息
+     */
+    public toast(content: string): void;
+
+    /**
+     * toastLong 吐司（时间更长），与System.toast区别是，可以后台弹出消息
+     */
+    public toastLong(content: string): void;
+
+    /**
      * 关闭FloatDialogs开启的所有弹窗
      */
     public closeAll(): boolean;
