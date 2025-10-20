@@ -108,18 +108,6 @@ declare global {
         public length(): number;
 
         /**
-         * 获取多个子控件
-         * @param uiSelector 查询条件
-         */
-        public findChildren(uiSelector: UiSelector): UiObject[];
-
-        /**
-         * 获取一个子控件
-         * @param uiSelector 查询条件
-         */
-        public findChild(uiSelector: UiSelector): UiObject;
-
-        /**
          * 获取子控件数量
          */
         public childCount(): number;
