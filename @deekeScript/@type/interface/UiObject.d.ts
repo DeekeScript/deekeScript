@@ -98,7 +98,12 @@ declare global {
         /**
          * 获取子控件数量
          */
-        public childCount(): number;
+        public getChildCount(): number;
+
+        /**
+         * 获取子控件
+        */
+        public getChildren(index): UiObject;
 
         /**
          * 获取父控件
