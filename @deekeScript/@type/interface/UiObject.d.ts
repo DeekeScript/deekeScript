@@ -81,18 +81,6 @@ declare global {
         public desc(): string;
 
         /**
-         * 设置描述内容
-         * @param desc 要设置的内容
-         */
-        public setDesc(desc: string): void;
-
-        /**
-         * 设置一个 辅助提示文本
-         * @param hintText 辅助文本
-         */
-        public setHintText(hintText: string): void;
-
-        /**
          * 获取控件的id
          */
         public id(): string;
@@ -199,80 +187,6 @@ declare global {
          * 获取控件的包名
          */
         public getPackageName(): string;
-
-
-        /**
-         * 设置控件是否可以点击
-         * @param clickable 是否可以点击
-         */
-        public setClickable(clickable: boolean): UiObject;
-
-        /**
-         * 设置控件是否可以被长按
-         * @param longClickable 是否可以长按
-         */
-        public setLongClickable(longClickable: boolean): UiObject;
-
-        /**
-         * 设置控件是否可以编辑
-         * @param editable 是否可以编辑
-         */
-        public setEditable(editable: boolean): UiObject;
-
-        /**
-         * 设置控件是否可用
-         * @param enabled 是否可用
-         */
-        public setEnabled(enabled: boolean): UiObject;
-
-        /**
-         * 设置控件是否可以选中
-         * @param checkable 是否可以选中
-         */
-        public setCheckable(checkable: boolean): boolean
-
-        /**
-         * 设置控件是否选中
-         * @param checked 是否选中
-         */
-        public setChecked(checked: boolean): UiObject
-
-        /**
-         * 设置控件是否选中
-         * @param selected 是否选中
-         */
-        public setSelected(selected: boolean): UiObject
-
-        /**
-         * 设置控件是否获得焦点
-         * @param focusable 是否可获得焦点
-         */
-        public setFocusable(focusable: boolean): UiObject
-
-        /**
-         * 设置控件是否获得焦点
-         * @param focusable 是否获得焦点
-         */
-        public setFocused(focusable: boolean): UiObject
-
-        /**
-         * 设置控件是否可以滚动
-         * @param scrollable 是否可以滚动
-         */
-        public setScrollable(scrollable: boolean): UiObject
-
-        /**
-         * 
-         * 设置是否是密码控件
-         * @param password 是否是密码控件
-         */
-        public setPassword(password: boolean): UiObject
-
-        /**
-         * 设置是否用户可见
-         * @param visibleToUser 是否对用户可见
-         */
-        public setVisibleToUser(visibleToUser: boolean): UiObject
     }
 }
 export { };
