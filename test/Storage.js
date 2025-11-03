@@ -1,3 +1,0 @@
-
-Storage.create('a').clear();
-
