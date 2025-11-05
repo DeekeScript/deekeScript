@@ -19,14 +19,9 @@ declare global {
 
         /**
          * 获取包信息
+         * @param packageName 包名
          */
-        public packageInfo(): any;//这里是返回的PackageInfo（Android对象）
-
-        /**
-         * 创建一个Intent对象
-         * @param i Intent对象
-         */
-        public intent(i: Intent): Intent;
+        public packageInfo(packageName: string): any;//这里是返回的PackageInfo（Android对象）
 
         /**
          * 调整到某个Activity
@@ -86,7 +81,20 @@ declare global {
          * 通过包名，进入某个App设置界面
          * @param packageName 包名
          */
-        public openAppSettings(packageName: string): void;
+        public openAppSetting(packageName: string): void;
+
+        /**
+         * 判断应用是否已安装
+         * @param packageName 包名
+         */
+        public isAppInstalled(packageName: string): boolean;
+
+        /**
+         * 通过指定应用打开URL，如果应用未安装则使用浏览器打开
+         * @param url URL地址
+         * @param packageName 包名（可选，用于指定打开URL的应用）
+         */
+        public openUrl(url: string, packageName: string): void;
     }
 }
 

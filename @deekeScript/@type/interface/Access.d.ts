@@ -65,7 +65,7 @@ interface access {
      /**
      * 是否开启读取通知权限
      */
-     public hasNotificationAccess(): void;
+     public hasNotificationAccess(): boolean;
 }
 
 export { };

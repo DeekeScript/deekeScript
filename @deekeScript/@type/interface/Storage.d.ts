@@ -98,13 +98,22 @@ interface storage {
     /**
      * 移除某个键
      * @param key 键
+     * @return 返回Promise，实际使用时通过blockingSubscribe()或toCompletionStage()来获取结果
      */
-    public remove(key: string): boolean;
+    public remove(key: string): any; // 实际返回Single<Preferences>，在JavaScript中可以通过异步方式处理
 
     /**
      * 清空所有值
+     * @return 返回Promise，实际使用时通过blockingSubscribe()或toCompletionStage()来获取结果
      */
-    public clear(): boolean;
+    public clear(): any; // 实际返回Single<Preferences>，在JavaScript中可以通过异步方式处理
+
+    /**
+     * 判断是否包含键为key的数据
+     * @param key 键
+     * @return 返回boolean，表示是否存在该键
+     */
+    public contains(key: string): boolean;
 }
 
 export { };

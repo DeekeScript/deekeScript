@@ -27,9 +27,15 @@ interface FloatDialogs {
     public toastLong(content: string): void;
 
     /**
+     * 设置悬浮窗是否可点击
+     * @param clickable 是否可点击
+     */
+    public setFloatWindowClickable(clickable: boolean): void;
+
+    /**
      * 关闭FloatDialogs开启的所有弹窗
      */
-    public closeAll(): boolean;
+    public closeAll(): void;
 }
 
 export { };

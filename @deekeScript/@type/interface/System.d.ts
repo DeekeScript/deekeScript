@@ -102,13 +102,13 @@ interface System {
      * 是否显示时间悬浮窗窗口
      * @param show 是否显示
      */
-    public setTimeWindowShow(show: boolean);
+    public setTimeWindowShow(show: boolean): void;
 
     /**
      * 切换无障碍模式，快速模式下，将自动过滤非重要控件。注意通过id或者text方式获取控件不受此模式影响；
      * @param mode 快速模式mode为fast，非快速模式为!fast
      */
-    public setAccessibilityMode(mode: string);
+    public setAccessibilityMode(mode: string): void;
 }
 
 export { };
