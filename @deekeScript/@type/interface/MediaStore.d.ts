@@ -20,16 +20,16 @@ interface MediaStore {
      * @param sourcePath 源图片路径
      * @param displayName 显示名称（可选）
      * @param relativePath 相对路径（可选，如 "Pictures/MyApp"）
-     * @return 保存后的 content:// Uri 字符串，失败返回空字符串 ""
+     * @return 保存后的 content:// Uri 字符串，失败返回 null
      */
-    public saveImage(sourcePath: string, displayName?: string, relativePath?: string): string;
+    public saveImage(sourcePath: string, displayName?: string, relativePath?: string): string | null;
 
     /**
      * 保存图片到相册（使用默认配置）
      * @param sourcePath 源图片路径
      * @return 保存后的 content:// Uri 字符串
      */
-    public saveImage(sourcePath: string): string;
+    public saveImage(sourcePath: string): string | null;
 
     /**
      * 删除图片
@@ -51,16 +51,16 @@ interface MediaStore {
      * @param sourcePath 源视频路径
      * @param displayName 显示名称（可选）
      * @param relativePath 相对路径（可选）
-     * @return 保存后的 content:// Uri 字符串，失败返回空字符串 ""
+     * @return 保存后的 content:// Uri 字符串，失败返回 null
      */
-    public saveVideo(sourcePath: string, displayName?: string, relativePath?: string): string;
+    public saveVideo(sourcePath: string, displayName?: string, relativePath?: string): string | null;
 
     /**
      * 保存视频到相册（使用默认配置）
      * @param sourcePath 源视频路径
      * @return 保存后的 content:// Uri 字符串
      */
-    public saveVideo(sourcePath: string): string;
+    public saveVideo(sourcePath: string): string | null;
 
     /**
      * 删除视频
@@ -81,9 +81,9 @@ interface MediaStore {
      * 保存音频文件
      * @param sourcePath 源文件路径
      * @param displayName 显示名称（可选）
-     * @return 保存后的 content:// Uri 字符串，失败返回空字符串 ""
+     * @return 保存后的 content:// Uri 字符串，失败返回 null
      */
-    public saveAudio(sourcePath: string, displayName?: string): string;
+    public saveAudio(sourcePath: string, displayName?: string): string | null;
 
     // ==================== 下载文件操作 ====================
 
@@ -91,9 +91,9 @@ interface MediaStore {
      * 保存文件到下载目录
      * @param sourcePath 源文件路径
      * @param displayName 显示名称（可选）
-     * @return 保存后的 content:// Uri 字符串（Android 10+）或文件路径（Android 9-），失败返回空字符串 ""
+     * @return 保存后的 content:// Uri 字符串（Android 10+）或文件路径（Android 9-），失败返回 null
      */
-    public saveToDownloads(sourcePath: string, displayName?: string): string;
+    public saveToDownloads(sourcePath: string, displayName?: string): string | null;
 
     /**
      * 获取下载目录的所有文件
@@ -108,16 +108,16 @@ interface MediaStore {
      * 保存文档文件到文档目录
      * @param sourcePath 源文件路径
      * @param displayName 显示名称（可选）
-     * @return 保存后的 content:// Uri 字符串（Android 10+）或文件路径（Android 9-），失败返回空字符串 ""
+     * @return 保存后的 content:// Uri 字符串（Android 10+）或文件路径（Android 9-），失败返回 null
      */
-    public saveToDocuments(sourcePath: string, displayName?: string): string;
+    public saveToDocuments(sourcePath: string, displayName?: string): string | null;
 
     /**
      * 保存文档文件到文档目录（使用默认名称）
      * @param sourcePath 源文件路径
      * @return 保存后的 content:// Uri 字符串或文件路径
      */
-    public saveToDocuments(sourcePath: string): string;
+    public saveToDocuments(sourcePath: string): string | null;
 
     /**
      * 获取文档目录的所有文件
@@ -130,9 +130,9 @@ interface MediaStore {
     /**
      * 从 URI 读取文件内容
      * @param uriString content:// Uri 字符串
-     * @return 文件内容字节数组，失败返回空数组 []
+     * @return 文件内容字节数组，失败返回 null
      */
-    public readFromUri(uriString: string): number[];
+    public readFromUri(uriString: string): number[] | null;
 
     /**
      * 查询媒体文件信息
