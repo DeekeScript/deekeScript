@@ -4,38 +4,40 @@ declare global {
 
 interface Http {
     /**
-     * post请求  {"Content-Type":"application/json"}
-     * @param url 请求地址
-     * @param json 请求内容，请使用JOSN.parse()将对象处理成字符串
-     */
-    public post(url: string, json: object): string;
-
-    /**
-     * 
+     * post请求
      * @param url 请求地址
      * @param json 请求内容
      * @param headers 请求头n的请求头，如：{"Content-Type":"application/json"}
      */
-    public postHeaders(url: string, json: object, headers: object): string | null;
+    public post(url: string, json: object, headers?: object): string | null;
 
     /**
      * get请求
      * @param url 请求地址
-     */
-    public get(url: string): string;
-
-    /**
-     * 带请求头的get请求
-     * @param url 请求地址
      * @param headers 请求头
      */
-    public getHeaders(url: string, headers: object): string | null;
+    public get(url: string, headers: object): string | null;
 
-    //下面的方法，暂时还没使用过
-    public postFile(url: string, files: string[], params: object, httpCallback: {
+    /**
+     * 
+     * @param url 请求地址
+     * @param files 
+     * @param params 
+     * @param httpCallback 
+     */
+    public postFile(url: string, files: Files[], params: object, httpCallback: {
         success: (response: any) => void,
         fail: (response: any) => void
     }): void;
+
+
+    /**
+      * 下载文件
+      * @param url 下载链接
+      * @param destPath 保存路径（含文件名称）
+      * @param headers 请求头
+      */
+    public download(url: string, destPath: string, headers?: object): string | null;
 }
 
 export { };
