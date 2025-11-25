@@ -4,7 +4,12 @@
   "description": "DeekeScript Android 项目配置文件，用于动态渲染页面",
   "type": "object",
   "required": ["name", "versionCode", "versionName", "icon", "host", "switchSetting", "groups", "bottomMenus", "settingLists", "apis"],
+  "additionalProperties": false,
   "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema 引用路径"
+    },
     "name": {
       "type": "string",
       "description": "App安装成功之后，在手机上的名称"
@@ -43,6 +48,7 @@
       "type": "object",
       "description": "功能开关设置",
       "required": ["alipay"],
+      "additionalProperties": false,
       "properties": {
         "alipay": {
           "type": "boolean",
@@ -56,6 +62,7 @@
       "items": {
         "type": "object",
         "required": ["title", "methods"],
+        "additionalProperties": false,
         "properties": {
           "title": {
             "type": "string",
@@ -87,6 +94,7 @@
       "items": {
         "type": "object",
         "required": ["title", "icon", "type"],
+        "additionalProperties": false,
         "properties": {
           "title": {
             "type": "string",
@@ -114,6 +122,7 @@
       "items": {
         "type": "object",
         "required": ["title", "icon", "type"],
+        "additionalProperties": false,
         "properties": {
           "title": {
             "type": "string",
@@ -161,6 +170,7 @@
       "items": {
         "type": "object",
         "required": ["type", "url"],
+        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
@@ -179,6 +189,7 @@
     "method": {
       "type": "object",
       "required": ["title", "icon"],
+      "additionalProperties": false,
       "properties": {
         "title": {
           "type": "string",
@@ -220,6 +231,7 @@
         "activity": {
           "type": "object",
           "description": "活动配置",
+          "additionalProperties": false,
           "properties": {
             "notice": {
               "type": "string",
@@ -238,6 +250,7 @@
               "description": "活动功能组",
               "items": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "title": {
                     "type": "string"
@@ -261,6 +274,7 @@
     "settingPage": {
       "type": "object",
       "required": ["params"],
+      "additionalProperties": false,
       "properties": {
         "params": {
           "type": "array",
@@ -272,217 +286,392 @@
       }
     },
     "param": {
-      "type": "object",
-      "required": ["type"],
-      "properties": {
-        "type": {
-          "type": "string",
-          "description": "参数类型",
-          "enum": [
-            "text",
-            "number",
-            "numberRange",
-            "textArea",
-            "switch",
-            "radio",
-            "checkbox",
-            "checkboxGroup",
-            "select",
-            "date",
-            "time",
-            "datetime",
-            "color",
-            "file",
-            "image",
-            "notice"
-          ]
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["type", "title"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "notice"
+            },
+            "title": {
+              "type": "string",
+              "description": "标题"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
+            },
+            "textColor": {
+              "type": "string",
+              "description": "文本颜色",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "textSize": {
+              "type": "number",
+              "description": "文本大小"
+            }
+          }
         },
-        "label": {
-          "type": "string",
-          "description": "标签文本"
+        {
+          "type": "object",
+          "required": ["type", "label", "name", "min", "max", "value"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "numberRange"
+            },
+            "label": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "name": {
+              "type": "string",
+              "description": "参数名称（用于存储和获取值）"
+            },
+            "min": {
+              "type": "number",
+              "description": "最小值"
+            },
+            "max": {
+              "type": "number",
+              "description": "最大值"
+            },
+            "value": {
+              "type": "number",
+              "description": "默认值"
+            },
+            "step": {
+              "type": "number",
+              "description": "步长"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
+            }
+          }
         },
-        "name": {
-          "type": "string",
-          "description": "参数名称（用于存储和获取值）"
+        {
+          "type": "object",
+          "required": ["type", "label", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "textArea"
+            },
+            "label": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "name": {
+              "type": "string",
+              "description": "参数名称（用于存储和获取值）"
+            },
+            "value": {
+              "type": "string",
+              "description": "默认值"
+            },
+            "hint": {
+              "type": "string",
+              "description": "提示文本"
+            },
+            "notice": {
+              "type": "string",
+              "description": "通知文本"
+            },
+            "lines": {
+              "type": "number",
+              "description": "行数"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
+            }
+          }
         },
-        "value": {
-          "description": "默认值（类型根据type而定）"
-        },
-        "hint": {
-          "type": "string",
-          "description": "提示文本"
-        },
-        "notice": {
-          "type": "string",
-          "description": "通知文本"
-        },
-        "title": {
-          "type": "string",
-          "description": "标题（用于notice类型）"
-        },
-        "min": {
-          "type": "number",
-          "description": "最小值（用于numberRange类型）"
-        },
-        "max": {
-          "type": "number",
-          "description": "最大值（用于numberRange类型）"
-        },
-        "step": {
-          "type": "number",
-          "description": "步长（用于numberRange类型）"
-        },
-        "options": {
-          "type": "array",
-          "description": "选项列表（用于radio、select类型）",
-          "items": {
-            "type": "object",
-            "properties": {
-              "label": {
+        {
+          "type": "object",
+          "required": ["type", "label", "name", "children", "values"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "checkboxGroup"
+            },
+            "label": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "name": {
+              "type": "string",
+              "description": "参数名称（用于存储和获取值）"
+            },
+            "children": {
+              "type": "array",
+              "description": "子选项",
+              "items": {
                 "type": "string"
-              },
-              "value": {
+              }
+            },
+            "values": {
+              "type": "array",
+              "description": "值列表",
+              "items": {
                 "type": "string"
               }
+            },
+            "columnCount": {
+              "type": "number",
+              "description": "列数"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
             }
-          }
-        },
-        "dataFrom": {
-          "type": "string",
-          "description": "数据来源（如：role）"
-        },
-        "children": {
-          "type": "array",
-          "description": "子选项（用于checkboxGroup类型）",
-          "items": {
-            "type": "string"
-          }
-        },
-        "values": {
-          "type": "array",
-          "description": "值列表（用于checkboxGroup类型）",
-          "items": {
-            "type": "string"
-          }
-        },
-        "columnCount": {
-          "type": "number",
-          "description": "列数（用于checkboxGroup类型）"
-        },
-        "lines": {
-          "type": "number",
-          "description": "行数（用于textArea类型）"
-        },
-        "textColor": {
-          "type": "string",
-          "description": "文本颜色（用于notice类型）",
-          "pattern": "^#[0-9A-Fa-f]{6}$"
-        },
-        "textSize": {
-          "type": "number",
-          "description": "文本大小（用于notice类型）"
-        },
-        "hidden": {
-          "type": "boolean",
-          "description": "是否隐藏",
-          "default": false
-        }
-      },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "type": {
-                "const": "numberRange"
-              }
-            }
-          },
-          "then": {
-            "required": ["label", "name", "min", "max", "value"]
           }
         },
         {
-          "if": {
-            "properties": {
-              "type": {
-                "const": "textArea"
-              }
+          "type": "object",
+          "required": ["type", "label", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "number"
+            },
+            "label": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "name": {
+              "type": "string",
+              "description": "参数名称（用于存储和获取值）"
+            },
+            "value": {
+              "type": "number",
+              "description": "默认值（数字类型）"
+            },
+            "hint": {
+              "type": "string",
+              "description": "提示文本"
+            },
+            "notice": {
+              "type": "string",
+              "description": "通知文本"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
             }
-          },
-          "then": {
-            "required": ["label", "name"]
           }
         },
         {
-          "if": {
-            "properties": {
-              "type": {
-                "const": "checkboxGroup"
-              }
+          "type": "object",
+          "required": ["type", "label", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "digit"
+            },
+            "label": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "name": {
+              "type": "string",
+              "description": "参数名称（用于存储和获取值）"
+            },
+            "value": {
+              "type": "integer",
+              "description": "默认值（整数类型）"
+            },
+            "hint": {
+              "type": "string",
+              "description": "提示文本"
+            },
+            "notice": {
+              "type": "string",
+              "description": "通知文本"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
             }
-          },
-          "then": {
-            "required": ["label", "name", "children", "values"]
           }
         },
         {
-          "if": {
-            "properties": {
-              "type": {
-                "const": "switch"
-              }
+          "type": "object",
+          "required": ["type", "label", "name", "min", "max", "value"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "digitRange"
+            },
+            "label": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "name": {
+              "type": "string",
+              "description": "参数名称（用于存储和获取值）"
+            },
+            "min": {
+              "type": "integer",
+              "description": "最小值（整数）"
+            },
+            "max": {
+              "type": "integer",
+              "description": "最大值（整数）"
+            },
+            "value": {
+              "type": "integer",
+              "description": "默认值（整数）"
+            },
+            "step": {
+              "type": "integer",
+              "description": "步长（整数）"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
             }
-          },
-          "then": {
-            "required": ["label", "name"]
           }
         },
         {
-          "if": {
-            "properties": {
-              "type": {
-                "const": "radio"
-              }
+          "type": "object",
+          "required": ["type", "label", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "switch"
+            },
+            "label": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "name": {
+              "type": "string",
+              "description": "参数名称（用于存储和获取值）"
+            },
+            "value": {
+              "type": "boolean",
+              "description": "默认值（布尔类型）"
+            },
+            "hint": {
+              "type": "string",
+              "description": "提示文本"
+            },
+            "notice": {
+              "type": "string",
+              "description": "通知文本"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
             }
-          },
-          "then": {
-            "required": ["label", "name"]
           }
         },
         {
-          "if": {
-            "properties": {
-              "type": {
-                "const": "text"
-              }
+          "type": "object",
+          "required": ["type", "label", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "text"
+            },
+            "label": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "name": {
+              "type": "string",
+              "description": "参数名称（用于存储和获取值）"
+            },
+            "value": {
+              "type": "string",
+              "description": "默认值"
+            },
+            "hint": {
+              "type": "string",
+              "description": "提示文本"
+            },
+            "notice": {
+              "type": "string",
+              "description": "通知文本"
+            },
+            "lines": {
+              "type": "number",
+              "description": "行数（用于多行文本）"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
             }
-          },
-          "then": {
-            "required": ["label", "name"]
           }
         },
         {
-          "if": {
-            "properties": {
-              "type": {
-                "const": "number"
+          "type": "object",
+          "required": ["type", "label", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["radio", "select"]
+            },
+            "label": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "name": {
+              "type": "string",
+              "description": "参数名称（用于存储和获取值）"
+            },
+            "value": {
+              "type": "string",
+              "description": "默认值"
+            },
+            "options": {
+              "type": "array",
+              "description": "选项列表",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
+            },
+            "dataFrom": {
+              "type": "string",
+              "description": "数据来源（如：role）"
+            },
+            "hidden": {
+              "type": "boolean",
+              "description": "是否隐藏",
+              "default": false
             }
-          },
-          "then": {
-            "required": ["label", "name"]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "type": {
-                "const": "notice"
-              }
-            }
-          },
-          "then": {
-            "required": ["title"]
           }
         }
       ]

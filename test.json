@@ -1,8 +1,6 @@
 {
     "$schema": "./deekeScript.schema.json",
     "name": "test",
-    "version": "1.0.0",
-    "description": "test",
     "versionCode": "100",
     "versionName": "名称",
     "debug": true,
@@ -27,6 +25,74 @@
                                 "label": "标题",
                                 "name": "title",
                                 "type": "number"
+                            },
+                            {
+                                "type": "notice",
+                                "title": "提示"
+                            },
+                            {
+                                "type": "switch",
+                                "label": "标题",
+                                "name": "title",
+                                "value": true
+                            },
+                            {
+                                "type": "number",
+                                "label": "标题",
+                                "name": "title",
+                                "value": 3223
+                            },
+                            {
+                                "type": "digit",
+                                "label": "标题",
+                                "name": "title",
+                                "value": 32
+                            },
+                            {
+                                "type": "numberRange",
+                                "label": "标题",
+                                "name": "title",
+                                "value": 32,
+                                "min": 0,
+                                "max": 100,
+                                "step": 1
+                            },
+                            {
+                                "type": "textArea",
+                                "label": "标题",
+                                "name": "title",
+                                "value": "32",
+                                "lines": 3
+                            },
+                            {
+                                "type": "checkboxGroup",
+                                "label": "标题",
+                                "name": "title",
+                                "children": ["1", "2", "3"],
+                                "values": ["1", "2", "3"]
+                            },
+                            {
+                                "type": "digitRange",
+                                "label": "标题",
+                                "name": "title",
+                                "value": 32,
+                                "min": 0,
+                                "max": 100,
+                                "step": 1
+                            },
+                            {
+                                "type": "radio",
+                                "label": "标题",
+                                "name": "title",
+                                "value": "1",
+                                "dataFrom": "role",
+                                "options": []
+                            },
+                            {
+                                "type": "text",
+                                "label": "标题",
+                                "name": "title",
+                                "value": "32"
                             }
                         ]
                     }
