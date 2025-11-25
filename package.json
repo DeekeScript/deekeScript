@@ -1,6 +1,6 @@
 {
   "name": "deeke-script-app",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "DeekeScript应用",
   "main": "src/index.ts",
   "scripts": {
@@ -8,7 +8,8 @@
     "build-zip": "rimraf script && cpx \"src/**/*\" script && ts-node --esm ./deekeScriptZipBuild",
     "build-obfuscator": "rimraf script && cpx \"src/**/*\" script && ts-node --esm ./gulpfile",
     "build-obfuscator-zip": "rimraf script && cpx \"src/**/*\" script && ts-node --esm ./gulpfile && ts-node --esm ./deekeScriptZipBuild",
-    "postinstall": "ts-node --esm init"
+    "postinstall": "ts-node --esm init",
+    "update-types": "node update-types.js"
   },
   "repository": {
     "type": "git",

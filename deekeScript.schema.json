@@ -1,0 +1,492 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DeekeScript 配置文件",
+  "description": "DeekeScript Android 项目配置文件，用于动态渲染页面",
+  "type": "object",
+  "required": ["name", "versionCode", "versionName", "icon", "host", "switchSetting", "groups", "bottomMenus", "settingLists", "apis"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "App安装成功之后，在手机上的名称"
+    },
+    "versionCode": {
+      "type": "string",
+      "description": "版本号（软件自动升级凭证，当前版本号大于或者等于后台上传的版本号，则无法升级）"
+    },
+    "versionName": {
+      "type": "string",
+      "description": "版本名称，尽量和版本号统一（版本号100，则配置为1.0.0）"
+    },
+    "icon": {
+      "type": "string",
+      "description": "图标建议采用200*200像素的，清晰度大的"
+    },
+    "head": {
+      "type": "string",
+      "description": "App中用户设置页面的头像，无设置页可以不填"
+    },
+    "settingTopBg": {
+      "type": "string",
+      "description": "设置页面顶部背景图"
+    },
+    "debug": {
+      "type": "boolean",
+      "description": "默认为true（不需要激活码也可以启动脚本），如果需要激活才能使用APP，请设置为false",
+      "default": true
+    },
+    "host": {
+      "type": "string",
+      "description": "接口请求域名",
+      "format": "uri"
+    },
+    "switchSetting": {
+      "type": "object",
+      "description": "功能开关设置",
+      "required": ["alipay"],
+      "properties": {
+        "alipay": {
+          "type": "boolean",
+          "description": "支持支付宝支付"
+        }
+      }
+    },
+    "groups": {
+      "type": "array",
+      "description": "主界面的功能组，每组都会包含若干个功能",
+      "items": {
+        "type": "object",
+        "required": ["title", "methods"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "App主界面的功能名称"
+          },
+          "titleHidden": {
+            "type": "boolean",
+            "description": "App主界面功能组标题是否隐藏，默认不隐藏",
+            "default": false
+          },
+          "hidden": {
+            "type": "boolean",
+            "description": "是否隐藏当前功能组，默认不隐藏",
+            "default": false
+          },
+          "methods": {
+            "type": "array",
+            "description": "当前功能组下的功能列表",
+            "items": {
+              "$ref": "#/definitions/method"
+            }
+          }
+        }
+      }
+    },
+    "bottomMenus": {
+      "type": "array",
+      "description": "App中底部菜单，可以使用系统内置的，也可以自定义",
+      "items": {
+        "type": "object",
+        "required": ["title", "icon", "type"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "菜单标题，可使用 {NAME} 占位符"
+          },
+          "icon": {
+            "type": "string",
+            "description": "菜单图标路径"
+          },
+          "banner": {
+            "type": "string",
+            "description": "横幅图片路径"
+          },
+          "type": {
+            "type": "string",
+            "description": "菜单类型",
+            "enum": ["home", "speech", "setting"]
+          }
+        }
+      }
+    },
+    "settingLists": {
+      "type": "array",
+      "description": "App中设置页的列表项，可以使用系统内置的，也可以自定义",
+      "items": {
+        "type": "object",
+        "required": ["title", "icon", "type"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "设置项标题"
+          },
+          "icon": {
+            "type": "string",
+            "description": "设置项图标路径"
+          },
+          "type": {
+            "type": "string",
+            "description": "设置项类型",
+            "enum": ["customerService", "notice", "settingService", "statistics", "uploadLog", "updateApp", "clear", "qiwei"]
+          },
+          "description": {
+            "type": "string",
+            "description": "设置项描述"
+          },
+          "file": {
+            "type": "string",
+            "description": "文件路径（用于 notice 类型）"
+          },
+          "url": {
+            "type": "string",
+            "description": "接口URL"
+          },
+          "jsFile": {
+            "type": "string",
+            "description": "JavaScript文件路径"
+          },
+          "hidden": {
+            "type": "boolean",
+            "description": "是否隐藏",
+            "default": false
+          },
+          "settingPage": {
+            "$ref": "#/definitions/settingPage"
+          }
+        }
+      }
+    },
+    "apis": {
+      "type": "array",
+      "description": "设置相关api，比如激活码api，验证激活码是否有效api等",
+      "items": {
+        "type": "object",
+        "required": ["type", "url"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "API类型",
+            "enum": ["bind", "checkBind", "aiSpeechToken", "config", "getToken", "createOrder"]
+          },
+          "url": {
+            "type": "string",
+            "description": "API接口路径"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "method": {
+      "type": "object",
+      "required": ["title", "icon"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "App主界面的功能名称"
+        },
+        "icon": {
+          "type": "string",
+          "description": "App主界面的功能图标"
+        },
+        "jsFile": {
+          "type": "string",
+          "description": "功能实际执行的代码所在文件"
+        },
+        "settingPage": {
+          "$ref": "#/definitions/settingPage"
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "属性值，当为true的时候，则界面上不再显示此功能模块",
+          "default": false
+        },
+        "runType": {
+          "type": "string",
+          "description": "如果为floatSwitch则需要手动点击右侧悬浮窗执行",
+          "enum": ["floatSwitch"]
+        },
+        "packageName": {
+          "type": "string",
+          "description": "包名，和runType配合使用"
+        },
+        "columns": {
+          "type": "number",
+          "description": "每行被等分为24,8则表示当前groups一行放3个功能图标"
+        },
+        "autoOpen": {
+          "type": "boolean",
+          "description": "是否自动打开界面（需要和packageName配合使用）"
+        },
+        "activity": {
+          "type": "object",
+          "description": "活动配置",
+          "properties": {
+            "notice": {
+              "type": "string",
+              "description": "活动提示"
+            },
+            "title": {
+              "type": "string",
+              "description": "活动标题"
+            },
+            "minVersion": {
+              "type": "number",
+              "description": "最小版本号"
+            },
+            "groups": {
+              "type": "array",
+              "description": "活动功能组",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "titleHidden": {
+                    "type": "boolean"
+                  },
+                  "methods": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/method"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "settingPage": {
+      "type": "object",
+      "required": ["params"],
+      "properties": {
+        "params": {
+          "type": "array",
+          "description": "需要用户设置的参数",
+          "items": {
+            "$ref": "#/definitions/param"
+          }
+        }
+      }
+    },
+    "param": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "参数类型",
+          "enum": [
+            "text",
+            "number",
+            "numberRange",
+            "textArea",
+            "switch",
+            "radio",
+            "checkbox",
+            "checkboxGroup",
+            "select",
+            "date",
+            "time",
+            "datetime",
+            "color",
+            "file",
+            "image",
+            "notice"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "description": "标签文本"
+        },
+        "name": {
+          "type": "string",
+          "description": "参数名称（用于存储和获取值）"
+        },
+        "value": {
+          "description": "默认值（类型根据type而定）"
+        },
+        "hint": {
+          "type": "string",
+          "description": "提示文本"
+        },
+        "notice": {
+          "type": "string",
+          "description": "通知文本"
+        },
+        "title": {
+          "type": "string",
+          "description": "标题（用于notice类型）"
+        },
+        "min": {
+          "type": "number",
+          "description": "最小值（用于numberRange类型）"
+        },
+        "max": {
+          "type": "number",
+          "description": "最大值（用于numberRange类型）"
+        },
+        "step": {
+          "type": "number",
+          "description": "步长（用于numberRange类型）"
+        },
+        "options": {
+          "type": "array",
+          "description": "选项列表（用于radio、select类型）",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "dataFrom": {
+          "type": "string",
+          "description": "数据来源（如：role）"
+        },
+        "children": {
+          "type": "array",
+          "description": "子选项（用于checkboxGroup类型）",
+          "items": {
+            "type": "string"
+          }
+        },
+        "values": {
+          "type": "array",
+          "description": "值列表（用于checkboxGroup类型）",
+          "items": {
+            "type": "string"
+          }
+        },
+        "columnCount": {
+          "type": "number",
+          "description": "列数（用于checkboxGroup类型）"
+        },
+        "lines": {
+          "type": "number",
+          "description": "行数（用于textArea类型）"
+        },
+        "textColor": {
+          "type": "string",
+          "description": "文本颜色（用于notice类型）",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "textSize": {
+          "type": "number",
+          "description": "文本大小（用于notice类型）"
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "是否隐藏",
+          "default": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "numberRange"
+              }
+            }
+          },
+          "then": {
+            "required": ["label", "name", "min", "max", "value"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "textArea"
+              }
+            }
+          },
+          "then": {
+            "required": ["label", "name"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "checkboxGroup"
+              }
+            }
+          },
+          "then": {
+            "required": ["label", "name", "children", "values"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "switch"
+              }
+            }
+          },
+          "then": {
+            "required": ["label", "name"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "radio"
+              }
+            }
+          },
+          "then": {
+            "required": ["label", "name"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "text"
+              }
+            }
+          },
+          "then": {
+            "required": ["label", "name"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "number"
+              }
+            }
+          },
+          "then": {
+            "required": ["label", "name"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "notice"
+              }
+            }
+          },
+          "then": {
+            "required": ["title"]
+          }
+        }
+      ]
+    }
+  }
+}
+

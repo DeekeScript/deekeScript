@@ -1,0 +1,67 @@
+{
+    "$schema": "./deekeScript.schema.json",
+    "name": "test",
+    "version": "1.0.0",
+    "description": "test",
+    "versionCode": "100",
+    "versionName": "名称",
+    "debug": true,
+    "icon": "icon.png",
+    "head": "head.png",
+    "host": "http://127.0.0.1:8080",
+    "switchSetting": {
+        "alipay": false
+    },
+    "settingTopBg": "top.png",
+    "groups": [
+        {
+            "title": "测试",
+            "methods": [
+                {
+                    "icon": "icon.png",
+                    "title": "测试",
+                    "jsFile": "test.js",
+                    "settingPage": {
+                        "params": [
+                            {
+                                "label": "标题",
+                                "name": "title",
+                                "type": "number"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "apis": [
+        {
+            "type": "aiSpeechToken",
+            "url": "http://127.0.0.1:8080/api/aiSpeechToken"
+        }
+    ],
+    "bottomMenus": [
+        {
+            "banner": "banner.png",
+            "icon": "icon.png",
+            "title": "标题",
+            "type": "home"
+        }
+    ],
+    "settingLists": [
+        {
+            "title": "设置",
+            "icon": "icon.png",
+            "type": "clear",
+            "settingPage": {
+                "params": [
+                    {
+                        "label": "标题",
+                        "name": "title",
+                        "type": "number"
+                    }
+                ]
+            }
+        }
+    ]
+}

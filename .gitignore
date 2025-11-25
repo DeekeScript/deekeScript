@@ -1,1 +1,3 @@
 node_modules
+.temp-update
+@deekeScript.backup

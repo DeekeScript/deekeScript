@@ -1,4 +1,5 @@
 {
+  "$schema": "./deekeScript.schema.json",
   "name": "测试测试",
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
