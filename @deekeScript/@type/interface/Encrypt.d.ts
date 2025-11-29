@@ -44,7 +44,7 @@ interface Encrypt {
      * @param iv 
      * @param input 
      */
-    public aesCbcEncrypt(key: string, iv: string, input: string): string;
+    public aesCbcEncode(key: string, iv: string, input: string): string;
 
     /**
      * aescbc解密
@@ -52,7 +52,7 @@ interface Encrypt {
      * @param iv 
      * @param input 
      */
-    public aesCbcDecrypt(key: string, iv: string, input: string): string;
+    public aesCbcDecode(key: string, iv: string, input: string): string;
 }
 
 export { };

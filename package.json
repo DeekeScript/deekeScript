@@ -1,6 +1,6 @@
 {
   "name": "deeke-script-app",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "description": "DeekeScript应用",
   "main": "src/index.ts",
   "scripts": {

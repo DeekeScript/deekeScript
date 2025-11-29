@@ -42,6 +42,11 @@ declare global {
         public cut(): boolean;
 
         /**
+         * 粘贴内容到文本框
+         */
+        public paste(): boolean;
+
+        /**
          * 让控件获取焦点
          */
         public focus(): boolean;
@@ -109,11 +114,6 @@ declare global {
          * 获取父控件
          */
         public parent(): UiObject;
-
-        /**
-         * 获取控件的层级
-         */
-        public depth(): number;
 
         /**
          * 获取控件的绘制顺序
