@@ -36,6 +36,12 @@ interface FloatDialogs {
      * 关闭FloatDialogs开启的所有弹窗
      */
     public closeAll(): void;
+
+    /**
+     * 设置悬浮窗显示/隐藏
+     * @param visible 是否显示
+     */
+    public setFloatWindowVisible(visible: boolean): void;
 }
 
 export { };

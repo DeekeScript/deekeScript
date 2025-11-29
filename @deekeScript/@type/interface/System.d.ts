@@ -109,6 +109,12 @@ interface System {
      * @param mode 快速模式mode为fast，非快速模式为!fast
      */
     public setAccessibilityMode(mode: string): void;
+
+    /**
+     * 设置屏幕是否保持常亮
+     * @param keepOn 是否保持屏幕常亮
+     */
+    public setKeepScreenOn(keepOn: boolean): void;
 }
 
 export { };

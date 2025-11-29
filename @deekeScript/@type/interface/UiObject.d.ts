@@ -192,6 +192,11 @@ declare global {
          * 获取控件的包名
          */
         public getPackageName(): string;
+
+        /**
+         * 获取控件的提示文本
+         */
+        public getHintText(): string;
     }
 }
 export { };
