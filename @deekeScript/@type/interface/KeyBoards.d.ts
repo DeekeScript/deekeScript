@@ -22,6 +22,33 @@ interface KeyBoards {
      * 删除文本框最后一个字符
      */
     public delete():boolean;
+
+    /**
+     * 隐藏键盘
+     */
+    public hide(): boolean;
+
+    /**
+     * 发送按键事件，支持各种按键
+     * 注意：输入法只能发送文本输入相关的按键，系统级按键（如HOME、BACK、POWER等）无法通过输入法发送
+     * @param key 按键代码，可以是字符串（如 "ENTER"）或数字（如 KeyBoards.KEYCODE.ENTER）
+     */
+    public pressKey(key: string | number): boolean;
+
+    /**
+     * 发送Enter键（回车键）
+     */
+    public pressEnter(): boolean;
+
+    /**
+     * 发送Tab键（制表符）
+     */
+    public pressTab(): boolean;
+
+    /**
+     * 发送空格键
+     */
+    public pressSpace(): boolean;
 }
 
 export { };
