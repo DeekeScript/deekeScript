@@ -4,17 +4,6 @@ declare global {
 
 interface Device {
     /**
-     * 息屏后，保持 CPU 唤醒，延时释放
-     * @param second 保持 CPU 唤醒，延时释放，单位秒
-     */
-    public keepCpuAwake(second: number): void;
-
-    /**
-     * 关闭CPU唤醒状态
-     */
-    public releaseCpuWakeLock(): void;
-
-    /**
      * 获取屏幕宽度
      */
     public width(): number;
@@ -60,11 +49,6 @@ interface Device {
     public getAttr(key: string): string;
 
     /**
-     * 判断屏幕是否亮着
-     */
-    public isScreenOn(): boolean;
-
-    /**
      * 获取设备品牌， 如 "HUAWEI" 或 "Xiaomi"
      */
     public brand(): string;
@@ -83,6 +67,146 @@ interface Device {
      * 获取设备代号， 例如 "REL" 表示正式发布的版本
      */
     public codename(): string;
+
+    /**
+     * 获取设备制造商信息，如 "HUAWEI"、"Xiaomi" 等
+     */
+    public manufacturer(): string;
+
+    /**
+     * 获取硬件名称，如 "kirin990" 等
+     */
+    public hardware(): string;
+
+    /**
+     * 获取主板型号信息
+     */
+    public board(): string;
+
+    /**
+     * 获取产品名称信息
+     */
+    public product(): string;
+
+    /**
+     * 获取 Bootloader 版本信息
+     */
+    public bootloader(): string;
+
+    /**
+     * 获取构建ID信息
+     */
+    public buildId(): string;
+
+    /**
+     * 获取显示版本信息
+     */
+    public display(): string;
+
+    /**
+     * 获取设备指纹信息
+     */
+    public fingerprint(): string;
+
+    /**
+     * 获取主机名信息
+     */
+    public host(): string;
+
+    /**
+     * 获取构建用户信息
+     */
+    public user(): string;
+
+    /**
+     * 获取CPU架构信息，如 "arm64-v8a"、"armeabi-v7a" 等
+     */
+    public getCpuAbi(): string;
+
+    /**
+     * 获取所有支持的CPU架构列表
+     */
+    public getCpuAbis(): string[];
+
+    /**
+     * 获取WiFi网络的IP地址（仅WiFi连接时有效）
+     * @returns WiFi IP地址，如果WiFi未连接返回空字符串
+     */
+    public getWifiIPAddress(): string;
+
+    /**
+     * 获取当前活动网络的IP地址（支持WiFi和移动网络，返回局域网IP）
+     * @returns 当前活动网络的IP地址，如果获取失败返回 "127.0.0.1"
+     */
+    public getIPAddress(): string;
+
+    /**
+     * 获取公网IPv4地址（需要通过HTTP请求外部服务）
+     * @returns 公网IPv4地址，如果获取失败返回空字符串
+     */
+    public getPublicIPAddress(): string;
+
+    /**
+     * 获取公网IPv6地址（需要通过HTTP请求外部服务）
+     * @returns 公网IPv6地址，如果获取失败返回空字符串
+     */
+    public getPublicIPAddressV6(): string;
+
+    /**
+     * 获取公网IP信息（包含IPv4和IPv6）
+     * @returns 包含 ipv4 和 ipv6 的对象
+     */
+    public getPublicIPInfo(): {
+        ipv4: string;
+        ipv6: string;
+    };
+
+    /**
+     * 获取完整的IP信息（包括当前IP、WiFi IP、公网IP等）
+     * @returns 包含所有IP信息的对象
+     */
+    public getIpInfo(): {
+        ip: string;
+        wifiIP: string;
+        publicIP: string;
+        publicIPV6: string;
+        publicIPInfo: {
+            ipv4: string;
+            ipv6: string;
+        };
+    };
+
+    /**
+     * 获取MAC地址（需要WiFi已连接）
+     * @returns MAC地址，如果WiFi未连接返回空字符串
+     */
+    public getMacAddress(): string;
+
+    /**
+     * 获取网络类型
+     * @returns 网络类型："WiFi" | "Mobile" | "Ethernet" | "Other" | "None"
+     */
+    public getNetworkType(): "WiFi" | "Mobile" | "Ethernet" | "Other" | "None";
+
+    /**
+     * 检查网络是否已连接
+     * @returns 网络是否已连接
+     */
+    public isNetworkConnected(): boolean;
+
+    /**
+     * 获取完整的网络信息
+     * @returns 包含网络类型、连接状态、MAC地址、IP地址等的对象
+     */
+    public getNetworkInfo(): {
+        type: "WiFi" | "Mobile" | "Ethernet" | "Other" | "None";
+        connected: boolean;
+        macAddress: string;
+        ip: string;
+        wifiIP: string;
+        publicIP: string;
+        publicIPV6: string;
+    };
 }
 
 export { };
