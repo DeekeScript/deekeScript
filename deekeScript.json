@@ -7,9 +7,11 @@
   "versionCode": "101",
   "versionName": "1.0.1",
   "host": "https://home.deeke.top",
+  "debug": true,
   "switchSetting": {
     "alipay": true
   },
+  "bottomMenusHidden": true,
   "groups": [
     {
       "title": "DY·万能引流测试",

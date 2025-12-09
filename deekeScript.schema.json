@@ -3,7 +3,7 @@
   "title": "DeekeScript 配置文件",
   "description": "DeekeScript Android 项目配置文件，用于动态渲染页面",
   "type": "object",
-  "required": ["name", "versionCode", "versionName", "icon", "host", "switchSetting", "groups", "bottomMenus", "settingLists", "apis"],
+  "required": ["name", "versionCode", "versionName", "icon", "host", "switchSetting", "bottomMenusHidden", "groups", "bottomMenus", "settingLists", "apis"],
   "additionalProperties": false,
   "properties": {
     "$schema": {
@@ -43,6 +43,11 @@
       "type": "string",
       "description": "接口请求域名",
       "format": "uri"
+    },
+    "bottomMenusHidden": { 
+      "type": "boolean",
+      "default": false,
+      "description": "是否隐藏底部菜单"
     },
     "switchSetting": {
       "type": "object",
