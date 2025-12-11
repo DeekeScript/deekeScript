@@ -136,6 +136,39 @@ interface access {
       * @return true 如果权限被永久拒绝或禁用
       */
      public isStoragePermissionPermanentlyDenied(): boolean;
+
+     /**
+      * 检查是否有位置权限
+      * 
+      * 权限说明：
+      * - 检查 ACCESS_FINE_LOCATION（精确定位）或 ACCESS_COARSE_LOCATION（粗略定位）权限
+      * - 如果授予了 ACCESS_FINE_LOCATION，则自动拥有 ACCESS_COARSE_LOCATION 权限
+      * 
+      * @return true 如果有权限
+      */
+     public hasLocationPermission(): boolean;
+
+     /**
+      * 申请位置权限
+      * 
+      * 权限说明：
+      * - 优先请求 ACCESS_FINE_LOCATION（精确定位）
+      * - 如果用户拒绝了精确定位，系统可能降级为 ACCESS_COARSE_LOCATION（粗略定位）
+      * 
+      * 注意：这是异步操作，不会阻塞
+      * 如果用户禁用了权限，需要调用 isLocationPermissionPermanentlyDenied() 检查是否被永久拒绝
+      */
+     public requestLocationPermissions(): void;
+
+     /**
+      * 检查位置权限是否被永久拒绝（用户选择了"不再询问"）
+      * 
+      * 如果返回true，说明用户之前拒绝过权限并选择了"不再询问"，
+      * 系统不会再弹出权限对话框，需要引导用户去设置页面手动开启
+      * 
+      * @return true 如果权限被永久拒绝
+      */
+     public isLocationPermissionPermanentlyDenied(): boolean;
 }
 
 export { };

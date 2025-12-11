@@ -207,6 +207,27 @@ interface Device {
         publicIP: string;
         publicIPV6: string;
     };
+
+    /**
+     * 获取设备当前位置信息
+     * 
+     * 需要先申请位置权限（使用Access.requestLocationPermissions()）。
+     * 此方法会优先使用GPS定位（更精确），如果GPS不可用，会尝试使用网络定位。
+     * 如果仍然无法获取位置，会尝试使用被动定位提供者。
+     * 
+     * @returns 位置信息对象，包含纬度、经度、海拔、精度、速度、方向角、时间戳和定位提供者。
+     *          如果获取失败或没有权限，返回 null
+     */
+    public getLocation(): {
+        latitude: number;
+        longitude: number;
+        altitude: number;
+        accuracy: number;
+        speed: number;
+        bearing: number;
+        time: number;
+        provider: string;
+    } | null;
 }
 
 export { };

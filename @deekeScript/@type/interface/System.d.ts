@@ -10,6 +10,18 @@ interface System {
     public sleep(milliSecond: number): void;
 
     /**
+     * 精确休眠
+     * @param milliSecond 毫秒
+     * 
+     * 与sleep()方法相比，preciseSleep()使用更精确的休眠机制，
+     * 通过WakeLock保持CPU唤醒状态，并使用循环检查来确保休眠时间的准确性。
+     * 
+     * 注意：此方法会保持CPU唤醒状态，可能会增加电量消耗。
+     * 如果不需要精确的休眠时间，建议使用sleep()方法。
+     */
+    public preciseSleep(milliSecond: number): void;
+
+    /**
      * 释放内存
      */
     public gc(): void;
