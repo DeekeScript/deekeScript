@@ -29,12 +29,10 @@ interface Device {
     public androidVersion(): string;
 
     /**
-     * 生成设备唯一标识符， 卸载App前，可以通过getUuid获取，卸载后丢失
-     */
-    public createUuid(): string;
-
-    /**
      * 获取设备唯一标识符
+     * 
+     * 返回系统级别的 ANDROID_ID，在设备恢复出厂设置之前会保持不变，保证设备唯一性。
+     * 注意：设备恢复出厂设置后，ANDROID_ID 可能会改变。App卸载不会影响此标识符。
      */
     public getUuid(): string;
 
