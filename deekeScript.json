@@ -11,7 +11,7 @@
   "switchSetting": {
     "alipay": true
   },
-  "bottomMenusHidden": true,
+  "bottomMenusHidden": false,
   "groups": [
     {
       "title": "DY·万能引流测试",
