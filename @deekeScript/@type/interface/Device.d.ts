@@ -226,6 +226,26 @@ interface Device {
         time: number;
         provider: string;
     } | null;
+
+    /**
+     * 获取状态栏高度（像素）
+     * 
+     * 状态栏是屏幕顶部显示时间、电池、信号等信息的区域。
+     * 如果获取失败返回0。
+     * 
+     * @returns 状态栏高度（像素）
+     */
+    public getStatusBarHeight(): number;
+
+    /**
+     * 获取底部虚拟按钮（导航栏）高度（像素）
+     * 
+     * 导航栏是屏幕底部显示返回、主页、最近任务等虚拟按钮的区域。
+     * 如果导航栏隐藏了或获取失败返回0。
+     * 
+     * @returns 导航栏高度（像素），如果隐藏或获取失败返回0
+     */
+    public getNavigationBarHeight(): number;
 }
 
 export { };
