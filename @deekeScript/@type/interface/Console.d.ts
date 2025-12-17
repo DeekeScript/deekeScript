@@ -91,12 +91,35 @@ interface Console {
     setLineHeight(lineHeight: number): void;
 
     /**
-     * 一次性设置三个按钮的颜色（关闭按钮、拖拽按钮、调整大小按钮）
+     * 一次性设置两个按钮的颜色（关闭按钮、调整大小按钮）
      * @param closeColor 关闭按钮颜色（ARGB格式）
-     * @param dragColor 拖拽按钮颜色（ARGB格式）
      * @param resizeColor 调整大小按钮颜色（ARGB格式）
      */
-    setButtonColors(closeColor: number, dragColor: number, resizeColor: number): void;
+    setButtonColors(closeColor: number, resizeColor: number): void;
+
+    /**
+     * 设置标题栏文字的颜色
+     * @param color 颜色值（ARGB格式，如 0xFFFFFFFF 表示白色）
+     */
+    setTitleTextColor(color: number): void;
+
+    /**
+     * 设置标题栏文字的字体大小
+     * @param size 字体大小（sp）
+     */
+    setTitleTextSize(size: number): void;
+
+    /**
+     * 设置标题栏的文字内容
+     * @param text 标题文字内容。如果传入 null 或空字符串，将使用应用名称作为默认标题
+     */
+    setTitleText(text: string | null): void;
+
+    /**
+     * 设置标题栏的背景颜色
+     * @param color 颜色值（ARGB格式，-1表示自动计算，比背景色深20%）
+     */
+    setTitleBarColor(color: number): void;
 
     /**
      * 设置是否允许窗口移动到顶部
@@ -159,8 +182,11 @@ interface Console {
         textSize?: number;
         lineHeight?: number;
         closeButtonColor?: number;
-        dragButtonColor?: number;
         resizeButtonColor?: number;
+        titleTextColor?: number;
+        titleTextSize?: number;
+        titleText?: string | null;
+        titleBarColor?: number;
         allowMoveToTop?: boolean;
         allowMoveToBottom?: boolean;
         clickable?: boolean;
@@ -180,8 +206,11 @@ interface Console {
         textSize: number;
         lineHeight: number;
         closeButtonColor: number;
-        dragButtonColor: number;
         resizeButtonColor: number;
+        titleTextColor: number;
+        titleTextSize: number;
+        titleText: string;
+        titleBarColor: number;
         allowMoveToTop: boolean;
         allowMoveToBottom: boolean;
         clickable: boolean;
