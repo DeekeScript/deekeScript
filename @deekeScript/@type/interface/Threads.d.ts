@@ -33,10 +33,10 @@ interface Threads {
  * ThreadWrapper对象，用于管理线程
  */
 interface ThreadWrapper {
-    /**
-     * 启动线程（使用线程池时，任务会自动启动，此方法主要用于兼容性）
-     */
-    start(): void;
+  /**
+   * 启动线程
+   */
+  start(): void;
 
     /**
      * 等待线程任务完成
@@ -78,7 +78,7 @@ interface ThreadWrapper {
      * 获取线程名称
      * @returns 线程名称
      */
-    getName(): string | null;
+    getName(): string;
 
     /**
      * 设置线程优先级
