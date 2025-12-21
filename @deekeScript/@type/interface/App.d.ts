@@ -94,7 +94,12 @@ declare global {
          * @param url URL地址
          * @param packageName 包名（可选，用于指定打开URL的应用）
          */
-        public openUrl(url: string, packageName: string): void;
+        /**
+         * 打开URL地址。如果提供了packageName，则优先使用指定应用打开，如果应用未安装则使用浏览器打开；如果未提供packageName，则直接使用浏览器打开。
+         * @param url URL地址
+         * @param packageName 包名（可选，用于指定打开URL的应用）
+         */
+        openUrl(url: string, packageName?: string): void;
     }
 }
 
