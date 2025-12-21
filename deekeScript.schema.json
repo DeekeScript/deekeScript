@@ -61,6 +61,25 @@
         }
       }
     },
+    "hooks": {
+      "type": "object",
+      "description": "生命周期钩子函数配置",
+      "additionalProperties": false,
+      "properties": {
+        "app_start_before": {
+          "type": "string",
+          "description": "应用启动前执行的钩子函数文件路径"
+        },
+        "app_start": {
+          "type": "string",
+          "description": "应用启动时执行的钩子函数文件路径"
+        },
+        "app_active_after": {
+          "type": "string",
+          "description": "应用激活后执行的钩子函数文件路径"
+        }
+      }
+    },
     "groups": {
       "type": "array",
       "description": "主界面的功能组，每组都会包含若干个功能",
