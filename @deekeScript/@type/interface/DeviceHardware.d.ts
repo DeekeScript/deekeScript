@@ -26,7 +26,7 @@ interface DeviceHardware {
      * 禁用/启用状态栏
      * 禁用后，状态栏将被隐藏
      * 需要Device Owner权限
-     * API级别要求：API 23 (Android 6.0) 及以上
+     * API级别要求：API 26 (Android 8.0) 及以上
      * @param disabled true表示禁用状态栏，false表示启用状态栏
      * @returns 是否成功，true表示成功，false表示失败
      */
