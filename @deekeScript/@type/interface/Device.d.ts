@@ -246,6 +246,23 @@ interface Device {
      * @returns 导航栏高度（像素），如果隐藏或获取失败返回0
      */
     public getNavigationBarHeight(): number;
+
+    /**
+     * 获取所有已安装应用的包名列表
+     * @returns 应用包名数组
+     */
+    public getInstalledPackages(): string[];
+
+    /**
+     * 获取所有已安装应用的详细信息列表
+     * @returns 应用信息数组，每个元素包含应用信息对象（packageName, appName, versionName, versionCode等）
+     */
+    public getInstalledApplications(): Array<{
+        packageName: string;
+        appName: string;
+        versionName: string;
+        versionCode: number;
+    }>;
 }
 
 export { };
