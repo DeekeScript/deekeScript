@@ -120,6 +120,26 @@
                 "value": 60
               },
               {
+                "type": "switch",
+                "value": true,
+                "name": "switch",
+                "label": "开启后，子表单也开启",
+                "childrenParams": [
+                  {
+                    "type": "text",
+                    "label": "子表单1",
+                    "name": "child_text1",
+                    "value": ""
+                  },
+                  {
+                    "type": "number",
+                    "label": "子表单2",
+                    "name": "child_number1",
+                    "value": 0
+                  }
+                ]
+              },
+              {
                 "type": "checkboxGroup",
                 "label": "运行时间",
                 "name": "toker_run_hour",

@@ -49,6 +49,15 @@ interface KeyBoards {
      * 发送空格键
      */
     public pressSpace(): boolean;
+
+    /**
+     * 智能方法：根据当前状态自动跳转到合适的页面
+     * - 如果已经是默认输入法，返回 true
+     * - 如果未启用，跳转到启用页面（用户需要先启用）
+     * - 如果已启用但未设为默认，弹出输入法选择界面（用户可以选择为默认）
+     * @returns 返回当前输入法是否已设为默认（true表示已是默认，false表示需要用户操作）
+     */
+    public showInputMethodPicker(): boolean;
 }
 
 export { };
