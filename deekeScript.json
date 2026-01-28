@@ -1,6 +1,6 @@
 {
   "$schema": "./deekeScript.schema.json",
-  "name": "测试测试",
+  "name": "智能截流",
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
@@ -14,494 +14,290 @@
   "bottomMenusHidden": false,
   "groups": [
     {
-      "title": "DY·万能引流测试",
+      "title": "DY·智能截流",
       "titleHidden": false,
       "hidden": false,
       "methods": [
         {
-          "title": "推荐营销2",
+          "title": "智能截流",
           "icon": "images/test/finger.png",
           "jsFile": "script/task/dy.js",
+          "autoOpen": true,
+          "packageName": "com.ss.android.ugc.aweme",
+          "runType": "floatSwitch",
           "settingPage": {
             "params": [
               {
-                "type": "numberRange",
-                "label": "观看时长（秒）",
-                "name": "toker_view_video_second",
-                "max": 60,
-                "min": 5,
-                "value": 12,
-                "step": 1
-              },
-              {
-                "type": "textArea",
-                "label": "关键词筛选（多个使用逗号隔开）",
-                "name": "toker_view_video_keywords",
-                "value": "",
-                "notice": "* 关键词不填则操作所有"
-              },
-              {
-                "type": "numberRange",
-                "label": "点赞频率（%）",
-                "name": "toker_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "评论频率（%）",
-                "name": "toker_comment_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "关注频率（%）",
-                "name": "toker_focus_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "私信频率（%）",
-                "name": "toker_private_msg_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "评论区五连赞频率（%）",
-                "name": "toker_comment_area_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "性别",
-                "name": "toker_run_sex",
-                "columnCount": 6,
-                "children": [
-                  "女",
-                  "男",
-                  "未知"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2"
+                "type": "radio",
+                "label": "运行区域",
+                "name": "toker_run_mode",
+                "value": "0",
+                "options": [
+                  {
+                    "label": "推荐区域",
+                    "value": "0"
+                  },
+                  {
+                    "label": "同城区域",
+                    "value": "1"
+                  },
+                  {
+                    "label": "搜索页面",
+                    "value": "2"
+                  }
                 ]
               },
               {
-                "type": "numberRange",
-                "label": "最小年龄",
-                "name": "toker_run_min_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 0
+                "type": "textArea",
+                "label": "作品IP地址（多个使用逗号隔开）",
+                "name": "toker_video_ip",
+                "value": "",
+                "notice": "* 匹配ip的视频才会被操作，留空则不筛选"
               },
               {
-                "type": "numberRange",
-                "label": "最大年龄",
-                "name": "toker_run_max_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 60
+                "type": "textArea",
+                "label": "作品关键词筛选（多个使用逗号隔开）",
+                "name": "toker_video_keywords",
+                "value": "",
+                "notice": "* 匹配关键词的视频才会被操作，留空则不筛选"
+              },
+              {
+                "type": "number",
+                "label": "未匹配关键词，等待确认时间（秒）",
+                "name": "toker_wait_second",
+                "value": 30
               },
               {
                 "type": "switch",
-                "value": true,
-                "name": "switch",
-                "label": "开启后，子表单也开启",
+                "label": "评论作品设置",
+                "name": "toker_comments",
+                "value": false,
                 "childrenParams": [
                   {
-                    "type": "text",
-                    "label": "子表单1",
-                    "name": "child_text1",
-                    "value": ""
+                    "type": "numberRange",
+                    "label": "评论频率（%）",
+                    "name": "toker_comment_rate",
+                    "max": 100,
+                    "min": 0,
+                    "step": 1,
+                    "value": 100
+                  },
+                  {
+                    "type": "checkboxGroup",
+                    "label": "评论形式",
+                    "name": "toker_comment_type",
+                    "values": [
+                      "0"
+                    ],
+                    "children": [
+                      "文字",
+                      "图片",
+                      "@抖音名字"
+                    ]
+                  },
+                  {
+                    "type": "textArea",
+                    "label": "@抖音名字",
+                    "name": "toker_comment_at_name",
+                    "value": "",
+                    "notice": "* 格式：@抖音名字1@抖音名字2@抖音名字3"
+                  },
+                  {
+                    "type": "textArea",
+                    "label": "评论内容（多个评论使用两个空行换行）",
+                    "name": "toker_comment_content",
+                    "value": "你好\n\n厉害了"
+                  },
+                  {
+                    "type": "imagePicker",
+                    "label": "评论图片",
+                    "name": "toker_comment_images",
+                    "values": [],
+                    "max": 9
+                  }
+                ]
+              },
+              {
+                "type": "switch",
+                "label": "意向客户主页留痕设置",
+                "name": "toker_comment_setting",
+                "value": false,
+                "childrenParams": [
+                  {
+                    "type": "textArea",
+                    "label": "IP地址（多个使用逗号隔开）",
+                    "name": "toker_comment_setting_video_ip",
+                    "value": "",
+                    "notice": "* 匹配ip的评论才会被操作，留空则不筛选"
+                  },
+                  {
+                    "type": "textArea",
+                    "label": "关键词筛选（多个使用逗号隔开）",
+                    "name": "toker_comment_setting_keywords",
+                    "value": "",
+                    "notice": "* 匹配关键词的评论才会被操作，留空则不筛选"
+                  },
+                  {
+                    "type": "checkboxGroup",
+                    "label": "性别",
+                    "name": "toker_comment_setting_sex",
+                    "children": [
+                      "女",
+                      "男",
+                      "未知"
+                    ],
+                    "values": [
+                      "0",
+                      "1",
+                      "2"
+                    ]
                   },
                   {
                     "type": "number",
-                    "label": "子表单2",
-                    "name": "child_number1",
-                    "value": 0
+                    "label": "N天内评论",
+                    "name": "toker_comment_setting_min_day",
+                    "value": 30,
+                    "notice": "* 不填写则不限制"
+                  },
+                  {
+                    "type": "numberRange",
+                    "label": "关注频率（%）",
+                    "name": "toker_comment_setting_focus_rate",
+                    "max": 100,
+                    "min": 0,
+                    "step": 1,
+                    "value": 1
+                  },
+                  {
+                    "type": "numberRange",
+                    "label": "私信频率（%）",
+                    "name": "toker_comment_setting_private_msg_rate",
+                    "max": 100,
+                    "min": 0,
+                    "step": 1,
+                    "value": 1
+                  },
+                  {
+                    "type": "textArea",
+                    "label": "私信内容（多个评论使用两个空行换行）",
+                    "name": "toker_comment_setting_private_msg",
+                    "value": "你好\n\n厉害了"
+                  },
+                  {
+                    "type": "numberRange",
+                    "label": "首作品点赞概率",
+                    "name": "toker_comment_setting_video_zan_rate",
+                    "max": 100,
+                    "min": 0,
+                    "step": 1,
+                    "value": 18
+                  },
+                  {
+                    "type": "numberRange",
+                    "label": "首作品评论概率",
+                    "name": "toker_comment_setting_video_comment_rate",
+                    "max": 100,
+                    "min": 0,
+                    "step": 1,
+                    "value": 18
+                  },
+                  {
+                    "type": "checkboxGroup",
+                    "label": "评论形式",
+                    "name": "toker_comment_setting_video_comment_type",
+                    "values": [
+                      "0"
+                    ],
+                    "children": [
+                      "文字",
+                      "图片",
+                      "@抖音名字"
+                    ]
+                  },
+                  {
+                    "type": "imagePicker",
+                    "label": "评论图片",
+                    "name": "toker_comment_setting_video_comment_images",
+                    "values": [],
+                    "max": 9
+                  },
+                  {
+                    "type": "textArea",
+                    "label": "@抖音名字",
+                    "name": "toker_comment_setting_video_at_name",
+                    "value": "",
+                    "notice": "* 格式：@抖音名字1@抖音名字2@抖音名字3"
+                  },
+                  {
+                    "type": "textArea",
+                    "label": "评论内容（多个评论使用两个空行换行）",
+                    "name": "toker_comment_setting_video_comment_content",
+                    "value": "你好\n\n厉害了"
                   }
                 ]
               },
               {
-                "type": "checkboxGroup",
-                "label": "运行时间",
-                "name": "toker_run_hour",
-                "columnCount": 6,
-                "children": [
-                  "0时",
-                  "1时",
-                  "2时",
-                  "3时",
-                  "4时",
-                  "5时",
-                  "6时",
-                  "7时",
-                  "8时",
-                  "9时",
-                  "10时",
-                  "11时",
-                  "12时",
-                  "13时",
-                  "14时",
-                  "15时",
-                  "16时",
-                  "17时",
-                  "18时",
-                  "19时",
-                  "20时",
-                  "21时",
-                  "22时",
-                  "23时"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "7",
-                  "8",
-                  "9",
-                  "10",
-                  "11",
-                  "12",
-                  "13",
-                  "14",
-                  "15",
-                  "16",
-                  "17",
-                  "18",
-                  "19",
-                  "20",
-                  "21",
-                  "22",
-                  "23"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "title": "同城营销",
-          "icon": "images/test/city.png",
-          "jsFile": "script/task/dyCity.js",
-          "settingPage": {
-            "params": [
-              {
-                "type": "numberRange",
-                "label": "观看时长（秒）",
-                "name": "toker_city_view_video_second",
-                "max": 30,
-                "min": 5,
-                "value": 12,
-                "step": 1
-              },
-              {
-                "type": "textArea",
-                "label": "关键词筛选（多个使用逗号隔开）",
-                "name": "toker_city_view_video_keywords",
-                "value": "",
-                "notice": "* 关键词不填则操作所有"
-              },
-              {
-                "type": "numberRange",
-                "label": "点赞频率（%）",
-                "name": "toker_city_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "评论频率（%）",
-                "name": "toker_city_comment_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "关注频率（%）",
-                "name": "toker_city_focus_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "私信频率（%）",
-                "name": "toker_city_private_msg_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "评论区五连赞频率（%）",
-                "name": "toker_city_comment_area_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "同城距离（公里内）",
-                "name": "toker_city_distance",
-                "max": 100,
-                "min": 1,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "性别",
-                "name": "toker_city_run_sex",
-                "columnCount": 6,
-                "children": [
-                  "女",
-                  "男",
-                  "未知"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2"
-                ]
-              },
-              {
-                "type": "numberRange",
-                "label": "最小年龄",
-                "name": "toker_city_run_min_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 0
-              },
-              {
-                "type": "numberRange",
-                "label": "最大年龄",
-                "name": "toker_city_run_max_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "运行时间",
-                "name": "toker_city_run_hour",
-                "columnCount": 6,
-                "children": [
-                  "0时",
-                  "1时",
-                  "2时",
-                  "3时",
-                  "4时",
-                  "5时",
-                  "6时",
-                  "7时",
-                  "8时",
-                  "9时",
-                  "10时",
-                  "11时",
-                  "12时",
-                  "13时",
-                  "14时",
-                  "15时",
-                  "16时",
-                  "17时",
-                  "18时",
-                  "19时",
-                  "20时",
-                  "21时",
-                  "22时",
-                  "23时"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "7",
-                  "8",
-                  "9",
-                  "10",
-                  "11",
-                  "12",
-                  "13",
-                  "14",
-                  "15",
-                  "16",
-                  "17",
-                  "18",
-                  "19",
-                  "20",
-                  "21",
-                  "22",
-                  "23"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "title": "工具箱",
-          "hidden": false,
-          "icon": "images/test/tool.png",
-          "activity": {
-            "notice": "暂无功能~",
-            "title": "工具箱",
-            "minVersion": 10001,
-            "groups": [
-              {
-                "title": "工具箱",
-                "titleHidden": true,
-                "methods": [
+                "label": "作品评论区回复意向客户",
+                "name": "toker_back_comment",
+                "type": "switch",
+                "value": false,
+                "childrenParams": [
                   {
-                    "title": "一键取赞",
-                    "hidden": false,
-                    "icon": "images/test/cancel_zan.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "帮助你快速取消视频点赞~"
-                        }
-                      ]
-                    }
+                    "label": "IP地址",
+                    "name": "toker_back_comment_ip",
+                    "type": "textArea",
+                    "value": "",
+                    "notice": "* 匹配ip的视频才会被操作，留空则不筛选"
                   },
                   {
-                    "title": "一键取关",
-                    "hidden": false,
-                    "icon": "images/test/cancel_focus.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "帮助你快速取消单向关注（你关注他，他没有关注你）的用户~"
-                        },
-                        {
-                          "type": "switch",
-                          "label": "互相关注取关",
-                          "name": "task_dy_cancel_focus_mutual_switch"
-                        }
-                      ]
-                    }
+                    "type": "textArea",
+                    "label": "关键词筛选（多个使用逗号隔开）",
+                    "name": "toker_back_comment_keywords",
+                    "value": "",
+                    "notice": "* 匹配关键词的视频才会被操作，留空则不筛选"
                   },
                   {
-                    "title": "粉丝回访",
-                    "hidden": false,
-                    "icon": "images/test/view_back.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "粉丝回访，能增加粉丝粘性~"
-                        }
-                      ]
-                    }
+                    "type": "number",
+                    "label": "N天内回复",
+                    "name": "toker_back_comment_min_day",
+                    "value": 30
+                  },
+                  {
+                    "type": "checkboxGroup",
+                    "label": "回复形式",
+                    "name": "toker_back_comment_type",
+                    "children": [
+                      "文字",
+                      "图片",
+                      "@抖音名字"
+                    ],
+                    "values": [
+                      "0",
+                      "1",
+                      "2"
+                    ]
+                  },
+                  {
+                    "type": "imagePicker",
+                    "label": "回复图片",
+                    "name": "toker_back_comment_images",
+                    "values": [],
+                    "max": 9
+                  },
+                  {
+                    "type": "textArea",
+                    "label": "回复内容",
+                    "name": "toker_back_comment_content",
+                    "value": "你好\n\n厉害了"
+                  },
+                  {
+                    "type": "textArea",
+                    "label": "@抖音名字（多个使用逗号隔开）",
+                    "name": "toker_back_comment_at_user",
+                    "value": "",
+                    "notice": "* 如：@A@B"
                   }
                 ]
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "title": "其他功能",
-      "titleHidden": false,
-      "hidden": false,
-      "methods": [
-        {
-          "title": "直接运行",
-          "icon": "images/test/ai.png",
-          "jsFile": "script/task/redirect.js"
-        }
-      ]
-    },
-    {
-      "title": "新功能",
-      "titleHidden": false,
-      "hidden": false,
-      "methods": [
-        {
-          "title": "直接运行1",
-          "columns": 12,
-          "icon": "images/test/score.png",
-          "jsFile": "src/task/douyin_zan.js",
-          "settingPage": {
-            "params": [
-              {
-                "type": "numberRange",
-                "label": "点赞次数",
-                "name": "task_douyin_zan_count",
-                "max": 60,
-                "min": 5,
-                "value": 5,
-                "step": 1
-              },
-              {
-                "type": "number",
-                "label": "评论次数",
-                "name": "task_douyin_zan_comment",
-                "value": 5
-              }
-            ]
-          }
-        },
-        {
-          "title": "手动运行",
-          "columns": 12,
-          "runType": "floatSwitch",
-          "icon": "images/test/score.png",
-          "jsFile": "src/task/douyin_zan.js",
-          "settingPage": {
-            "params": [
-              {
-                "type": "numberRange",
-                "label": "点赞次数",
-                "name": "task_douyin_zan_count",
-                "max": 60,
-                "min": 5,
-                "value": 5,
-                "step": 1
-              },
-              {
-                "type": "number",
-                "label": "评论次数",
-                "name": "task_douyin_zan_comment",
-                "value": 5
               }
             ]
           }

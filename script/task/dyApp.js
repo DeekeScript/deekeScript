@@ -1,7 +1,7 @@
-let e = {
-    getName() {
+const dyApp = {
+    getName(){
         return "appName";
     }
-};
+}
 
-module.exports = e;
+module.exports = dyApp;

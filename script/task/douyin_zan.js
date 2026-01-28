@@ -1,38 +1,89 @@
-let e = {
-    log() {
-        Log.log(arguments), console.log(arguments);
+
+let newTask = {
+    log(){
+        Log.log(arguments);
+        console.log(arguments);
     },
     comment() {
-        var e = UiSelector().id("com.ss.android.ugc.aweme:id/comment_container").isVisibleToUser(!0).findOne(), e = (console.log(e), 
-        Gesture.click(e.bounds().left + Math.random() * e.bounds().width(), e.bounds().centerY()), 
-        console.log("打开评论窗口"), System.sleep(1200), UiSelector().className("android.widget.EditText").editable(!0).findOne()), e = (console.log(e), 
-        Gesture.click(e.bounds().left + Math.random() * e.bounds().width(), e.bounds().centerY()), 
-        console.log("开始输入评论"), System.sleep(500), UiSelector().className("android.widget.EditText").editable(!0).findOne()), e = (console.log(e), 
-        Log.log(e), e.setText("太棒了"), System.sleep(500), UiSelector().id("com.ss.android.ugc.aweme:id/dqq").text("发送").findOne());
-        console.log(e), Gesture.click(e.bounds().centerX(), e.bounds().centerY()), 
-        System.sleep(500), Gesture.back(), System.sleep(500);
-    },
-    backHome() {
-        var e;
-        console.log("开始返回主页");
-        let o = 5;
-        for (;(e = UiSelector().id("com.ss.android.ugc.aweme:id/x_t").isVisibleToUser(!0).findOne()) && console.log("在首页"), 
-        Gesture.back(), console.log("返回"), System.sleep(1e3), !e && 0 <= --o; );
-    },
-    run() {
-        console.log("开始进入应用"), App.launch("com.ss.android.ugc.aweme"), System.sleep(2e3);
-        let e = Storage.getInteger("task_douyin_zan_count"), o = Storage.getInteger("task_douyin_zan_comment");
-        for (console.log("配置：" + e + " 赞，" + o + " 评论"); 0 < e || 0 < o; ) try {
-            var s;
-            console.log("zanCount: " + e + " commentCount: " + o), 0 <= --e && (s = UiSelector().id("com.ss.android.ugc.aweme:id/fd9").isVisibleToUser(!0).findOne(), 
-            console.log("点赞tag", s), Gesture.click(s.bounds().left + Math.random() * s.bounds().width(), s.bounds().centerY()), 
-            System.sleep(1e3), console.log("点赞完成")), 0 <= --o && (this.comment(), 
-            System.sleep(1e3)), UiSelector().id("com.ss.android.ugc.aweme:id/viewpager").desc("视频").scrollable(!0).findOne().scrollForward(), 
-            System.sleep(3e3);
-        } catch (e) {
-            console.log(e), this.backHome();
-        }
-    }
-};
+        //注释
+        let tag = UiSelector().id('com.ss.android.ugc.aweme:id/comment_container').isVisibleToUser(true).findOne();
+        console.log(tag);
+        Gesture.click(tag.bounds().left + Math.random() * tag.bounds().width(), tag.bounds().centerY());
+        console.log('打开评论窗口');
+        System.sleep(1200);
 
-Log.setFile("douyin_zan.js.log"), e.run(), FloatDialogs.show("抖音任务完成");
+        let inputTag = UiSelector().className('android.widget.EditText').editable(true).findOne();
+        console.log(inputTag);
+        Gesture.click(inputTag.bounds().left + Math.random() * inputTag.bounds().width(), inputTag.bounds().centerY());
+        console.log('开始输入评论');
+        System.sleep(500);
+
+        let iptTag = UiSelector().className('android.widget.EditText').editable(true).findOne();
+        console.log(iptTag);
+        Log.log(iptTag);
+        iptTag.setText('太棒了');
+        System.sleep(500);
+
+        let sendTag = UiSelector().id('com.ss.android.ugc.aweme:id/dqq').text('发送').findOne();
+        console.log(sendTag);
+
+        Gesture.click(sendTag.bounds().centerX(), sendTag.bounds().centerY());
+        System.sleep(500);
+        Gesture.back();
+        System.sleep(500);
+    },
+
+    backHome() {
+        console.log('开始返回主页');
+        let homeTag;
+        let backMaxCount = 5;
+        do {
+            homeTag = UiSelector().id('com.ss.android.ugc.aweme:id/x_t').isVisibleToUser(true).findOne();
+            if (homeTag) {
+                console.log('在首页');
+            }
+            Gesture.back();
+            console.log('返回');
+            System.sleep(1000);
+        } while (!homeTag && --backMaxCount >= 0);
+    },
+
+    run() {
+        console.log('开始进入应用');
+        App.launch('com.ss.android.ugc.aweme');
+        System.sleep(2000);
+        let zanCount = Storage.getInteger('task_douyin_zan_count');
+        let commentCount = Storage.getInteger('task_douyin_zan_comment');
+
+        console.log('配置：' + zanCount + ' 赞，' + commentCount + ' 评论');
+        while (zanCount > 0 || commentCount > 0) {
+            try {
+                console.log('zanCount: ' + zanCount + ' commentCount: ' + commentCount);
+                if (--zanCount >= 0) {
+                    let tag = UiSelector().id('com.ss.android.ugc.aweme:id/fd9').isVisibleToUser(true).findOne();
+                    console.log('点赞tag', tag);
+                    Gesture.click(tag.bounds().left + Math.random() * tag.bounds().width(), tag.bounds().centerY());
+                    System.sleep(1000);
+                    console.log('点赞完成');
+                }
+
+                if (--commentCount >= 0) {
+                    this.comment();
+                    System.sleep(1000);
+                }
+
+
+                let tag = UiSelector().id('com.ss.android.ugc.aweme:id/viewpager').desc('视频').scrollable(true).findOne();
+                tag.scrollForward();
+                System.sleep(3000);
+            } catch (e) {
+                console.log(e);
+                this.backHome();
+            }
+        }
+    },
+}
+
+Log.setFile("douyin_zan.js.log");
+newTask.run();
+FloatDialogs.show('抖音任务完成');
