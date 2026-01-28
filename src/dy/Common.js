@@ -105,7 +105,7 @@ let Common = {
         }
         for (let i = 0; i < times; i++) {
             Gesture.back();
-            Log.log('返回一次');
+            Common.log('返回一次');
             Common.sleep(500);
         }
     },
@@ -117,7 +117,7 @@ let Common = {
             return null;
         }
 
-        if (UiSelector().className('android.widget.TextView').desc('搜索').findOne()) {
+        if (UiSelector().className('android.widget.TextView').text('搜索').findOne()) {
             Common.log('在搜索页面');
             return 'search';
         }

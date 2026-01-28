@@ -183,6 +183,11 @@ let task = {
                         Common.back();
                         System.setAccessibilityMode('fast');
                         System.sleep(1000);
+                        if (UiSelector().descContains('复制名字').findOne()) {
+                            Common.back();
+                            Log.log('在用户页面-，返回');
+                            System.sleep(1000);
+                        }
                     } catch (e) {
                         Common.log('处理评论区异常了', e, e.message);
                         //如果在用户页面，则返回

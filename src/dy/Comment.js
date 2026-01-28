@@ -34,18 +34,14 @@ let Comment = {
                 now.getHours() * 3600 +
                 now.getMinutes() * 60;
         } else if (/^\d{4}年\d{1,2}月\d{1,2}日$/.test(time)) {
-            let formatted = time
-                .replace('年', '-')
-                .replace('月', '-')
-                .replace('日', '');
-            incSecond = new Date(formatted).getTime() / 1000;
+            let formatted = time.replace('年', '-').replace('月', '-').replace('日', '');
+            incSecond = new Date().getTime() / 1000 - new Date(formatted).getTime() / 1000;
+        } else if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(time)) {
+            incSecond = new Date().getTime() / 1000 - new Date(time).getTime() / 1000;
         } else if (/^\d{1,2}月\d{1,2}日$/.test(time)) {
             const year = now.getFullYear();
-            let formatted =
-                year +
-                '-' +
-                time.replace('月', '-').replace('日', '');
-            incSecond = new Date(formatted).getTime() / 1000;
+            let formatted = year + '-' + time.replace('月', '-').replace('日', '');
+            incSecond = new Date().getTime() / 1000 - new Date(formatted).getTime() / 1000;
         }
 
         return incSecond;
