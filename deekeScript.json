@@ -4,8 +4,8 @@
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
-  "versionCode": "101",
-  "versionName": "1.0.1",
+  "versionCode": "102",
+  "versionName": "1.0.2",
   "host": "https://home.deeke.top",
   "debug": true,
   "switchSetting": {
@@ -158,6 +158,15 @@
                     "name": "toker_comment_setting_min_day",
                     "value": 30,
                     "notice": "* 不填写则不限制"
+                  },
+                  {
+                    "type": "numberRange",
+                    "label": "评论赞频率（%）",
+                    "name": "toker_comment_setting_comment_zan_rate",
+                    "max": 100,
+                    "min": 0,
+                    "step": 1,
+                    "value": 1
                   },
                   {
                     "type": "numberRange",
