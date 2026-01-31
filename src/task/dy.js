@@ -5,6 +5,13 @@ let User = require('../dy/User');
 let Dy = require('../dy/Dy');
 
 let task = {
+    log() {
+        let d = new Date();
+        let file = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        let allFile = "log/log-log-" + file + ".txt";
+        Log.setFile(allFile);
+    },
+
     dealComment(cfg) {
         if (cfg.commentRate < Math.random()) {
             Common.log('评论概率不达标，跳过评论');
@@ -293,6 +300,7 @@ let task = {
         }
 
         let ip = Dy.getIp();
+        Common.log('ip', ip);
         if (config.videoIp) {
             if (!ip) {
                 Common.log('不在指定IP范围，跳过操作视频', ip);
@@ -437,6 +445,7 @@ let config = {
 }
 
 try {
+    task.log();
     Common.log('配置：', config);
     task.run(config);
 } catch (e) {
