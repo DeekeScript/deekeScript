@@ -293,18 +293,34 @@ let task = {
         }
 
         let ip = Dy.getIp();
-        if (ip && config.videoIp && !Common.contains(ip, config.videoIp)) {
-            Common.log('不在指定IP范围，跳过操作视频', ip);
-            return;
+        if (config.videoIp) {
+            if (!ip) {
+                Common.log('不在指定IP范围，跳过操作视频', ip);
+                return;
+            }
+
+            if (!Common.contains(ip, config.videoIp)) {
+                Common.log('不在指定IP范围，跳过操作视频', ip);
+                return;
+            }
         }
 
         let desc = Dy.getDesc();
         Common.log('视频描述', desc);
-        if (
-            (config.videoKeywords && !Common.contains(desc, config.videoKeywords)
-                && (config.ip && !Common.contains(desc, config.ip)))
-            && config.videoWaitSecond > 0
-        ) {
+        let rt = false;
+        if (config.videoKeywords) {
+            if (desc && Common.contains(desc, config.videoKeywords)) {
+                rt = true;
+            }
+
+            if (ip && Common.contains(ip, config.videoKeywords)) {
+                rt = true;
+            }
+        } else {
+            rt = true;
+        }
+
+        if (!rt) {
             Common.log('找到关键词，等待', config.videoWaitSecond, '秒');
             let nextVideo = FloatDialogs.confirm('不包含关键词提示', config.videoWaitSecond + '秒后关闭，执行下一个作品', '下一个作品', '操作当前作品', (dialog) => {
                 let i = 0;

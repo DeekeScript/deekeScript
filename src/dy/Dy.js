@@ -86,7 +86,7 @@ let Dy = {
     },
 
     getIp() {
-        let tag = Common.id('qeq').isVisibleToUser(true).findOne();
+        let tag = Common.id('qeq').isVisibleToUser(true).findOne() || Common.id('qhd').isVisibleToUser(true).findOne();
         if (!tag || !tag.desc()) {
             return null;
         }

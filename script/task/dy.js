@@ -78,6 +78,11 @@ let task = {
                             continue;
                         }
 
+                        if (cfg.commentZanRate >= Math.random() && Comment.isZan(comments[k].tag)) {
+                            Log.log('评论赞');
+                            Comment.clickZan(comments[k]);
+                        }
+
                         Common.log('找到了关键词', comments[k]['content']);
                         Storage.putBoolean('task_dy_toker_comment_' + nickname + '_' + comments[k].nickname, true);
                         try {
@@ -288,14 +293,34 @@ let task = {
         }
 
         let ip = Dy.getIp();
-        if (ip && config.videoIp && !Common.contains(ip, config.videoIp)) {
-            Common.log('不在指定IP范围，跳过操作视频', ip);
-            return;
+        if (config.videoIp) {
+            if (!ip) {
+                Common.log('不在指定IP范围，跳过操作视频', ip);
+                return;
+            }
+
+            if (!Common.contains(ip, config.videoIp)) {
+                Common.log('不在指定IP范围，跳过操作视频', ip);
+                return;
+            }
         }
 
         let desc = Dy.getDesc();
         Common.log('视频描述', desc);
-        if (config.videoKeywords && !Common.contains(desc, config.videoKeywords) && config.videoWaitSecond > 0) {
+        let rt = false;
+        if (config.videoKeywords) {
+            if (desc && Common.contains(desc, config.videoKeywords)) {
+                rt = true;
+            }
+
+            if (ip && Common.contains(ip, config.videoKeywords)) {
+                rt = true;
+            }
+        } else {
+            rt = true;
+        }
+
+        if (!rt) {
             Common.log('找到关键词，等待', config.videoWaitSecond, '秒');
             let nextVideo = FloatDialogs.confirm('不包含关键词提示', config.videoWaitSecond + '秒后关闭，执行下一个作品', '下一个作品', '操作当前作品', (dialog) => {
                 let i = 0;
@@ -387,6 +412,7 @@ let config = {
         keywords: Storage.get('toker_comment_setting_keywords').replace(/\，/g, ',').split(','),
         gender: Storage.getArray('toker_comment_setting_sex'),
         minDay: Storage.getInteger('toker_comment_setting_min_day'),
+        commentZanRate: Storage.getInteger('toker_comment_setting_comment_zan_rate') / 100,
         focusRate: Storage.getInteger('toker_comment_setting_focus_rate') / 100,
         privateRate: Storage.getInteger('toker_comment_setting_private_msg_rate') / 100,
         privateTypes: Storage.getArray('toker_comment_setting_private_msg_type'),

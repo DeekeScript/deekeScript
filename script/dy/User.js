@@ -117,6 +117,7 @@ let User = {
                 throw new Error('发送消息失败');
             }
 
+            Common.sleep(2000);
             Common.back(2);
             Common.sleep(500 + 500 * Math.random());
             Common.log("私信发送完成");

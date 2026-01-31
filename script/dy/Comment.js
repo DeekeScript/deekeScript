@@ -301,6 +301,11 @@ let Comment = {
         if (tag) {
             return tag.text();
         }
+
+        tag = this.getAvatarTag();
+        if (tag.desc()) {
+            return tag.desc();
+        }
         return false;
     },
 
@@ -331,6 +336,32 @@ let Comment = {
             return false;
         }
         return closeTag.click();
+    },
+
+    /**
+     * 是否已点赞
+     * @returns boolean
+     */
+    isZan(tag) {
+        if (!tag) {
+            tag = this.getZanTag();
+        }
+
+        if (!tag) {
+            return false;
+        }
+        return tag.desc().indexOf('已选中') !== -1;
+    },
+
+    /**
+     * 点赞
+     * @param {Object} data 
+     * @returns 
+     */
+    clickZan(data) {
+        let zanTag = this.getZanTag(data.tag);
+        zanTag && zanTag.parent() && zanTag.parent().click();
+        return true;
     },
 }
 
