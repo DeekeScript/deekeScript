@@ -82,50 +82,57 @@ let Comment = {
 
         //获取是否评论图片
         Common.log("带图评论：" + img);
+        let func = null;
         if (img) {
-            Common.selectPhoto(img);
+            func = Common.selectPhoto(img);
             iptTag.click();
             Common.sleep(100);
         }
 
-        Common.log('msg', msg);
-        if (msg) {
-            let j = Math.floor(Math.random() * msg.length);
-            Common.sleep(200 + 50 * Math.random());
-            System.setClip(msg.substring(0, j));
-            Log.log('评论第一部分：', msg.substring(0, j));
-            iptTag.paste();
-            if (atUser) {
+        try {
+            Common.log('msg', msg);
+            if (msg) {
+                let j = Math.floor(Math.random() * msg.length);
                 Common.sleep(200 + 50 * Math.random());
-                this.atUser(atUser);
+                System.setClip(msg.substring(0, j));
+                Log.log('评论第一部分：', msg.substring(0, j));
+                iptTag.paste();
+                if (atUser) {
+                    Common.sleep(200 + 50 * Math.random());
+                    this.atUser(atUser);
+                }
+
+                Common.sleep(200 + 50 * Math.random());
+                System.setClip(msg.substring(j, msg.length));
+                Log.log('评论第二部分：', msg.substring(j, msg.length));
+                iptTag.paste();
+            } else {
+                if (atUser) {
+                    this.atUser(atUser);
+                }
             }
 
-            Common.sleep(200 + 50 * Math.random());
-            System.setClip(msg.substring(j, msg.length));
-            Log.log('评论第二部分：', msg.substring(j, msg.length));
-            iptTag.paste();
-        } else {
-            if (atUser) {
-                this.atUser(atUser);
+            Common.sleep(500 + Math.random() * 1000);
+            Common.sleep(500 + Math.random() * 500);
+
+            let btnTag = UiSelector().className('android.widget.TextView').isVisibleToUser(true).text('发送').findOne();
+            Gesture.click(btnTag.bounds().left + btnTag.bounds().width() * Math.random(), btnTag.bounds().top + btnTag.bounds().height() * Math.random());
+            Common.sleep(500 + 500 * Math.random());
+
+            //查看dg0位置有没有下来
+            iptTag = UiSelector().className('android.widget.EditText').isVisibleToUser(true).filter(v => {
+                return v.isEditable();
+            }).findOne();
+            if (iptTag && iptTag.bounds().top < Device.height() * 2 / 3) {
+                Common.back();
+                Common.log("点击失败：返回");
             }
+        } catch (e) {
+            Log.log(e);
         }
-
-        Common.sleep(500 + Math.random() * 1000);
-        Common.sleep(500 + Math.random() * 500);
-
-        let btnTag = UiSelector().className('android.widget.TextView').isVisibleToUser(true).text('发送').findOne();
-        Gesture.click(btnTag.bounds().left + btnTag.bounds().width() * Math.random(), btnTag.bounds().top + btnTag.bounds().height() * Math.random());
-        Common.sleep(500 + 500 * Math.random());
-
-        //查看dg0位置有没有下来
-        iptTag = UiSelector().className('android.widget.EditText').isVisibleToUser(true).filter(v => {
-            return v.isEditable();
-        }).findOne();
-        if (iptTag && iptTag.bounds().top < Device.height() * 2 / 3) {
-            Common.back();
-            Common.log("点击失败：返回");
+        if (func) {
+            func();
         }
-
         Common.sleep(1000 + 1000 * Math.random());
         return true;
     },

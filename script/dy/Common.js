@@ -64,11 +64,15 @@ let Common = {
             Common.log("图片处理异常：", e);
         }
 
-        let success = MediaStore.deleteImage(file2);
-        if (success) {
-            console.log('删除成功');
+        System.sleep(1000);
+        return function () {
+            let success = MediaStore.deleteImage(file2);
+            if (success) {
+                Log.log('删除成功');
+            } else {
+                Log.log('删除失败');
+            }
         }
-        System.sleep(2000);
     },
 
     swipeSearchUserOp(filterRootLayout) {
