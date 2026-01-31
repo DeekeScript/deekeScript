@@ -8,7 +8,7 @@ let task = {
     log() {
         let d = new Date();
         let file = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-        let allFile = "log/log-log-" + file + ".txt";
+        let allFile = "log-log-" + file + ".txt";
         Log.setFile(allFile);
     },
 

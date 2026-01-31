@@ -86,17 +86,19 @@ let Dy = {
     },
 
     getIp() {
-        let tag = Common.id('qeq').isVisibleToUser(true).findOne() || Common.id('qhd').isVisibleToUser(true).findOne();
-        if (!tag || !tag.desc()) {
-            return null;
+        //拆分获取
+        let t1 = Common.id('2js').isVisibleToUser(true).findOne();
+        let t2 = Common.id('4hn').isVisibleToUser(true).findOne();
+
+        let str = '';
+        if (t1 && t1.text()) {
+            str = t1.text();
         }
 
-        let tmp = tag.desc().split('m');
-        if (tmp && tmp.length == 2) {
-            return tmp[1];
+        if (t2 && t2.text()) {
+            str += t2.text();
         }
-
-        return tmp[0].replace('null', '');
+        return str;
     }
 }
 
