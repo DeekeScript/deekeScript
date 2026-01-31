@@ -88,7 +88,11 @@ let Video = {
             tag = UiSelector().className('androidx.viewpager.widget.ViewPager').scrollable(true).isVisibleToUser(true).findOne();
         }
         if (!tag) {
-            tag = UiSelector().scrollable(true).isVisibleToUser(true).findOne();
+            let x1 = Device.width() * (0.2 + 0.6 * Math.random());
+            let x2 = x1 + Device.width() * 0.2 * Math.random();
+            let y1 = Device.height() * (0.65 + 0.2);
+            let y2 = y1 - Device.height() * (0.5 + 0.15 * Math.random());
+            return Gesture.swipe(x1, y1, x2, y2, 200 + 100 * Math.random());
         }
         if (!tag) {
             throw new Error('找不到可滑动的视频页面');
