@@ -80,6 +80,19 @@ let Comment = {
             return v.isEditable();
         }).findOne();
 
+        if (!iptTag) {
+            Common.sleep(1500 + 500 * Math.random());
+            iptTag = UiSelector().className('android.widget.EditText').filter(v => {
+                return v.isEditable();
+            }).findOne();
+        }
+
+        if (!iptTag) {
+            Common.back();
+            Common.sleep(1000);
+            return false;
+        }
+
         //获取是否评论图片
         Common.log("带图评论：" + img);
         let func = null;
@@ -186,12 +199,14 @@ let Comment = {
             }
 
             if (this.containers.includes(data.nickname + '_' + data.content)) {
+                Common.log('已存在');
                 continue;
             }
 
             contents.push(data);
             this.containers.push(data.nickname + '_' + data.content);
         }
+        Common.log('数量2：', contents.length);
         return contents;
     },
 

@@ -220,7 +220,9 @@ let task = {
                 }
             }
 
+            Common.log('开始处理回复', backCfg);
             if (backCfg) {
+                Common.log('开始处理回复2');
                 let comments = Comment.getList();
                 for (let k in comments) {
                     try {
@@ -235,17 +237,20 @@ let task = {
                             continue;
                         }
 
+                        Common.log('123');
                         if (backCfg.ip && comments[k].ip && !Common.contains(comments[k].ip, backCfg.ip)) {
                             Common.log('IP不匹配', comments[k].ip, backCfg.ip);
                             continue;
                         }
 
+                        Common.log('124');
                         //评论时间处理
                         if (backCfg.minDay && comments[k].time / 86400 > backCfg.minDay) {
                             Common.log('时间不匹配', comments[k].time / 86400, backCfg.minDay);
                             continue;
                         }
 
+                        Common.log('125');
                         if (Storage.getBoolean('task_dy_toker_comment_back_' + nickname + '_' + comments[k].nickname)) {
                             Common.log('重复');
                             continue;
@@ -255,6 +260,7 @@ let task = {
                         Storage.putBoolean('task_dy_toker_comment_back_' + nickname + '_' + comments[k].nickname, true);
 
                         let backTag = comments[k].tag.children().findOne(UiSelector().text('回复'));
+                        Common.log('backTag', backTag);
                         if (backTag) {
                             backTag.click();
                             System.sleep(1500);
