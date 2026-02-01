@@ -53,13 +53,23 @@ let task = {
     },
 
     //cfg是指对评论用户的相关操作
-    dealComments(nickname, cfg, backCfg, firstContinue) {
+    dealComments(nickname, cfg, backCfg, firstContinue, count) {
         let a = firstContinue;
         let b = firstContinue;
+        if (cfg && backCfg) {
+            count *= 2;
+        }
+
+        Common.log('count', count);
         while (true) {
             if (cfg) {
                 let comments = Comment.getList(0);
                 for (let k in comments) {
+                    if (count-- <= 0) {
+                        Common.log('操作完了');
+                        break;
+                    }
+
                     try {
                         if (a) {
                             a = false;
@@ -90,11 +100,6 @@ let task = {
                         if (Storage.getBoolean('task_dy_toker_comment_' + nickname + '_' + comments[k].nickname)) {
                             Common.log('重复');
                             continue;
-                        }
-
-                        if (cfg.commentZanRate >= Math.random() && !Comment.isZan(comments[k].tag)) {
-                            Log.log('评论赞');
-                            Comment.clickZan(comments[k]);
                         }
 
                         Common.log('找到了关键词', comments[k]['content']);
@@ -227,6 +232,10 @@ let task = {
                 Common.log('开始处理回复2');
                 let comments = Comment.getList(1);
                 for (let k in comments) {
+                    if (count-- <= 0) {
+                        Common.log('操作完了');
+                        break;
+                    }
                     try {
                         if (b) {
                             b = false;
@@ -260,6 +269,11 @@ let task = {
 
                         Common.log('找到了关键词', comments[k]['content']);
                         Storage.putBoolean('task_dy_toker_comment_back_' + nickname + '_' + comments[k].nickname, true);
+
+                        if (backCfg.commentZanRate >= Math.random() && !Comment.isZan(comments[k].tag)) {
+                            Log.log('评论赞');
+                            Comment.clickZan(comments[k]);
+                        }
 
                         let backTag = comments[k].tag.children().findOne(UiSelector().text('回复'));
                         Common.log('backTag', backTag);
@@ -298,8 +312,8 @@ let task = {
                 }
             }
 
-            Common.log('下一页评论');
-            if (!Common.swipeCommentListOp()) {
+            Common.log('下一页评论', count);
+            if (count <= 0 || !Common.swipeCommentListOp()) {
                 Common.back();
                 System.sleep(1000);
                 Common.log('到底了');
@@ -383,7 +397,7 @@ let task = {
                 Video.openComment(!!Video.getCommentCount());
             }
 
-            this.dealComments(nickname, config.commentUser, config.backComment, first);
+            this.dealComments(nickname, config.commentUser, config.backComment, first, config.count);
         }
 
         Comment.closeCommentWindow();
@@ -432,6 +446,7 @@ let config = {
     videoIp: Storage.get('toker_video_ip') ? Storage.get('toker_video_ip').replace(/\，/g, ',').split(',') : null,
     videoKeywords: Storage.get('toker_video_keywords') ? Storage.get('toker_video_keywords').replace(/\，/g, ',').split(',') : null,
     videoWaitSecond: Storage.getInteger('toker_wait_second'),
+    count: Storage.getInteger('toker_video_count'),
     comment: Storage.getBoolean('toker_comments') ? {
         commentRate: Storage.getInteger('toker_comment_rate') / 100,
         commentTypes: Storage.getArray('toker_comment_type'),
@@ -444,7 +459,6 @@ let config = {
         keywords: Storage.get('toker_comment_setting_keywords') ? Storage.get('toker_comment_setting_keywords').replace(/\，/g, ',').split(',') : null,
         gender: Storage.getArray('toker_comment_setting_sex'),
         minDay: Storage.getInteger('toker_comment_setting_min_day'),
-        commentZanRate: Storage.getInteger('toker_comment_setting_comment_zan_rate') / 100,
         focusRate: Storage.getInteger('toker_comment_setting_focus_rate') / 100,
         privateRate: Storage.getInteger('toker_comment_setting_private_msg_rate') / 100,
         privateTypes: Storage.getArray('toker_comment_setting_private_msg_type'),
@@ -462,6 +476,7 @@ let config = {
         keywords: Storage.get('toker_back_comment_keywords') ? Storage.get('toker_back_comment_keywords').replace(/\，/g, ',').split(',') : null,
         minDay: Storage.getInteger('toker_back_comment_min_day'),
         type: Storage.getArray('toker_back_comment_type'),
+        commentZanRate: Storage.getInteger('toker_back_comment_zan_rate') / 100,
         comentImages: Storage.getArray('toker_back_comment_images'),
         comments: Storage.get('toker_back_comment_content').split("\n\n"),
         atUserNames: Storage.get('toker_back_comment_at_user').split('@'),

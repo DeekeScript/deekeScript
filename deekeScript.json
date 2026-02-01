@@ -4,8 +4,8 @@
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
-  "versionCode": "113",
-  "versionName": "1.1.3",
+  "versionCode": "114",
+  "versionName": "1.1.4",
   "host": "https://home.deeke.top",
   "debug": true,
   "switchSetting": {
@@ -65,6 +65,12 @@
                 "type": "number",
                 "label": "未匹配关键词，等待确认时间（秒）",
                 "name": "toker_wait_second",
+                "value": 30
+              },
+              {
+                "type": "number",
+                "label": "前N条评论",
+                "name": "toker_video_count",
                 "value": 30
               },
               {
@@ -158,15 +164,6 @@
                     "name": "toker_comment_setting_min_day",
                     "value": 30,
                     "notice": "* 不填写则不限制"
-                  },
-                  {
-                    "type": "numberRange",
-                    "label": "评论赞频率（%）",
-                    "name": "toker_comment_setting_comment_zan_rate",
-                    "max": 100,
-                    "min": 0,
-                    "step": 1,
-                    "value": 1
                   },
                   {
                     "type": "numberRange",
@@ -272,6 +269,15 @@
                     "value": 30
                   },
                   {
+                    "type": "numberRange",
+                    "label": "评论赞频率（%）",
+                    "name": "toker_back_comment_zan_rate",
+                    "max": 100,
+                    "min": 0,
+                    "step": 1,
+                    "value": 1
+                  },
+                  {
                     "type": "checkboxGroup",
                     "label": "回复形式",
                     "name": "toker_back_comment_type",
@@ -322,11 +328,6 @@
       "type": "home"
     },
     {
-      "title": "话术设置",
-      "icon": "images/test/speech.png",
-      "type": "speech"
-    },
-    {
       "title": "系统设置",
       "icon": "images/test/setting.png",
       "type": "setting"
@@ -338,7 +339,7 @@
       "icon": "images/test/kefu.png",
       "type": "customerService",
       "description": "客服微信：DeekeScript",
-      "hidden": false
+      "hidden": true
     },
     {
       "title": "功能说明",
