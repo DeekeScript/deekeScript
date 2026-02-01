@@ -108,13 +108,15 @@ let task = {
                         //私密账号
                         if (User.isPrivate()) {
                             Common.back();
-                            System.sleep(500);
+                            System.sleep(1500);
                             Common.log('私密账号');
                             continue;
                         }
 
                         if (cfg.gender && !Common.contains(User.getGender(), cfg.gender)) {
                             Common.log('性别不匹配');
+                            Common.back();
+                            System.sleep(1500);
                             continue;
                         }
 
