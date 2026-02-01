@@ -360,6 +360,7 @@ let Comment = {
         if (!tag) {
             return false;
         }
+        Common.log('isZan', tag.desc());
         return tag.desc().indexOf('已选中') !== -1;
     },
 
@@ -370,6 +371,7 @@ let Comment = {
      */
     clickZan(data) {
         let zanTag = this.getZanTag(data.tag);
+        Common.log('zanTag', zanTag);
         zanTag && zanTag.parent() && zanTag.parent().click();
         return true;
     },

@@ -92,7 +92,7 @@ let task = {
                             continue;
                         }
 
-                        if (cfg.commentZanRate >= Math.random() && Comment.isZan(comments[k].tag)) {
+                        if (cfg.commentZanRate >= Math.random() && !Comment.isZan(comments[k].tag)) {
                             Log.log('评论赞');
                             Comment.clickZan(comments[k]);
                         }
