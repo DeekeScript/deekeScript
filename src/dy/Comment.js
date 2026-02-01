@@ -92,10 +92,9 @@ let Comment = {
         try {
             Common.log('msg', msg);
             if (msg) {
-                let j = Math.floor(Math.random() * msg.length);
                 Common.sleep(200 + 50 * Math.random());
-                System.setClip(msg.substring(0, j));
-                Log.log('评论第一部分：', msg.substring(0, j));
+                System.setClip(msg);
+                Log.log('评论部分：', msg);
                 iptTag.paste();
                 if (atUser) {
                     Common.sleep(200 + 50 * Math.random());
@@ -103,9 +102,6 @@ let Comment = {
                 }
 
                 Common.sleep(200 + 50 * Math.random());
-                System.setClip(msg.substring(j, msg.length));
-                Log.log('评论第二部分：', msg.substring(j, msg.length));
-                iptTag.paste();
             } else {
                 if (atUser) {
                     this.atUser(atUser);
@@ -149,7 +145,10 @@ let Comment = {
         if (secondListTag.length > 0) {
             Common.log('二级评论数量：', secondListTag.length);
             for (let i in secondListTag) {
-                secondListTag[i].parent().click();
+                if (secondListTag[i].parent()) {
+                    secondListTag[i].parent().click();
+                    Common.sleep(3000 + Math.random() * 1500);
+                }
             }
         }
 
@@ -216,10 +215,18 @@ let Comment = {
      */
     getNicknameTag() {
         // return this.tag.children().findOne(Common.id('title'));
-        return Common.id('title').filter(v => {
+        let tag = Common.id('title').filter(v => {
             return v.bounds().left >= this.tag.bounds().left && v.bounds().right <= this.tag.bounds().right
                 && v.bounds().top >= this.tag.bounds().top && v.bounds().bottom <= this.tag.bounds().bottom;
         }).findOne();
+
+        if (!tag) {
+            tag = Common.id('2fj').filter(v => {
+                return v.bounds().left >= this.tag.bounds().left && v.bounds().right <= this.tag.bounds().right
+                    && v.bounds().top >= this.tag.bounds().top && v.bounds().bottom <= this.tag.bounds().bottom;
+            }).findOne();
+        }
+        return tag;
     },
 
     /**
@@ -309,10 +316,6 @@ let Comment = {
             return tag.text();
         }
 
-        tag = this.getAvatarTag();
-        if (tag.desc()) {
-            return tag.desc();
-        }
         return false;
     },
 

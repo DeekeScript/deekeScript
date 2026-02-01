@@ -203,6 +203,7 @@ let task = {
                     } catch (e) {
                         Common.log('处理评论区异常了', e, e.message);
                         //如果在用户页面，则返回
+                         System.setAccessibilityMode('fast');
                         if (UiSelector().descContains('复制名字').findOne()) {
                             Common.back();
                             Log.log('在用户页面，返回');
@@ -405,8 +406,8 @@ let task = {
 
 let config = {
     videoType: ['tuijian', 'tongcheng', 'search'][Storage.get('toker_run_mode')],
-    videoIp: Storage.get('toker_video_ip').replace(/\，/g, ',').split(','),
-    videoKeywords: Storage.get('toker_video_keywords').replace(/\，/g, ',').split(','),
+    videoIp: Storage.get('toker_video_ip') ? Storage.get('toker_video_ip').replace(/\，/g, ',').split(',') : null,
+    videoKeywords: Storage.get('toker_video_keywords') ? Storage.get('toker_video_keywords').replace(/\，/g, ',').split(',') : null,
     videoWaitSecond: Storage.getInteger('toker_wait_second'),
     comment: Storage.getBoolean('toker_comments') ? {
         commentRate: Storage.getInteger('toker_comment_rate') / 100,
@@ -416,8 +417,8 @@ let config = {
         commentImages: Storage.getArray('toker_comment_images'),
     } : null,
     commentUser: Storage.getBoolean('toker_comment_setting') ? {
-        ip: Storage.get('toker_comment_setting_video_ip').replace(/\，/g, ',').split(','),
-        keywords: Storage.get('toker_comment_setting_keywords').replace(/\，/g, ',').split(','),
+        ip: Storage.get('toker_comment_setting_video_ip') ? Storage.get('toker_comment_setting_video_ip').replace(/\，/g, ',').split(',') : null,
+        keywords: Storage.get('toker_comment_setting_keywords') ? Storage.get('toker_comment_setting_keywords').replace(/\，/g, ',').split(',') : null,
         gender: Storage.getArray('toker_comment_setting_sex'),
         minDay: Storage.getInteger('toker_comment_setting_min_day'),
         commentZanRate: Storage.getInteger('toker_comment_setting_comment_zan_rate') / 100,
@@ -434,8 +435,8 @@ let config = {
         videoCommentContents: Storage.get('toker_comment_setting_video_comment_content').split("\n\n"),
     } : null,
     backComment: Storage.getBoolean('toker_back_comment') ? {
-        ip: Storage.get('toker_back_comment_ip').replace(/\，/g, ',').split(','),
-        keywords: Storage.get('toker_back_comment_keywords').replace(/\，/g, ',').split(','),
+        ip: Storage.get('toker_back_comment_ip') ? Storage.get('toker_back_comment_ip').replace(/\，/g, ',').split(',') : null,
+        keywords: Storage.get('toker_back_comment_keywords') ? Storage.get('toker_back_comment_keywords').replace(/\，/g, ',').split(',') : null,
         minDay: Storage.getInteger('toker_back_comment_min_day'),
         type: Storage.getArray('toker_back_comment_type'),
         comentImages: Storage.getArray('toker_back_comment_images'),
