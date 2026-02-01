@@ -146,7 +146,7 @@ let Comment = {
         return true;
     },
     containers: [],
-    getList() {
+    getList(type) {
         let moreTag = UiSelector().text('已折叠部分评论').isVisibleToUser(true).findOne();
         if (moreTag) {
             Common.log('点击展开');
@@ -198,13 +198,13 @@ let Comment = {
                 this.containers.shift();
             }
 
-            if (this.containers.includes(data.nickname + '_' + data.content)) {
+            if (this.containers.includes(data.nickname + '_' + data.content + '_' + type)) {
                 Common.log('已存在');
                 continue;
             }
 
             contents.push(data);
-            this.containers.push(data.nickname + '_' + data.content);
+            this.containers.push(data.nickname + '_' + data.content + '_' + type);
         }
         Common.log('数量2：', contents.length);
         return contents;

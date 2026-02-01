@@ -58,7 +58,7 @@ let task = {
         let b = firstContinue;
         while (true) {
             if (cfg) {
-                let comments = Comment.getList();
+                let comments = Comment.getList(0);
                 for (let k in comments) {
                     try {
                         if (a) {
@@ -223,7 +223,7 @@ let task = {
             Common.log('开始处理回复', backCfg);
             if (backCfg) {
                 Common.log('开始处理回复2');
-                let comments = Comment.getList();
+                let comments = Comment.getList(1);
                 for (let k in comments) {
                     try {
                         if (b) {
