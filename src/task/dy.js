@@ -53,12 +53,19 @@ let task = {
     },
 
     //cfg是指对评论用户的相关操作
-    dealComments(nickname, cfg, backCfg) {
+    dealComments(nickname, cfg, backCfg, firstContinue) {
+        let a = firstContinue;
+        let b = firstContinue;
         while (true) {
             if (cfg) {
                 let comments = Comment.getList();
                 for (let k in comments) {
                     try {
+                        if (a) {
+                            a = false;
+                            Common.log('自己，不处理');
+                            continue;
+                        }
                         if (comments[k]['isAuthor']) {
                             Common.log('作者本人评论，跳过');
                             continue;
@@ -203,7 +210,7 @@ let task = {
                     } catch (e) {
                         Common.log('处理评论区异常了', e, e.message);
                         //如果在用户页面，则返回
-                         System.setAccessibilityMode('fast');
+                        System.setAccessibilityMode('fast');
                         if (UiSelector().descContains('复制名字').findOne()) {
                             Common.back();
                             Log.log('在用户页面，返回');
@@ -217,6 +224,12 @@ let task = {
                 let comments = Comment.getList();
                 for (let k in comments) {
                     try {
+                        if (b) {
+                            b = false;
+                            Common.log('自己，不处理');
+                            continue;
+                        }
+
                         if (backCfg.keywords && (!comments[k]['content'] || !Common.contains(comments[k]['content'], backCfg.keywords))) {
                             Common.log('数据：', comments[k]['content'], backCfg.keywords);
                             continue;
@@ -349,9 +362,11 @@ let task = {
         }
 
         Common.log('开始操作视频评论区');
+        let first = false;
         if (config.comment) {
             System.sleep(1500);
             this.dealComment(config.comment);
+            first = true;
         }
 
         if (config.commentUser || config.backComment) {
@@ -360,7 +375,7 @@ let task = {
                 Video.openComment(!!Video.getCommentCount());
             }
 
-            this.dealComments(nickname, config.commentUser, config.backComment);
+            this.dealComments(nickname, config.commentUser, config.backComment, first);
         }
 
         Comment.closeCommentWindow();
