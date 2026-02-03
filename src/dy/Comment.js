@@ -46,16 +46,14 @@ let Comment = {
 
         return incSecond;
     },
-    atUser(atUser) {
-        let tag = UiSelector().isVisibleToUser(true).filter(v => {
-            return v.isEditable();
-        }).findOne();
-        let account = atUser.split('@');
+    atUser(tag, atUser) {
+        let account = [atUser];
+        Common.log('开始@用户', account);
         for (let i in account) {
             if (!account[i]) {
                 continue;
             }
-            System.setClip('@' + account[i].replace('@', ''));
+            System.setClip('@' + account[i]);
             System.sleep(1000);
             tag.paste();
             System.sleep(2000);
@@ -94,7 +92,7 @@ let Comment = {
         }
 
         //获取是否评论图片
-        Common.log("带图评论：" + img);
+        Common.log("带图评论：" + img, atUser);
         let func = null;
         if (img) {
             func = Common.selectPhoto(img);
@@ -107,17 +105,17 @@ let Comment = {
             if (msg) {
                 Common.sleep(200 + 50 * Math.random());
                 System.setClip(msg);
-                Log.log('评论部分：', msg);
+                Log.log('评论部分：', msg, atUser);
                 iptTag.paste();
                 if (atUser) {
                     Common.sleep(200 + 50 * Math.random());
-                    this.atUser(atUser);
+                    this.atUser(iptTag, atUser);
                 }
 
                 Common.sleep(200 + 50 * Math.random());
             } else {
                 if (atUser) {
-                    this.atUser(atUser);
+                    this.atUser(iptTag, atUser);
                 }
             }
 

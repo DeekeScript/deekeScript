@@ -33,7 +33,7 @@ let task = {
 
         let atName = '';
         if (cfg.commentTypes.includes('2') && cfg.commentAtNames && cfg.commentAtNames.length > 0) {
-            atName = cfg.commentAtNames[Math.floor(Math.random() * cfg.commentAtNames.length)];
+            atName = cfg.commentAtNames[Math.ceil(0.001 + Math.random() * cfg.commentAtNames.length)];
         }
 
         let img = undefined;
@@ -180,7 +180,7 @@ let task = {
                                     Video.openComment(!!Video.getCommentCount());
                                     Common.log('开启评论窗口');
                                     let msg = cfg.videoCommentContents[Math.floor(Math.random() * cfg.videoCommentContents.length)];
-                                    let atName = cfg.videoCommentAtNames[Math.floor(Math.random() * cfg.videoCommentAtNames.length)];
+                                    let atName = cfg.videoCommentAtNames[Math.ceil(0.001 + Math.random() * cfg.videoCommentAtNames.length)];
                                     let img = cfg.videoCommentImages[Math.floor(Math.random() * cfg.videoCommentImages.length)];
                                     if (!cfg.videoCommentTypes.includes("0")) {
                                         msg = null;
@@ -273,6 +273,7 @@ let task = {
                         if (backCfg.commentZanRate >= Math.random() && !Comment.isZan(comments[k].tag)) {
                             Log.log('评论赞');
                             Comment.clickZan(comments[k]);
+                            Common.sleep(1000 + 500 * Math.random());
                         }
 
                         let backTag = comments[k].tag.children().findOne(UiSelector().text('回复'));
@@ -488,5 +489,5 @@ try {
     Common.log('配置：', config);
     task.run(config);
 } catch (e) {
-    Common.log('异常处理：', e, e.message);
+    Common.log('异常处理：', e.message);
 }
