@@ -387,13 +387,11 @@ let task = {
 
         let desc = Dy.getDesc();
         Common.log('视频描述', desc);
-        if (config.videoKeywords) {
-            if (!desc || (desc && !Common.contains(desc, config.videoKeywords))) {
-                alert = true;
-            }
-
-            if (!ip || (ip && !Common.contains(ip, config.videoKeywords))) {
-                alert = true;
+        if (config.videoKeywords && !alert) {
+            if (!desc || !Common.contains(desc, config.videoKeywords)) {
+                if (!ip || !Common.contains(ip, config.videoKeywords)) {
+                    alert = true;
+                }
             }
         }
 
