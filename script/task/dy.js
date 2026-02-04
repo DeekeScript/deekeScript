@@ -61,6 +61,7 @@ let task = {
         }
 
         Common.log('count', count);
+        let commentsGender = [];
         while (true) {
             if (cfg) {
                 let comments = Comment.getList(0);
@@ -118,7 +119,11 @@ let task = {
                             continue;
                         }
 
-                        if (cfg.gender && !Common.contains(User.getGender(), cfg.gender)) {
+                        let gender = User.getGender();
+                        commentsGender[comments[k].nickname] = gender;
+                        Common.log('加入性别', comments[k].nickname, gender);
+
+                        if (cfg.gender && !Common.contains(gender, cfg.gender)) {
                             Common.log('性别不匹配');
                             Common.back();
                             System.sleep(1500);
@@ -270,36 +275,65 @@ let task = {
                         Common.log('找到了关键词', comments[k]['content']);
                         Storage.putBoolean('task_dy_toker_comment_back_' + nickname + '_' + comments[k].nickname, true);
 
+                        //回复和点赞查看性别是否符合，不符合则不操作
+                        let gender = commentsGender[comments[k].nickname];
+                        Common.log('数组获取性别：', gender);
+                        if (!["0", "1", "2"].includes(gender)) {
+                            //进入用户中心查看性别
+                            try {
+                                Common.log('进入用户主页获取性别');
+                                Comment.intoUserPage(comments[k]);
+                            } catch (e) {
+                                Common.log('进入用户页异常处理2：', e, e.message);
+                                continue;
+                            }
+
+                            gender = User.getGender();
+                            Common.log('性别：', gender);
+                            commentsGender[comments[k].nickname] = gender;
+                            Common.back();
+                            Common.sleep(1000);
+                        }
+                        Common.log('性别选项：', gender);
+                        if (backCfg.gender && !backCfg.gender.includes(gender)) {
+                            Common.log('性别不匹配', comments[k].gender, backCfg.gender);
+                            continue;
+                        }
+
                         if (backCfg.commentZanRate >= Math.random() && !Comment.isZan(comments[k].tag)) {
                             Log.log('评论赞');
                             Comment.clickZan(comments[k]);
                             Common.sleep(1000 + 500 * Math.random());
                         }
 
-                        let backTag = comments[k].tag.children().findOne(UiSelector().text('回复'));
-                        Common.log('backTag', backTag);
-                        if (backTag) {
-                            backTag.click();
-                            System.sleep(1500);
-                            let msg = backCfg.comments[Math.floor(Math.random() * backCfg.comments.length)];
-                            let atName = backCfg.atUserNames[Math.floor(Math.random() * backCfg.atUserNames.length)];
-                            let img = backCfg.comentImages[Math.floor(Math.random() * backCfg.comentImages.length)];
+                        if (backCfg.commentRate >= Math.random()) {
+                            let backTag = comments[k].tag.children().findOne(UiSelector().text('回复'));
+                            Common.log('backTag', backTag);
+                            if (backTag) {
+                                backTag.click();
+                                System.sleep(1500);
+                                let msg = backCfg.comments[Math.floor(Math.random() * backCfg.comments.length)];
+                                let atName = backCfg.atUserNames[Math.floor(Math.random() * backCfg.atUserNames.length)];
+                                let img = backCfg.comentImages[Math.floor(Math.random() * backCfg.comentImages.length)];
 
-                            if (!backCfg.type.includes("0")) {
-                                msg = null;
+                                if (!backCfg.type.includes("0")) {
+                                    msg = null;
+                                }
+
+                                if (!backCfg.type.includes("2")) {
+                                    atName = null;
+                                }
+
+                                if (!backCfg.type.includes("1")) {
+                                    img = null;
+                                }
+
+                                Comment.commentMsg(msg, atName, img);///////////////////////////////////操作  回复评论
+                                Common.log('回复了评论');
+                                System.sleep(1000);
                             }
-
-                            if (!backCfg.type.includes("2")) {
-                                atName = null;
-                            }
-
-                            if (!backCfg.type.includes("1")) {
-                                img = null;
-                            }
-
-                            Comment.commentMsg(msg, atName, img);///////////////////////////////////操作  回复评论
-                            Common.log('回复了评论');
-                            System.sleep(1000);
+                        } else {
+                            Common.log('不处理回复');
                         }
                     } catch (e) {
                         Common.log('处理回复评论异常了', e);
@@ -338,34 +372,32 @@ let task = {
 
         let ip = Dy.getIp();
         Common.log('ip', ip);
+        let alert = false;
         if (config.videoIp) {
             if (!ip) {
                 Common.log('不在指定IP范围，跳过操作视频', ip);
-                return;
+                alert = true;
             }
 
             if (!Common.contains(ip, config.videoIp)) {
                 Common.log('不在指定IP范围，跳过操作视频', ip);
-                return;
+                alert = true;
             }
         }
 
         let desc = Dy.getDesc();
         Common.log('视频描述', desc);
-        let rt = false;
         if (config.videoKeywords) {
-            if (desc && Common.contains(desc, config.videoKeywords)) {
-                rt = true;
+            if (!desc || (desc && !Common.contains(desc, config.videoKeywords))) {
+                alert = true;
             }
 
-            if (ip && Common.contains(ip, config.videoKeywords)) {
-                rt = true;
+            if (!ip || (ip && !Common.contains(ip, config.videoKeywords))) {
+                alert = true;
             }
-        } else {
-            rt = true;
         }
 
-        if (!rt) {
+        if (alert) {
             Common.log('找到关键词，等待', config.videoWaitSecond, '秒');
             let nextVideo = FloatDialogs.confirm('不包含关键词提示', config.videoWaitSecond + '秒后关闭，执行下一个作品', '下一个作品', '操作当前作品', (dialog) => {
                 let i = 0;
@@ -475,9 +507,11 @@ let config = {
     backComment: Storage.getBoolean('toker_back_comment') ? {
         ip: Storage.get('toker_back_comment_ip') ? Storage.get('toker_back_comment_ip').replace(/\，/g, ',').split(',') : null,
         keywords: Storage.get('toker_back_comment_keywords') ? Storage.get('toker_back_comment_keywords').replace(/\，/g, ',').split(',') : null,
+        gender: Storage.getArray('toker_back_comment_setting_sex'),
         minDay: Storage.getInteger('toker_back_comment_min_day'),
         type: Storage.getArray('toker_back_comment_type'),
         commentZanRate: Storage.getInteger('toker_back_comment_zan_rate') / 100,
+        commentRate: Storage.getInteger('toker_back_comment_rate') / 100,
         comentImages: Storage.getArray('toker_back_comment_images'),
         comments: Storage.get('toker_back_comment_content').split("\n\n"),
         atUserNames: Storage.get('toker_back_comment_at_user').split('@'),

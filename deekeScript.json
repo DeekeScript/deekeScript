@@ -4,8 +4,8 @@
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
-  "versionCode": "115",
-  "versionName": "1.1.5",
+  "versionCode": "116",
+  "versionName": "1.1.6",
   "host": "https://home.deeke.top",
   "debug": true,
   "switchSetting": {
@@ -263,6 +263,21 @@
                     "notice": "* 匹配关键词的视频才会被操作，留空则不筛选"
                   },
                   {
+                    "type": "checkboxGroup",
+                    "label": "性别",
+                    "name": "toker_back_comment_setting_sex",
+                    "children": [
+                      "女",
+                      "男",
+                      "未知"
+                    ],
+                    "values": [
+                      "0",
+                      "1",
+                      "2"
+                    ]
+                  },
+                  {
                     "type": "number",
                     "label": "N天内回复",
                     "name": "toker_back_comment_min_day",
@@ -275,7 +290,16 @@
                     "max": 100,
                     "min": 0,
                     "step": 1,
-                    "value": 1
+                    "value": 25
+                  },
+                  {
+                    "type": "numberRange",
+                    "label": "评论区回复频率（%）",
+                    "name": "toker_back_comment_rate",
+                    "max": 100,
+                    "min": 0,
+                    "step": 1,
+                    "value": 25
                   },
                   {
                     "type": "checkboxGroup",
