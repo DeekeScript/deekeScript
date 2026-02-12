@@ -4,12 +4,12 @@
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
-  "versionCode": "117",
-  "versionName": "1.1.7",
+  "versionCode": "118",
+  "versionName": "1.1.8",
   "host": "https://home.deeke.top",
   "debug": true,
   "switchSetting": {
-    "alipay": true
+    "alipay": false
   },
   "bottomMenusHidden": false,
   "groups": [
