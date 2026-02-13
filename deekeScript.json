@@ -8,6 +8,7 @@
   "versionName": "1.1.9",
   "host": "https://home.deeke.top",
   "debug": true,
+  "showAd": false,
   "switchSetting": {
     "alipay": false
   },
