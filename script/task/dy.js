@@ -424,7 +424,7 @@ let task = {
 
         if (config.commentUser || config.backComment) {
             System.sleep(1500);
-            if (!Common.id('title').textContains('暂无评论').findOne() && !Common.id('title').textContains('条评论').findOne()) {
+            if (!first && !Common.id('title').textContains('暂无评论').findOne() && !Common.id('title').textContains('条评论').findOne()) {
                 Video.openComment(!!Video.getCommentCount());
             }
 

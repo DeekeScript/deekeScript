@@ -4,8 +4,8 @@
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
-  "versionCode": "118",
-  "versionName": "1.1.8",
+  "versionCode": "119",
+  "versionName": "1.1.9",
   "host": "https://home.deeke.top",
   "debug": true,
   "switchSetting": {
