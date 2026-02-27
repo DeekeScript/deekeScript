@@ -481,7 +481,7 @@ let config = {
     comment: Storage.getBoolean('toker_comments') ? {
         commentRate: Storage.getInteger('toker_comment_rate') / 100,
         commentTypes: Storage.getArray('toker_comment_type'),
-        commentAtNames: Storage.get('toker_comment_at_name').split('@'),
+        commentAtNames: Storage.get('toker_comment_at_name').substring(1).split('@'),
         commentContents: Storage.get('toker_comment_content').split("\n\n"),
         commentImages: Storage.getArray('toker_comment_images'),
     } : null,
@@ -499,7 +499,7 @@ let config = {
         videoCommentRate: Storage.getInteger('toker_comment_setting_video_comment_rate') / 100,
         videoCommentTypes: Storage.getArray('toker_comment_setting_video_comment_type'),
         videoCommentImages: Storage.getArray('toker_comment_setting_video_comment_images'),
-        videoCommentAtNames: Storage.get('toker_comment_setting_video_at_name').split('@'),
+        videoCommentAtNames: Storage.get('toker_comment_setting_video_at_name').substring(1).split('@'),
         videoCommentContents: Storage.get('toker_comment_setting_video_comment_content').split("\n\n"),
     } : null,
     backComment: Storage.getBoolean('toker_back_comment') ? {
@@ -512,7 +512,7 @@ let config = {
         commentRate: Storage.getInteger('toker_back_comment_rate') / 100,
         comentImages: Storage.getArray('toker_back_comment_images'),
         comments: Storage.get('toker_back_comment_content').split("\n\n"),
-        atUserNames: Storage.get('toker_back_comment_at_user').split('@'),
+        atUserNames: Storage.get('toker_back_comment_at_user').substring(1).split('@'),
     } : null,
 }
 
