@@ -358,6 +358,59 @@ let task = {
         }
     },
 
+    dealUserVideo(config) {
+        Common.log('处理用户视频', config.user);
+        if (config.user.focusRate >= Math.random()) {
+            Log.log('关注用户');
+            if (Video.intoLocalUserPage()) {
+                if (config.user.ip.length > 0 && config.user.ip[0] != '') {
+                    let ipTag = UiSelector().textContains('IP：').isVisibleToUser(true).findOne();
+                    Common.log('ipTag', ipTag);
+                    if (!ipTag || !config.user.ip.includes(ipTag.text().replace('IP：', ''))) {
+                        Common.back(1);
+                        Common.sleep(2000);
+                        Common.log('没有IP，或者IP不匹配');
+                    }
+                }
+
+                if (config.user.gender) {
+                    let genderTag = UiSelector().text('女').isVisibleToUser(true).findOne() || UiSelector().text('男').isVisibleToUser(true).findOne();
+                    Common.log('genderTag', genderTag);
+                    let gender = "2";
+                    if (genderTag && genderTag.text() == '男') {
+                        gender = "1";
+                    } else if (genderTag && genderTag.text() == '女') {
+                        gender = "0";
+                    }
+
+                    if (!config.user.gender.includes(gender)) {
+                        Common.back(1);
+                        Common.sleep(2000);
+                        Common.log('性别不匹配');
+                    }
+                }
+
+                User.focus();
+                Common.sleep(2000 + 2000 * Math.random());
+                Common.back();
+                Common.sleep(1000);
+                Common.log('关注用户完成');
+            }
+        }
+
+        if (config.user.zanRate >= Math.random()) {
+            Video.clickZan();
+            Common.sleep(2000 + 2000 * Math.random());
+            Common.log('赞视频');
+        }
+
+        if (config.user.collectRate >= Math.random()) {
+            Video.collect();
+            Common.sleep(2000 + 2000 * Math.random());
+            Common.log('收藏视频');
+        }
+    },
+
     dealVideo(config) {
         Common.log('开始处理视频');
         if (Video.isLiving()) {
@@ -412,6 +465,11 @@ let task = {
             }
         } else {
             Common.log('找到了关键词');
+        }
+
+        //开始操作博主
+        if (config.user.toker_user) {
+            this.dealUserVideo(config);
         }
 
         Common.log('开始操作视频评论区');
@@ -478,6 +536,16 @@ let config = {
     videoKeywords: Storage.get('toker_video_keywords') ? Storage.get('toker_video_keywords').replace(/\，/g, ',').split(',') : null,
     videoWaitSecond: Storage.getInteger('toker_wait_second'),
     count: Storage.getInteger('toker_video_count'),
+    runMinute: Storage.getInteger('toker_run_minute'),
+    runRandomMinute: Storage.getInteger('toker_run_random_minute'),
+    user: {
+        toker_user: Storage.getBoolean('toker_user'),
+        gender: Storage.getArray('toker_sex'),
+        zanRate: Storage.getInteger('toker_zan_rate') / 100,
+        focusRate: Storage.getInteger('toker_focus_rate') / 100,
+        collectRate: Storage.getInteger('toker_collect_rate') / 100,
+        ip: Storage.get('toker_user_ip').replace(/\，/g, ',').split(','),
+    },
     comment: Storage.getBoolean('toker_comments') ? {
         commentRate: Storage.getInteger('toker_comment_rate') / 100,
         commentTypes: Storage.getArray('toker_comment_type'),
@@ -516,10 +584,13 @@ let config = {
     } : null,
 }
 
-try {
-    task.log();
-    Common.log('配置：', config);
-    task.run(config);
-} catch (e) {
-    Common.log('异常处理：', e.message);
+while (true) {
+    try {
+        task.log();
+        Common.log('配置：', config);
+        task.run(config);
+    } catch (e) {
+        Common.log('异常处理：', e.message);
+    }
 }
+

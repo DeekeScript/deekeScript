@@ -146,6 +146,37 @@ let Video = {
         console.log("直播2检测完成");
         return tag ? true : false;
     },
+
+    getAvatarTag() {
+        let tag = Common.id('user_avatar').isVisibleToUser(true).findOnce();
+        if (tag) {
+            return tag;
+        }
+        throw new Error('找不到头像');
+    },
+
+    intoLocalUserPage() {
+        let nicknameTag = this.getAvatarTag();
+        Log.log(nicknameTag);
+        let res = nicknameTag.click();
+        Common.sleep(5000 + Math.random() * 1000);
+        let tag = UiSelector().className('android.widget.Button').isVisibleToUser(true).clickable(true).filter(v => {
+            return v.bounds().top < Device.height() / 4 && v.bounds().left < Device.width() / 4;
+        }).findOne();
+        if (tag) {
+            tag.click();
+            Common.sleep(2000);
+        }
+
+        return res;
+    },
+
+    collect() {
+        let collectTag = UiSelector().descContains('未选中，收藏').isVisibleToUser(true).findOne();
+        if (collectTag) {
+            Common.click(collectTag);
+        }
+    }
 }
 
 module.exports = Video;
