@@ -492,17 +492,31 @@ let task = {
         Comment.closeCommentWindow();
         System.sleep(1000);
         Log.log('关闭评论区');
+        return true;
     },
     run(config) {
+        let videoCount = config.runVideoCount;
+        if (videoCount <= 0) {
+            videoCount = 999999999;//为0的时候，不限制
+        }
+
         while (true) {
             //判断是不是在指定页面，不是则尝试返回
             try {
-                Common.log('backXPage');
+                Common.log('backXPage', '剩余视频数量：', videoCount);
                 System.setAccessibilityMode('fast');
                 this.backXPage(config.videoType);
                 Common.log('dealVideo');
-                this.dealVideo(config);
+                if (this.dealVideo(config)) {
+                    Common.log('一个视频处理完成');
+                    if (--videoCount <= 0) {
+                        Common.log('一轮视频处理完成');
+                        Video.next(true);
+                        return true;
+                    }
+                }
                 Video.next(true);
+
                 System.sleep(2000 + Math.random() * 1000);
             } catch (e) {
                 Common.log('视频操作报错了：', e, e.message);
@@ -536,7 +550,7 @@ let config = {
     videoKeywords: Storage.get('toker_video_keywords') ? Storage.get('toker_video_keywords').replace(/\，/g, ',').split(',') : null,
     videoWaitSecond: Storage.getInteger('toker_wait_second'),
     count: Storage.getInteger('toker_video_count'),
-    runMinute: Storage.getInteger('toker_run_minute'),
+    runVideoCount: Storage.getInteger('toker_run_video_count'),
     runRandomMinute: Storage.getInteger('toker_run_random_minute'),
     user: {
         toker_user: Storage.getBoolean('toker_user'),
@@ -588,7 +602,21 @@ while (true) {
     try {
         task.log();
         Common.log('配置：', config);
-        task.run(config);
+        if (task.run(config)) {
+            App.backApp();
+            let startTime = Date.parse(new Date()) / 1000;
+            let sleepSecond = config.runRandomMinute / 2 + Math.random() * config.runRandomMinute / 2;
+            Common.log('等待', sleepSecond, '分钟');
+            while (true) {
+                Common.sleep(1000);
+                if (Date.parse(new Date()) / 1000 - startTime >= sleepSecond * 60) {
+                    Common.log('时间已到，下一轮操作');
+                    App.launch('com.ss.android.ugc.aweme');
+                    Common.sleep(5000);
+                    break;
+                }
+            }
+        }
     } catch (e) {
         Common.log('异常处理：', e.message);
     }

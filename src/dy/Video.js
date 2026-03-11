@@ -105,7 +105,7 @@ let Video = {
     },
 
     getCommentTag() {
-        let tag = UiSelector().className('android.widget.LinearLayout').descContains('评论').clickable(true).isVisibleToUser(true).findOne();
+        let tag = UiSelector().className('android.widget.LinearLayout').descContains('评论').isVisibleToUser(true).findOne();
         Common.log("评论标签：：：", tag);
         if (tag) {
             return tag;

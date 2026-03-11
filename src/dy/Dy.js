@@ -18,7 +18,7 @@ let Dy = {
 
     getDesc() {
         let tag = Common.id('desc').isVisibleToUser(true).findOne();
-        return tag.text();
+        return tag ? tag.text() : '';
     },
 
     getNickname() {

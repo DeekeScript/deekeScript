@@ -4,8 +4,8 @@
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
-  "versionCode": "121",
-  "versionName": "1.2.1",
+  "versionCode": "122",
+  "versionName": "1.2.2",
   "host": "https://home.deeke.top",
   "debug": true,
   "showAd": false,
@@ -49,20 +49,18 @@
                 ]
               },
               {
-                "type": "numberRange",
-                "label": "运行/休息时间（分钟）",
-                "name": "toker_run_minute",
-                "max": 120,
-                "min": 5,
-                "value": 30
+                "type": "number",
+                "label": "每轮操作视频数（不含不匹配的视频数）",
+                "name": "toker_run_video_count",
+                "value": 5
               },
               {
                 "type": "numberRange",
-                "label": "运行/休息时间最大随机值（分钟）",
+                "label": "每轮休息最大随机值（分钟）",
                 "name": "toker_run_random_minute",
-                "max": 60,
+                "max": 30,
                 "min": 1,
-                "value": 5
+                "value": 1
               },
               {
                 "type": "textArea",

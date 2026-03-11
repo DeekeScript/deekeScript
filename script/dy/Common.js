@@ -114,10 +114,22 @@ let Common = {
         }
     },
 
+    city: null,
     //判断在哪个页面
     inXPage() {
         if (!Common.id('user_avatar').findOne()) {
             Common.log('不在指定页面');
+            return null;
+        }
+
+        if (this.city) {
+            if (UiSelector().descContains(this.city).findOne()) {
+                return 'tongcheng';
+            }
+            Common.log('不在同城页面');
+            FloatDialogs.show('不在同城页面，请重新启动');
+            System.exit();
+            System.sleep(3000);
             return null;
         }
 
@@ -131,8 +143,10 @@ let Common = {
             return 'tuijian';
         }
 
-        if (UiSelector().descContains('推荐').findOne()) {
+        let tag = UiSelector().descContains('已选中').findOne();
+        if (tag) {
             Common.log('在同城页面');
+            Common.city = tag.desc();
             return 'tongcheng';
         }
     }
