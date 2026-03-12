@@ -11,6 +11,15 @@ let Video = {
 
         throw new Error('没有找到赞标签');
     },
+
+    isZan() {
+        let zanTag = this.getZanTag();
+        if (zanTag) {
+            return zanTag.desc().indexOf('已点赞') > -1;
+        }
+        return false;
+    },
+
     clickZan() {
         let zanTag = this.getZanTag();
         if (zanTag) {
@@ -156,18 +165,10 @@ let Video = {
     },
 
     intoLocalUserPage() {
-        let nicknameTag = this.getAvatarTag();
-        Log.log(nicknameTag);
-        let res = nicknameTag.click();
-        Common.sleep(5000 + Math.random() * 1000);
-        let tag = UiSelector().className('android.widget.Button').isVisibleToUser(true).clickable(true).filter(v => {
-            return v.bounds().top < Device.height() / 4 && v.bounds().left < Device.width() / 4;
-        }).findOne();
-        if (tag) {
-            tag.click();
-            Common.sleep(2000);
-        }
-
+        let nicknameTag = Common.id('title').isVisibleToUser(true).findOne();
+        Common.log(nicknameTag);
+        let res = Common.click(nicknameTag);
+        Common.sleep(4000);
         return res;
     },
 

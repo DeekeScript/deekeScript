@@ -361,7 +361,7 @@ let task = {
     dealUserVideo(config) {
         Common.log('处理用户视频', config.user);
         if (config.user.focusRate >= Math.random()) {
-            Log.log('关注用户');
+            Common.log('关注用户');
             if (Video.intoLocalUserPage()) {
                 if (config.user.ip.length > 0 && config.user.ip[0] != '') {
                     let ipTag = UiSelector().textContains('IP：').isVisibleToUser(true).findOne();
@@ -390,6 +390,11 @@ let task = {
                     }
                 }
 
+                if (User.isFocus()) {
+                    Common.back();
+                    Common.sleep(1000);
+                    Common.log('已关注');
+                }
                 User.focus();
                 Common.sleep(2000 + 2000 * Math.random());
                 Common.back();
@@ -399,9 +404,14 @@ let task = {
         }
 
         if (config.user.zanRate >= Math.random()) {
-            Video.clickZan();
-            Common.sleep(2000 + 2000 * Math.random());
-            Common.log('赞视频');
+            if (!Video.isZan()) {
+                Common.log('视频未赞');
+                Video.clickZan();
+                Common.sleep(2000 + 2000 * Math.random());
+                Common.log('赞视频');
+            } else {
+                Common.log('已赞');
+            }
         }
 
         if (config.user.collectRate >= Math.random()) {
@@ -482,7 +492,7 @@ let task = {
 
         if (config.commentUser || config.backComment) {
             System.sleep(1500);
-            if (!first && !Common.id('title').textContains('暂无评论').findOne() && !Common.id('title').textContains('条评论').findOne()) {
+            if (Video.getZanTag()) {
                 Video.openComment(!!Video.getCommentCount());
             }
 
@@ -517,7 +527,7 @@ let task = {
                 }
                 Video.next(true);
 
-                System.sleep(2000 + Math.random() * 1000);
+                System.sleep(3000 + Math.random() * 1000);
             } catch (e) {
                 Common.log('视频操作报错了：', e, e.message);
                 Video.next(true);
