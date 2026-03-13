@@ -394,12 +394,13 @@ let task = {
                     Common.back();
                     Common.sleep(1000);
                     Common.log('已关注');
+                } else {
+                    User.focus();
+                    Common.sleep(2000 + 2000 * Math.random());
+                    Common.back();
+                    Common.sleep(1000);
+                    Common.log('关注用户完成');
                 }
-                User.focus();
-                Common.sleep(2000 + 2000 * Math.random());
-                Common.back();
-                Common.sleep(1000);
-                Common.log('关注用户完成');
             }
         }
 
@@ -492,7 +493,7 @@ let task = {
 
         if (config.commentUser || config.backComment) {
             System.sleep(1500);
-            if (Video.getZanTag()) {
+            if (UiSelector().className('android.widget.LinearLayout').descContains('点赞').clickable(true).isVisibleToUser(true).findOne()) {
                 Video.openComment(!!Video.getCommentCount());
             }
 
