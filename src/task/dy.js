@@ -198,7 +198,7 @@ let task = {
         while (true) {
             //判断是不是在指定页面，不是则尝试返回
             try {
-                this.backXPage(config.videoType);
+                // this.backXPage(config.videoType);
                 Common.log('dealVideo');
                 this.dealVideo(config);
                 Video.next(true);
