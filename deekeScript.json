@@ -7,7 +7,7 @@
   "versionCode": "100",
   "versionName": "1.0.0",
   "host": "https://home.deeke.top",
-  "debug": true,
+  "debug": false,
   "showAd": false,
   "switchSetting": {
     "alipay": false

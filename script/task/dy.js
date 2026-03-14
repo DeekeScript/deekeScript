@@ -61,7 +61,7 @@ let task = {
             return;
         }
 
-        if (config.user.focusRate >= Math.random()) {
+        if (config.focusRate >= Math.random()) {
             Common.log('关注用户');
             if (User.isFocus()) {
                 Common.back();
@@ -74,7 +74,12 @@ let task = {
                 Common.sleep(1000 + 500 * Math.random());
                 Common.log('关注用户完成');
             }
+            return;
         }
+
+        Common.back();
+        Common.sleep(1000 + 500 * Math.random());
+        Common.log('未关注');
     },
 
     dealVideo(config) {
@@ -108,11 +113,11 @@ let task = {
             let distance = distanceTag.text();
             let distanceNum = 1000;
             if (distance.indexOf('km') !== -1) {
-                distanceNum = Common.numDeal(distance) * 1000;
+                distanceNum = parseFloat(distance) * 1000;
             } else if (distance.indexOf('m') !== -1) {
-                distanceNum = Common.numDeal(distance);
+                distanceNum = Common.parseFloat(distance);
             } else {
-                distanceNum = Common.numDeal(distance);
+                distanceNum = Common.parseFloat(distance);
             }
 
             Common.log('距离', distanceNum, config.distance);
@@ -125,7 +130,9 @@ let task = {
 
         if (
             UiSelector().textContains('广告').isVisibleToUser(true).findOne() ||
-            UiSelector().textContains('咨询').isVisibleToUser(true).findOne()
+            UiSelector().textContains('咨询').isVisibleToUser(true).findOne() ||
+            UiSelector().textContains('预约').isVisibleToUser(true).findOne() ||
+            UiSelector().textContains('团购').isVisibleToUser(true).findOne()
         ) {
             Common.log('广告，跳过');
             FloatDialogs.toast('广告，跳过');
@@ -169,10 +176,10 @@ let task = {
                 FloatDialogs.toast('没有设置评论话术');
                 Common.log('没有设置评论话术');
             } else {
-                Common.log('评论概率不达标，跳过评论');
+                Common.log('准备评论');
+                first = Comment.commentMsg(msg.msg, null, null);
+                Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
             }
-            first = Comment.commentMsg(msg, null, null);
-            Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
         }
 
         Common.log('准备打开评论区');
@@ -181,6 +188,7 @@ let task = {
             Video.openComment(!!Video.getCommentCount());
         }
         this.dealComments(first);
+        Storage.putBoolean('dy_show_desc' + Encrypt.md5(desc), true);
         Comment.closeCommentWindow();
         System.sleep(1000);
         Log.log('关闭评论区');
