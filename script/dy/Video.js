@@ -1,3 +1,4 @@
+const { get } = require('../common/storage');
 let Common = require('./Common');
 let Video = {
     getZanTag() {
@@ -10,6 +11,14 @@ let Video = {
         }
 
         throw new Error('没有找到赞标签');
+    },
+
+    getZanCount() {
+        let zanTag = this.getZanTag();
+        if (zanTag) {
+            return Common.numDeal(zanTag.desc());
+        }
+        return 0;
     },
 
     isZan() {
@@ -168,7 +177,7 @@ let Video = {
         let nicknameTag = Common.id('title').isVisibleToUser(true).findOne();
         Common.log(nicknameTag);
         let res = Common.click(nicknameTag);
-        Common.sleep(4000);
+        Common.sleep(4000 + 2000 * Math.random());
         return res;
     },
 

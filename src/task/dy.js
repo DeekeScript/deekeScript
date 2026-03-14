@@ -3,8 +3,13 @@ let Video = require('../dy/Video');
 let Comment = require('../dy/Comment');
 let User = require('../dy/User');
 let Dy = require('../dy/Dy');
+let machine = require('../common/machine');
 
 let task = {
+    //0评论，1私信
+    getMsg(type) {
+        return machine.getMsg(type) || false;//永远不会结束
+    },
     log() {
         let d = new Date();
         let file = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
@@ -12,345 +17,33 @@ let task = {
         Log.setFile(allFile);
     },
 
-    dealComment(cfg) {
-        if (cfg.commentRate < Math.random()) {
-            Common.log('评论概率不达标，跳过评论');
-            return;
-        }
-
-        if (cfg.commentTypes.length == 0) {
-            Common.log('没有评论内容，跳过评论');
-            return;
-        }
-
-        Common.log('准备打开评论区');
-        Video.openComment(!!Video.getCommentCount());
-        Common.log('评论类型', cfg.commentTypes);
-        let msg = '';
-        if (cfg.commentTypes.includes('0')) {
-            msg = cfg.commentContents[Math.floor(Math.random() * cfg.commentContents.length)];
-        }
-
-        let atName = '';
-        if (cfg.commentTypes.includes('2') && cfg.commentAtNames && cfg.commentAtNames.length > 0) {
-            atName = cfg.commentAtNames[Math.ceil(0.001 + Math.random() * cfg.commentAtNames.length)];
-        }
-
-        let img = undefined;
-        if (cfg.commentTypes.includes('1') && cfg.commentImages && cfg.commentImages.length > 0) {
-            //图片评论
-            img = cfg.commentImages[Math.floor(Math.random() * cfg.commentImages.length)];
-        }
-
-        if (!msg && !img && !atName) {
-            Common.log('评论内容和图片均为空，跳过评论');
-            Common.back();
-            System.sleep(1000 + Math.random() * 500);
-            return;
-        }
-
-        return Comment.commentMsg(msg, atName, img);
-    },
-
     //cfg是指对评论用户的相关操作
-    dealComments(nickname, cfg, backCfg, firstContinue, count) {
-        let a = firstContinue;
-        let b = firstContinue;
-        if (cfg && backCfg) {
-            count *= 2;
-        }
-
-        Common.log('count', count);
-        let commentsGender = [];
+    dealComments(firstContinue) {
         while (true) {
-            if (cfg) {
-                let comments = Comment.getList(0);
-                for (let k in comments) {
-                    if (count-- <= 0) {
-                        Common.log('操作完了');
-                        break;
+            let comments = Comment.getList(0);
+            for (let k in comments) {
+                try {
+                    if (firstContinue) {
+                        firstContinue = false;
+                        Common.log('自己，不处理');
+                        continue;
+                    }
+                    if (comments[k]['isAuthor']) {
+                        Common.log('作者本人评论，跳过');
+                        continue;
                     }
 
-                    try {
-                        if (a) {
-                            a = false;
-                            Common.log('自己，不处理');
-                            continue;
-                        }
-                        if (comments[k]['isAuthor']) {
-                            Common.log('作者本人评论，跳过');
-                            continue;
-                        }
-
-                        if (cfg.keywords && (!comments[k]['content'] || !Common.contains(comments[k]['content'], cfg.keywords))) {
-                            Common.log('数据不包含关键词：', comments[k]['content'], cfg.keywords);
-                            continue;
-                        }
-
-                        if (cfg.ip && comments[k].ip && !Common.contains(comments[k].ip, cfg.ip)) {
-                            Common.log('IP不匹配', comments[k].ip, cfg.ip);
-                            continue;
-                        }
-
-                        //评论时间处理
-                        if (cfg.minDay && comments[k].time / 86400 > cfg.minDay) {
-                            Common.log('时间不匹配', comments[k].time / 86400, cfg.minDay);
-                            continue;
-                        }
-
-                        if (Storage.getBoolean('task_dy_toker_comment_' + nickname + '_' + comments[k].nickname)) {
-                            Common.log('重复');
-                            continue;
-                        }
-
-                        Common.log('找到了关键词', comments[k]['content']);
-                        Storage.putBoolean('task_dy_toker_comment_' + nickname + '_' + comments[k].nickname, true);
-                        try {
-                            Comment.intoUserPage(comments[k]);
-                        } catch (e) {
-                            Common.log('进入用户页异常处理：', e, e.message);
-                            continue;
-                        }
-                        //私密账号
-                        if (User.isPrivate()) {
-                            Common.back();
-                            System.sleep(1500);
-                            Common.log('私密账号');
-                            continue;
-                        }
-
-                        let gender = User.getGender();
-                        commentsGender[comments[k].nickname] = gender;
-                        Common.log('加入性别', comments[k].nickname, gender);
-
-                        if (cfg.gender && !Common.contains(gender, cfg.gender)) {
-                            Common.log('性别不匹配');
-                            Common.back();
-                            System.sleep(1500);
-                            continue;
-                        }
-
-                        let privateRate = Math.random();
-                        let focusRate = Math.random();
-                        let zanRate = Math.random();
-                        let commentRate = Math.random();
-
-                        Common.log('频率', cfg);
-                        if (privateRate > cfg.privateRate && focusRate > cfg.focusRate &&
-                            zanRate > cfg.videoZanRate && commentRate > cfg.videoCommentRate) {
-                            Common.log('全部概率不匹配，跳过用户操作');
-                            Common.back();
-                            System.sleep(2000);
-                            continue;
-                        }
-
-                        if (cfg.focusRate >= focusRate) {
-                            if (User.isFocus()) {
-                                Common.log('已关注');
-                            } else {
-                                User.focus();
-                                Common.log('关注了');
-                                System.sleep(1500 + 2000 * Math.random());
-                            }
-                        }
-
-                        if (cfg.privateRate >= privateRate) {
-                            Common.log('直接操作关注和私信引流');
-                            User.privateMsg(
-                                cfg.privateTypes,
-                                cfg.privateMsgs[Math.floor(Math.random() * cfg.privateMsgs.length)],
-                            );
-                            System.sleep(2000);
-                        }
-
-                        if (cfg.videoZanRate < zanRate && cfg.videoCommentRate < commentRate) {
-                            Common.log('视频点赞和评论概率均不匹配，跳过视频操作');
-                            Common.back();
-                            System.sleep(2000);
-                            continue;
-                        }
-
-                        System.setAccessibilityMode('!fast');
-                        try {
-                            Common.log('进入用户视频页面');
-                            if (Video.intoUserVideo()) {
-                                Common.log('有视频，直接操作视频引流');
-                                if (cfg.videoZanRate >= zanRate) {
-                                    Video.clickZan();
-                                    Common.log('点赞了');
-                                    System.sleep(1500 + 2000 * Math.random());
-                                }
-
-                                if (cfg.videoCommentRate >= commentRate) {
-                                    Video.openComment(!!Video.getCommentCount());
-                                    Common.log('开启评论窗口');
-                                    let msg = cfg.videoCommentContents[Math.floor(Math.random() * cfg.videoCommentContents.length)];
-                                    let atName = cfg.videoCommentAtNames[Math.ceil(0.001 + Math.random() * cfg.videoCommentAtNames.length)];
-                                    let img = cfg.videoCommentImages[Math.floor(Math.random() * cfg.videoCommentImages.length)];
-                                    if (!cfg.videoCommentTypes.includes("0")) {
-                                        msg = null;
-                                    }
-
-                                    if (!cfg.videoCommentTypes.includes("2")) {
-                                        atName = null;
-                                    }
-
-                                    if (!cfg.videoCommentTypes.includes("1")) {
-                                        img = null;
-                                    }
-                                    Comment.commentMsg(msg, atName, img);///////////////////////////////////操作  评论视频
-                                    System.sleep(1500 + 2000 * Math.random());
-                                    Common.log('评论了');
-                                    Common.back();//视频页面回到用户页面
-                                }
-                                Common.back();//从视频页面到用户页面
-                            }
-                        } catch (e) {
-                            Common.log('异常了', e);
-                            System.sleep(2000);
-                            User.backHome();
-                        }
-
-                        Common.back();
-                        System.setAccessibilityMode('fast');
-                        System.sleep(1000);
-                        if (UiSelector().descContains('复制名字').findOne()) {
-                            Common.back();
-                            Log.log('在用户页面-，返回');
-                            System.sleep(1000);
-                        }
-                    } catch (e) {
-                        Common.log('处理评论区异常了', e, e.message);
-                        //如果在用户页面，则返回
-                        System.setAccessibilityMode('fast');
-                        if (UiSelector().descContains('复制名字').findOne()) {
-                            Common.back();
-                            Log.log('在用户页面，返回');
-                            System.sleep(1000);
-                        }
-                    }
+                    Comment.clickZan(comments[k]);
+                    Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+                } catch (e) {
+                    Common.log('处理评论区异常了', e, e.message);
                 }
             }
 
-            Common.log('开始处理回复', backCfg);
-            if (backCfg) {
-                Common.log('开始处理回复2');
-                let comments = Comment.getList(1);
-                for (let k in comments) {
-                    if (count-- <= 0) {
-                        Common.log('操作完了');
-                        break;
-                    }
-                    try {
-                        if (b) {
-                            b = false;
-                            Common.log('自己，不处理');
-                            continue;
-                        }
-
-                        if (backCfg.keywords && (!comments[k]['content'] || !Common.contains(comments[k]['content'], backCfg.keywords))) {
-                            Common.log('数据：', comments[k]['content'], backCfg.keywords);
-                            continue;
-                        }
-
-                        Common.log('123');
-                        if (backCfg.ip && comments[k].ip && !Common.contains(comments[k].ip, backCfg.ip)) {
-                            Common.log('IP不匹配', comments[k].ip, backCfg.ip);
-                            continue;
-                        }
-
-                        Common.log('124');
-                        //评论时间处理
-                        if (backCfg.minDay && comments[k].time / 86400 > backCfg.minDay) {
-                            Common.log('时间不匹配', comments[k].time / 86400, backCfg.minDay);
-                            continue;
-                        }
-
-                        Common.log('125');
-                        if (Storage.getBoolean('task_dy_toker_comment_back_' + nickname + '_' + comments[k].nickname)) {
-                            Common.log('重复');
-                            continue;
-                        }
-
-                        Common.log('找到了关键词', comments[k]['content']);
-                        Storage.putBoolean('task_dy_toker_comment_back_' + nickname + '_' + comments[k].nickname, true);
-
-                        //回复和点赞查看性别是否符合，不符合则不操作
-                        let gender = commentsGender[comments[k].nickname];
-                        Common.log('数组获取性别：', gender);
-                        if (!["0", "1", "2"].includes(gender)) {
-                            //进入用户中心查看性别
-                            try {
-                                Common.log('进入用户主页获取性别');
-                                Comment.intoUserPage(comments[k]);
-                            } catch (e) {
-                                Common.log('进入用户页异常处理2：', e, e.message);
-                                continue;
-                            }
-
-                            gender = User.getGender();
-                            Common.log('性别：', gender);
-                            commentsGender[comments[k].nickname] = gender;
-                            Common.back();
-                            Common.sleep(1000);
-                        }
-                        Common.log('性别选项：', gender);
-                        if (backCfg.gender && !backCfg.gender.includes(gender)) {
-                            Common.log('性别不匹配', comments[k].gender, backCfg.gender);
-                            continue;
-                        }
-
-                        if (backCfg.commentZanRate >= Math.random() && !Comment.isZan(comments[k].tag)) {
-                            Log.log('评论赞');
-                            Comment.clickZan(comments[k]);
-                            Common.sleep(1000 + 500 * Math.random());
-                        }
-
-                        if (backCfg.commentRate >= Math.random()) {
-                            let backTag = comments[k].tag.children().findOne(UiSelector().text('回复'));
-                            Common.log('backTag', backTag);
-                            if (backTag) {
-                                backTag.click();
-                                System.sleep(1500);
-                                let msg = backCfg.comments[Math.floor(Math.random() * backCfg.comments.length)];
-                                let atName = backCfg.atUserNames[Math.floor(Math.random() * backCfg.atUserNames.length)];
-                                let img = backCfg.comentImages[Math.floor(Math.random() * backCfg.comentImages.length)];
-
-                                if (!backCfg.type.includes("0")) {
-                                    msg = null;
-                                }
-
-                                if (!backCfg.type.includes("2")) {
-                                    atName = null;
-                                }
-
-                                if (!backCfg.type.includes("1")) {
-                                    img = null;
-                                }
-
-                                Comment.commentMsg(msg, atName, img);///////////////////////////////////操作  回复评论
-                                Common.log('回复了评论');
-                                System.sleep(1000);
-                            }
-                        } else {
-                            Common.log('不处理回复');
-                        }
-                    } catch (e) {
-                        Common.log('处理回复评论异常了', e);
-                        //如果发送按钮底部不在屏幕底部
-                        if (UiSelector().text('发送').findOne()) {
-                            Common.back();
-                            Log.log('在用户页面，返回');
-                            System.sleep(1000);
-                        }
-                    }
-                }
-            }
-
-            Common.log('下一页评论', count);
-            if (count <= 0 || !Common.swipeCommentListOp()) {
+            Common.log('下一页评论');
+            if (!Common.swipeCommentListOp()) {
                 Common.back();
-                System.sleep(1000);
+                System.sleep(2000);
                 Common.log('到底了');
                 break;
             }
@@ -359,67 +52,34 @@ let task = {
     },
 
     dealUserVideo(config) {
-        Common.log('处理用户视频', config.user);
-        if (config.user.focusRate >= Math.random()) {
+        Video.intoLocalUserPage();
+        if (!UiSelector().textContains('抖音号：').isVisibleToUser(true).findOne()) {
+            Common.back();
+            Common.sleep(1000 + 500 * Math.random());
+            Common.log('非个人账号，不操作');
+            FloatDialogs.toast('非个人账号，不操作');
+            return;
+        }
+
+        if (config.focusRate >= Math.random()) {
             Common.log('关注用户');
-            if (Video.intoLocalUserPage()) {
-                if (config.user.ip.length > 0 && config.user.ip[0] != '') {
-                    let ipTag = UiSelector().textContains('IP：').isVisibleToUser(true).findOne();
-                    Common.log('ipTag', ipTag);
-                    if (!ipTag || !config.user.ip.includes(ipTag.text().replace('IP：', ''))) {
-                        Common.back(1);
-                        Common.sleep(2000);
-                        Common.log('没有IP，或者IP不匹配');
-                    }
-                }
-
-                if (config.user.gender) {
-                    let genderTag = UiSelector().text('女').isVisibleToUser(true).findOne() || UiSelector().text('男').isVisibleToUser(true).findOne();
-                    Common.log('genderTag', genderTag);
-                    let gender = "2";
-                    if (genderTag && genderTag.text() == '男') {
-                        gender = "1";
-                    } else if (genderTag && genderTag.text() == '女') {
-                        gender = "0";
-                    }
-
-                    if (!config.user.gender.includes(gender)) {
-                        Common.back(1);
-                        Common.sleep(2000);
-                        Common.log('性别不匹配');
-                    }
-                }
-
-                if (User.isFocus()) {
-                    Common.back();
-                    Common.sleep(1000);
-                    Common.log('已关注');
-                } else {
-                    User.focus();
-                    Common.sleep(2000 + 2000 * Math.random());
-                    Common.back();
-                    Common.sleep(1000);
-                    Common.log('关注用户完成');
-                }
-            }
-        }
-
-        if (config.user.zanRate >= Math.random()) {
-            if (!Video.isZan()) {
-                Common.log('视频未赞');
-                Video.clickZan();
-                Common.sleep(2000 + 2000 * Math.random());
-                Common.log('赞视频');
+            if (User.isFocus()) {
+                Common.back();
+                Common.sleep(1000 + 500 * Math.random());
+                Common.log('已关注');
             } else {
-                Common.log('已赞');
+                User.focus();
+                Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+                Common.back();
+                Common.sleep(1000 + 500 * Math.random());
+                Common.log('关注用户完成');
             }
+            return;
         }
-
-        if (config.user.collectRate >= Math.random()) {
-            Video.collect();
-            Common.sleep(2000 + 2000 * Math.random());
-            Common.log('收藏视频');
-        }
+        
+        Common.back();
+        Common.sleep(1000 + 500 * Math.random());
+        Common.log('未关注');
     },
 
     dealVideo(config) {
@@ -434,99 +94,114 @@ let task = {
             throw new Error('获取昵称失败');//不在视频页面
         }
 
-        let ip = Dy.getIp();
-        Common.log('ip', ip);
-        let alert = false;
-        if (config.videoIp) {
-            if (!ip) {
-                Common.log('不在指定IP范围，跳过操作视频', ip);
-                alert = true;
+        let zanCount = Video.getZanCount();
+        Common.log('视频赞数', zanCount);
+        if (zanCount < config.minZan || zanCount > config.maxZan) {
+            Common.log('视频赞不符合条件');
+            FloatDialogs.toast('视频赞不符合条件');
+            return;
+        }
+
+        if (config.distance > 0) {
+            let distanceTag = UiSelector().textContains('m').isVisibleToUser(true).findOne();
+            console.log(distanceTag);
+            if (!distanceTag) {
+                Common.log('距离不达标，跳过');
+                FloatDialogs.toast('距离不达标，跳过');
+                return;
+            }
+            let distance = distanceTag.text();
+            let distanceNum = 1000;
+            if (distance.indexOf('km') !== -1) {
+                distanceNum = parseFloat(distance) * 1000;
+            } else if (distance.indexOf('m') !== -1) {
+                distanceNum = Common.parseFloat(distance);
+            } else {
+                distanceNum = Common.parseFloat(distance);
             }
 
-            if (!Common.contains(ip, config.videoIp)) {
-                Common.log('不在指定IP范围，跳过操作视频', ip);
-                alert = true;
+            Common.log('距离', distanceNum, config.distance);
+            if (distanceNum > config.distance) {
+                Common.log('距离不达标，跳过');
+                FloatDialogs.toast('距离不达标，跳过');
+                return;
             }
+        }
+
+        if (
+            UiSelector().textContains('广告').isVisibleToUser(true).findOne() ||
+            UiSelector().textContains('咨询').isVisibleToUser(true).findOne() ||
+            UiSelector().textContains('预约').isVisibleToUser(true).findOne() ||
+            UiSelector().textContains('团购').isVisibleToUser(true).findOne()
+        ) {
+            Common.log('广告，跳过');
+            FloatDialogs.toast('广告，跳过');
+            return;
+        }
+
+        if (UiSelector().textContains('团购').isVisibleToUser(true).findOne()) {
+            Common.log('团购，跳过');
+            FloatDialogs.toast('团购，跳过');
+            return;
         }
 
         let desc = Dy.getDesc();
         Common.log('视频描述', desc);
-        if (config.videoKeywords && !alert) {
-            if (!desc || !Common.contains(desc, config.videoKeywords)) {
-                if (!ip || !Common.contains(ip, config.videoKeywords)) {
-                    alert = true;
-                }
-            }
-        }
-
-        if (alert) {
-            Common.log('找到关键词，等待', config.videoWaitSecond, '秒');
-            let nextVideo = FloatDialogs.confirm('不包含关键词提示', config.videoWaitSecond + '秒后关闭，执行下一个作品', '下一个作品', '操作当前作品', (dialog) => {
-                let i = 0;
-                while (i++ < config.videoWaitSecond) {
-                    System.sleep(1000);
-                    dialog.setContent((config.videoWaitSecond - i) + '秒后关闭，执行下一个作品');
-                }
-                return true;
-            });
-
-            if (nextVideo) {
-                Common.log('跳过操作视频');
-                return;
-            }
-        } else {
-            Common.log('找到了关键词');
+        if (desc && Storage.getBoolean('dy_show_desc' + Encrypt.md5(desc))) {
+            Common.log('已经操作过了');
+            FloatDialogs.toast('已经操作过了');
+            return;
         }
 
         //开始操作博主
-        if (config.user.toker_user) {
-            this.dealUserVideo(config);
-        }
-
+        this.dealUserVideo(config);
         Common.log('开始操作视频评论区');
-        let first = false;
-        if (config.comment) {
-            System.sleep(1500);
-            first = this.dealComment(config.comment);
-        }
-
-        if (config.commentUser || config.backComment) {
-            System.sleep(1500);
-            if (UiSelector().className('android.widget.LinearLayout').descContains('点赞').clickable(true).isVisibleToUser(true).findOne()) {
-                Video.openComment(!!Video.getCommentCount());
+        System.sleep(1500);
+        if (config.zanRate >= Math.random()) {
+            if (!Video.isZan()) {
+                Common.log('视频未赞');
+                Video.clickZan();
+                Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+                Common.log('赞视频');
+            } else {
+                Common.log('已赞');
             }
-
-            this.dealComments(nickname, config.commentUser, config.backComment, first, config.count);
         }
 
+        let first = false;
+        if (config.commentRate >= Math.random()) {
+            Video.openComment(!!Video.getCommentCount());
+            let msg = this.getMsg(0);
+            if (!msg) {
+                FloatDialogs.toast('没有设置评论话术');
+                Common.log('没有设置评论话术');
+            } else {
+                Common.log('评论概率不达标，跳过评论');
+            }
+            first = Comment.commentMsg(msg, null, null);
+            Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+        }
+
+        Common.log('准备打开评论区');
+        System.sleep(1500);
+        if (UiSelector().className('android.widget.LinearLayout').descContains('点赞').clickable(true).isVisibleToUser(true).findOne()) {
+            Video.openComment(!!Video.getCommentCount());
+        }
+        this.dealComments(first);
+        Storage.putBoolean('dy_show_desc' + Encrypt.md5(desc), true);
         Comment.closeCommentWindow();
         System.sleep(1000);
         Log.log('关闭评论区');
         return true;
     },
     run(config) {
-        let videoCount = config.runVideoCount;
-        if (videoCount <= 0) {
-            videoCount = 999999999;//为0的时候，不限制
-        }
-
         while (true) {
             //判断是不是在指定页面，不是则尝试返回
             try {
-                Common.log('backXPage', '剩余视频数量：', videoCount);
-                System.setAccessibilityMode('fast');
                 this.backXPage(config.videoType);
                 Common.log('dealVideo');
-                if (this.dealVideo(config)) {
-                    Common.log('一个视频处理完成');
-                    if (--videoCount <= 0) {
-                        Common.log('一轮视频处理完成');
-                        Video.next(true);
-                        return true;
-                    }
-                }
+                this.dealVideo(config);
                 Video.next(true);
-
                 System.sleep(3000 + Math.random() * 1000);
             } catch (e) {
                 Common.log('视频操作报错了：', e, e.message);
@@ -555,78 +230,23 @@ let task = {
 }
 
 let config = {
-    videoType: ['tuijian', 'tongcheng', 'search'][Storage.get('toker_run_mode')],
-    videoIp: Storage.get('toker_video_ip') ? Storage.get('toker_video_ip').replace(/\，/g, ',').split(',') : null,
-    videoKeywords: Storage.get('toker_video_keywords') ? Storage.get('toker_video_keywords').replace(/\，/g, ',').split(',') : null,
-    videoWaitSecond: Storage.getInteger('toker_wait_second'),
-    count: Storage.getInteger('toker_video_count'),
-    runVideoCount: Storage.getInteger('toker_run_video_count'),
-    runRandomMinute: Storage.getInteger('toker_run_random_minute'),
-    user: {
-        toker_user: Storage.getBoolean('toker_user'),
-        gender: Storage.getArray('toker_sex'),
-        zanRate: Storage.getInteger('toker_zan_rate') / 100,
-        focusRate: Storage.getInteger('toker_focus_rate') / 100,
-        collectRate: Storage.getInteger('toker_collect_rate') / 100,
-        ip: Storage.get('toker_user_ip').replace(/\，/g, ',').split(','),
-    },
-    comment: Storage.getBoolean('toker_comments') ? {
-        commentRate: Storage.getInteger('toker_comment_rate') / 100,
-        commentTypes: Storage.getArray('toker_comment_type'),
-        commentAtNames: Storage.get('toker_comment_at_name').substring(1).split('@'),
-        commentContents: Storage.get('toker_comment_content').split("\n\n"),
-        commentImages: Storage.getArray('toker_comment_images'),
-    } : null,
-    commentUser: Storage.getBoolean('toker_comment_setting') ? {
-        ip: Storage.get('toker_comment_setting_video_ip') ? Storage.get('toker_comment_setting_video_ip').replace(/\，/g, ',').split(',') : null,
-        keywords: Storage.get('toker_comment_setting_keywords') ? Storage.get('toker_comment_setting_keywords').replace(/\，/g, ',').split(',') : null,
-        gender: Storage.getArray('toker_comment_setting_sex'),
-        minDay: Storage.getInteger('toker_comment_setting_min_day'),
-        focusRate: Storage.getInteger('toker_comment_setting_focus_rate') / 100,
-        privateRate: Storage.getInteger('toker_comment_setting_private_msg_rate') / 100,
-        privateTypes: Storage.getArray('toker_comment_setting_private_msg_type'),
-        privateImages: Storage.getArray('toker_comment_setting_private_msg_images'),
-        privateMsgs: Storage.get('toker_comment_setting_private_msg').split("\n\n"),
-        videoZanRate: Storage.getInteger('toker_comment_setting_video_zan_rate') / 100,
-        videoCommentRate: Storage.getInteger('toker_comment_setting_video_comment_rate') / 100,
-        videoCommentTypes: Storage.getArray('toker_comment_setting_video_comment_type'),
-        videoCommentImages: Storage.getArray('toker_comment_setting_video_comment_images'),
-        videoCommentAtNames: Storage.get('toker_comment_setting_video_at_name').substring(1).split('@'),
-        videoCommentContents: Storage.get('toker_comment_setting_video_comment_content').split("\n\n"),
-    } : null,
-    backComment: Storage.getBoolean('toker_back_comment') ? {
-        ip: Storage.get('toker_back_comment_ip') ? Storage.get('toker_back_comment_ip').replace(/\，/g, ',').split(',') : null,
-        keywords: Storage.get('toker_back_comment_keywords') ? Storage.get('toker_back_comment_keywords').replace(/\，/g, ',').split(',') : null,
-        gender: Storage.getArray('toker_back_comment_setting_sex'),
-        minDay: Storage.getInteger('toker_back_comment_min_day'),
-        type: Storage.getArray('toker_back_comment_type'),
-        commentZanRate: Storage.getInteger('toker_back_comment_zan_rate') / 100,
-        commentRate: Storage.getInteger('toker_back_comment_rate') / 100,
-        comentImages: Storage.getArray('toker_back_comment_images'),
-        comments: Storage.get('toker_back_comment_content').split("\n\n"),
-        atUserNames: Storage.get('toker_back_comment_at_user').substring(1).split('@'),
-    } : null,
+    videoType: 'tongcheng',
+    distance: Storage.getInteger('toker_run_distance'),
+    minZan: Storage.getInteger('toker_run_zan_min_count'),
+    maxZan: Storage.getInteger('toker_run_zan_max_count'),
+    zanRate: Storage.getInteger('toker_run_video_zan_rate') / 100,
+    commentRate: Storage.getInteger('toker_run_video_comment_rate') / 100,
+    focesRate: Storage.getInteger('toker_run_video_focus_rate') / 100,
+    privateRate: Storage.getInteger('toker_run_video_private_rate') / 100,
+    commentZanRate: Storage.getInteger('toker_run_video_comment_zan_rate') / 100,
+    timeout: Storage.getInteger('toker_run_zan_timeout'),
 }
 
 while (true) {
     try {
         task.log();
         Common.log('配置：', config);
-        if (task.run(config)) {
-            App.backApp();
-            let startTime = Date.parse(new Date()) / 1000;
-            let sleepSecond = config.runRandomMinute / 2 + Math.random() * config.runRandomMinute / 2;
-            Common.log('等待', sleepSecond, '分钟');
-            while (true) {
-                Common.sleep(1000);
-                if (Date.parse(new Date()) / 1000 - startTime >= sleepSecond * 60) {
-                    Common.log('时间已到，下一轮操作');
-                    App.launch('com.ss.android.ugc.aweme');
-                    Common.sleep(5000);
-                    break;
-                }
-            }
-        }
+        task.run(config);
     } catch (e) {
         Common.log('异常处理：', e.message);
     }
