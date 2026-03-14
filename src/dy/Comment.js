@@ -152,16 +152,16 @@ let Comment = {
             Common.sleep(3000 + Math.random() * 1500);
         }
 
-        let secondListTag = UiSelector().descContains('展开').descContains('条回复').isVisibleToUser(true).find();
-        if (secondListTag.length > 0) {
-            Common.log('二级评论数量：', secondListTag.length);
-            for (let i in secondListTag) {
-                if (secondListTag[i].parent()) {
-                    secondListTag[i].parent().click();
-                    Common.sleep(3000 + Math.random() * 1500);
-                }
-            }
-        }
+        // let secondListTag = UiSelector().descContains('展开').descContains('条回复').isVisibleToUser(true).find();
+        // if (secondListTag.length > 0) {
+        //     Common.log('二级评论数量：', secondListTag.length);
+        //     for (let i in secondListTag) {
+        //         if (secondListTag[i].parent()) {
+        //             secondListTag[i].parent().click();
+        //             Common.sleep(3000 + Math.random() * 1500);
+        //         }
+        //     }
+        // }
 
         // let contains = UiSelector().className('android.widget.FrameLayout').filter(v => {
         //     return v.desc() && v.bounds().width() >= Device.width() - 10;
