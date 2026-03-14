@@ -487,8 +487,7 @@ let task = {
         let first = false;
         if (config.comment) {
             System.sleep(1500);
-            this.dealComment(config.comment);
-            first = true;
+            first = this.dealComment(config.comment);
         }
 
         if (config.commentUser || config.backComment) {
