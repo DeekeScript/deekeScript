@@ -76,7 +76,7 @@ let task = {
             }
             return;
         }
-        
+
         Common.back();
         Common.sleep(1000 + 500 * Math.random());
         Common.log('未关注');
@@ -176,10 +176,10 @@ let task = {
                 FloatDialogs.toast('没有设置评论话术');
                 Common.log('没有设置评论话术');
             } else {
-                Common.log('评论概率不达标，跳过评论');
+                Common.log('准备评论');
+                first = Comment.commentMsg(msg.msg, null, null);
+                Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
             }
-            first = Comment.commentMsg(msg, null, null);
-            Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
         }
 
         Common.log('准备打开评论区');

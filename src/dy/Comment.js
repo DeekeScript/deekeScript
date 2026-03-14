@@ -167,8 +167,8 @@ let Comment = {
         //     return v.desc() && v.bounds().width() >= Device.width() - 10;
         // }).isVisibleToUser(true).find();
         //一级评论和二级评论
-        let contains = UiSelector().filter(v => {
-            return (v.className() == 'android.view.ViewGroup' || v.className() == 'android.widget.FrameLayout') && v.desc() && v.children().findOne(Common.id('avatar'));
+        let contains = UiSelector().className('android.widget.FrameLayout').filter(v => {
+            return !!(v.desc() && v.bounds().width() >= Device.width() - 10 && v.children().findOne(Common.id('avatar')));
         }).isVisibleToUser(true).find();
 
         Common.log("数量：", contains.length);
@@ -180,10 +180,10 @@ let Comment = {
             data = {
                 tag: contains[i],
                 nickname: this.getNickname(),
-                content: this.getContent(),
+                //content: this.getContent(),
                 isAuthor: this.isAuthor(),
-                ip: this.getIp(),
-                time: this.getTime(),
+                //ip: this.getIp(),
+                //time: this.getTime(),
             }
 
             Common.log("评论读取到的数据：", data.nickname, data.content, data.ip, data.time, data.isAuthor);
