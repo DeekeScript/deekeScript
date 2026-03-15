@@ -162,17 +162,19 @@ let task = {
             UiSelector().textContains('预约').filter(f).isVisibleToUser(true).findOne() ||
             UiSelector().textContains('团购').filter(f).isVisibleToUser(true).findOne();
 
-        if (checkTag) {
+        if (checkTag && checkTag.text().indexOf('团购') === -1) {
             Common.log('广告，跳过');
             Log.log(checkTag);
             FloatDialogs.toast('广告，跳过');
             return;
-        }
-
-        if (UiSelector().textContains('团购').isVisibleToUser(true).findOne()) {
-            Common.log('团购，跳过');
-            FloatDialogs.toast('团购，跳过');
-            return;
+        } else if (checkTag && checkTag.text().indexOf('团购') !== -1) {
+            Common.log('团购');
+            let nicknameTag = Common.id('title').isVisibleToUser(true).findOne();
+            Log.log(checkTag);
+            if (nicknameTag && checkTag.bounds().top < nicknameTag.bounds().bottom) {
+                FloatDialogs.toast('团购，跳过');
+                return;
+            }
         }
 
         let desc = Dy.getDesc();
