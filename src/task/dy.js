@@ -61,6 +61,31 @@ let task = {
             return;
         }
 
+        let gender = User.getGender();
+        if (!config.gender.includes(gender)) {
+            Common.back();
+            Common.sleep(1000 + 500 * Math.random());
+            Common.log('性别不符合要求');
+            FloatDialogs.toast('性别不符合要求');
+            return;
+        }
+
+        if (config.minAge > 0 && (User.getAge() < config.minAge || User.getAge() > config.maxAge)) {
+            Common.back();
+            Common.sleep(1000 + 500 * Math.random());
+            Common.log('年龄不符合条件');
+            FloatDialogs.toast('年龄不符合条件');
+            return;
+        }
+
+        if (config.ip && !config.ip.includes(User.getIp())) {
+            Common.back();
+            Common.sleep(1000 + 500 * Math.random());
+            Common.log('IP不符合条件');
+            FloatDialogs.toast('IP不符合条件');
+            return;
+        }
+
         if (config.focusRate >= Math.random()) {
             Common.log('关注用户');
             if (User.isFocus()) {
@@ -128,13 +153,18 @@ let task = {
             }
         }
 
-        if (
-            UiSelector().textContains('广告').isVisibleToUser(true).findOne() ||
-            UiSelector().textContains('咨询').isVisibleToUser(true).findOne() ||
-            UiSelector().textContains('预约').isVisibleToUser(true).findOne() ||
-            UiSelector().textContains('团购').isVisibleToUser(true).findOne()
-        ) {
+        let f = (v) => {
+            return v.bounds().left >= 0 && v.bounds().top > Device.height() / 2 && v.bounds().left < Device.width() && v.bounds().height() < Device.height();
+        }
+
+        let checkTag = UiSelector().textContains('广告').filter(f).isVisibleToUser(true).findOne() ||
+            UiSelector().textContains('咨询').filter(f).isVisibleToUser(true).findOne() ||
+            UiSelector().textContains('预约').filter(f).isVisibleToUser(true).findOne() ||
+            UiSelector().textContains('团购').filter(f).isVisibleToUser(true).findOne();
+
+        if (checkTag) {
             Common.log('广告，跳过');
+            Log.log(checkTag);
             FloatDialogs.toast('广告，跳过');
             return;
         }
@@ -232,6 +262,10 @@ let task = {
 let config = {
     videoType: 'tongcheng',
     distance: Storage.getInteger('toker_run_distance'),
+    gender: Storage.getArray('toker_user_gender'),
+    ip: Storage.getString('toker_user_ip') && Storage.getString('toker_user_ip').replace(/，/g, ',').split(','),
+    minAge: Storage.getInteger('toker_user_min_age'),
+    maxAge: Storage.getInteger('toker_user_max_age'),
     minZan: Storage.getInteger('toker_run_zan_min_count'),
     maxZan: Storage.getInteger('toker_run_zan_max_count'),
     zanRate: Storage.getInteger('toker_run_video_zan_rate') / 100,

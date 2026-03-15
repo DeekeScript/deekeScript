@@ -12,6 +12,17 @@ let User = {
         return '2';
     },
 
+    getAge() {
+        let tag = UiSelector().textContains('岁').isVisibleToUser(true).findOne();
+        let nums = /\d+/.exec(tag.text());
+        return nums.length == 1 ? nums[0] : 0;
+    },
+
+    getIp() {
+        let tag = UiSelector().textContains('IP：').isVisibleToUser(true).findOne();
+        return tag ? tag.text().replace('IP：', '') : '';
+    },
+
     /**
      * 黑名单账号（封禁和注销账号）
      * @returns {boolean}

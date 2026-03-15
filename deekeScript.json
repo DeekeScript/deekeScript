@@ -4,8 +4,8 @@
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
-  "versionCode": "100",
-  "versionName": "1.0.0",
+  "versionCode": "101",
+  "versionName": "1.0.1",
   "host": "https://home.deeke.top",
   "debug": false,
   "showAd": false,
@@ -47,6 +47,46 @@
                 "value": 1000
               },
               {
+                "type": "checkboxGroup",
+                "label": "博主性别",
+                "name": "toker_user_gender",
+                "values": [
+                  "0",
+                  "1",
+                  "2"
+                ],
+                "children": [
+                  "女",
+                  "男",
+                  "未知"
+                ]
+              },
+              {
+                "type": "text",
+                "label": "博主IP（多个使用逗号隔开）",
+                "name": "toker_user_ip",
+                "value": "",
+                "notice": "* 不填则不限制"
+              },
+              {
+                "type": "numberRange",
+                "label": "博主最小年龄（为0则不限制）",
+                "name": "toker_user_min_age",
+                "value": 0,
+                "step": 1,
+                "min": 0,
+                "max": 100
+              },
+              {
+                "type": "numberRange",
+                "label": "博主最大年龄",
+                "name": "toker_user_max_age",
+                "value": 50,
+                "step": 1,
+                "min": 0,
+                "max": 100
+              },
+              {
                 "type": "numberRange",
                 "label": "点赞视频概率（%）",
                 "name": "toker_run_video_zan_rate",
@@ -71,16 +111,6 @@
                 "value": 50,
                 "step": 1,
                 "min": 0,
-                "max": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "私信博主概率（%）",
-                "name": "toker_run_video_private_rate",
-                "value": 50,
-                "step": 1,
-                "min": 0,
-                "hidden": true,
                 "max": 100
               },
               {
