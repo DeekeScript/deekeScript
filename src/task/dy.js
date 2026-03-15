@@ -99,12 +99,13 @@ let task = {
                 Common.sleep(1000 + 500 * Math.random());
                 Common.log('关注用户完成');
             }
-            return;
+            return true;
         }
 
         Common.back();
         Common.sleep(1000 + 500 * Math.random());
         Common.log('未关注');
+        return true;
     },
 
     dealVideo(config) {
@@ -186,7 +187,10 @@ let task = {
         }
 
         //开始操作博主
-        this.dealUserVideo(config);
+        if (!this.dealUserVideo(config)) {
+            return;
+        }
+
         Common.log('开始操作视频评论区');
         System.sleep(1500);
         if (config.zanRate >= Math.random()) {
