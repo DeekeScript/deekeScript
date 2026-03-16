@@ -24,6 +24,10 @@ let Dy = {
     getNickname() {
         //com.ss.android.ugc.aweme:id/title
         let tag = Common.id('title').isVisibleToUser(true).findOne();
+        if (!tag || !tag.text()) {
+            return null;
+        }
+        
         return tag.text() && tag.text().replace('@', '');
     },
 
