@@ -18,7 +18,7 @@ let task = {
     },
 
     //cfg是指对评论用户的相关操作
-    dealComments(firstContinue) {
+    dealComments(config, firstContinue) {
         while (true) {
             let comments = Comment.getList(0);
             for (let k in comments) {
@@ -33,8 +33,10 @@ let task = {
                         continue;
                     }
 
-                    Comment.clickZan(comments[k]);
-                    Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+                    if (config.commentZanRate >= Math.random() && (!config.commentIp || config.commentIp.includes(comments[k]['ip']))) {
+                        Comment.clickZan(comments[k]);
+                        Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+                    }
                 } catch (e) {
                     Common.log('处理评论区异常了', e, e.message);
                 }
@@ -223,7 +225,7 @@ let task = {
         if (UiSelector().className('android.widget.LinearLayout').descContains('点赞').clickable(true).isVisibleToUser(true).findOne()) {
             Video.openComment(!!Video.getCommentCount());
         }
-        this.dealComments(first);
+        this.dealComments(config, first);
         Storage.putBoolean('dy_show_desc' + Encrypt.md5(desc), true);
         Comment.closeCommentWindow();
         System.sleep(1000);
@@ -279,6 +281,7 @@ let config = {
     focesRate: Storage.getInteger('toker_run_video_focus_rate') / 100,
     privateRate: Storage.getInteger('toker_run_video_private_rate') / 100,
     commentZanRate: Storage.getInteger('toker_run_video_comment_zan_rate') / 100,
+    commentIp: Storage.getString('toker_comment_user_ip') && Storage.getString('toker_comment_user_ip').replace(/，/g, ',').split(','),
     timeout: Storage.getInteger('toker_run_zan_timeout'),
 }
 

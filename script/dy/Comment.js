@@ -182,7 +182,7 @@ let Comment = {
                 nickname: this.getNickname(),
                 //content: this.getContent(),
                 isAuthor: this.isAuthor(),
-                //ip: this.getIp(),
+                ip: this.getIp(),
                 //time: this.getTime(),
             }
 

@@ -114,6 +114,13 @@
                 "max": 100
               },
               {
+                "type": "text",
+                "label": "评论用户IP（多个使用逗号隔开）",
+                "name": "toker_comment_user_ip",
+                "value": "",
+                "notice": "* 不填则不限制"
+              },
+              {
                 "type": "numberRange",
                 "label": "评论点赞概率（%）",
                 "name": "toker_run_video_comment_zan_rate",
