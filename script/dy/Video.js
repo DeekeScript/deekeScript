@@ -92,34 +92,17 @@ let Video = {
         Common.sleep(4000 + Math.random() * 1000);
         return res;
     },
-    next(fast) {
-        if (fast) {
-            System.setAccessibilityMode('!fast');
-        }
-        let tag = UiSelector().id('com.ss.android.ugc.aweme:id/viewpager').desc('视频').scrollable(true).isVisibleToUser(true).findOne();
-        if (!tag) {
-            tag = UiSelector().id('com.ss.android.ugc.aweme:id/viewpager').filter(v => {
-                return v.bounds().height() < Device.height();
-            }).scrollable(true).className('androidx.viewpager.widget.ViewPager').isVisibleToUser(true).findOne();
-        }
-        if (!tag) {
-            tag = UiSelector().className('androidx.viewpager.widget.ViewPager').scrollable(true).isVisibleToUser(true).findOne();
-        }
-        if (!tag) {
-            let x1 = Device.width() * (0.2 + 0.6 * Math.random());
-            let x2 = x1 + Device.width() * 0.2 * Math.random();
-            let y1 = Device.height() * (0.65 + 0.2);
-            let y2 = y1 - Device.height() * (0.5 + 0.15 * Math.random());
-            return Gesture.swipe(x1, y1, x2, y2, 200 + 100 * Math.random());
-        }
-        if (!tag) {
-            throw new Error('找不到可滑动的视频页面');
-        }
-        let res = tag.scrollForward();
-        if (fast) {
-            System.setAccessibilityMode('fast');
-        }
-        return res;
+    next() {
+        let w = Device.width();
+        let h = Device.height();
+
+        let x = w * (0.45 + Math.random() * 0.1);
+        let startY = h * (0.80 + Math.random() * 0.05);
+        let endY = h * (0.20 + Math.random() * 0.05);
+
+        let duration = 250 + Math.random() * 150;
+
+        return Gesture.swipe(x, startY, x, endY, duration);
     },
 
     getCommentTag() {
