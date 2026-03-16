@@ -35,7 +35,7 @@ let task = {
 
                     if (config.commentZanRate >= Math.random() && (!config.commentIp || config.commentIp.includes(comments[k]['ip']))) {
                         Comment.clickZan(comments[k]);
-                        Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+                        Common.sleep(config.timeout * 1000);
                     }
                 } catch (e) {
                     Common.log('处理评论区异常了', e, e.message);
@@ -96,9 +96,9 @@ let task = {
                 Common.log('已关注');
             } else {
                 User.focus();
-                Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+                Common.sleep(config.timeout * 1000);
                 Common.back();
-                Common.sleep(1000 + 500 * Math.random());
+                Common.sleep(1000);
                 Common.log('关注用户完成');
             }
             return true;
@@ -199,7 +199,7 @@ let task = {
             if (!Video.isZan()) {
                 Common.log('视频未赞');
                 Video.clickZan();
-                Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+                Common.sleep(config.timeout * 1000);
                 Common.log('赞视频');
             } else {
                 Common.log('已赞');
@@ -216,17 +216,20 @@ let task = {
             } else {
                 Common.log('准备评论');
                 first = Comment.commentMsg(msg.msg, null, null);
-                Common.sleep((config.timeout / 2 + config.timeout * Math.random()) * 1000);
+                Common.sleep(config.timeout * 1000);
             }
         }
 
-        Common.log('准备打开评论区');
-        System.sleep(1500);
-        if (UiSelector().className('android.widget.LinearLayout').descContains('点赞').clickable(true).isVisibleToUser(true).findOne()) {
-            Video.openComment(!!Video.getCommentCount());
+        if (config.commentZanRate > 0) {
+            Common.log('准备打开评论区');
+            System.sleep(1500);
+            if (UiSelector().className('android.widget.LinearLayout').descContains('点赞').clickable(true).isVisibleToUser(true).findOne()) {
+                Video.openComment(!!Video.getCommentCount());
+            }
+            this.dealComments(config, first);
+            Storage.putBoolean('dy_show_desc' + Encrypt.md5(desc), true);
         }
-        this.dealComments(config, first);
-        Storage.putBoolean('dy_show_desc' + Encrypt.md5(desc), true);
+
         Comment.closeCommentWindow();
         System.sleep(1000);
         Log.log('关闭评论区');
@@ -239,11 +242,11 @@ let task = {
                 // this.backXPage(config.videoType);
                 Common.log('dealVideo');
                 this.dealVideo(config);
-                Video.next(true);
+                Video.next();
                 System.sleep(3000 + Math.random() * 1000);
             } catch (e) {
                 Common.log('视频操作报错了：', e, e.message);
-                Video.next(true);
+                Video.next();
             }
         }
     },
