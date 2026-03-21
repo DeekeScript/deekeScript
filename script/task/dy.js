@@ -480,6 +480,7 @@ let task = {
 
         //开始操作博主
         if (config.user.toker_user) {
+            System.sleep(2000);
             this.dealUserVideo(config);
         }
 
