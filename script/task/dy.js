@@ -246,6 +246,7 @@ let task = {
                 System.sleep(3000 + Math.random() * 1000);
             } catch (e) {
                 Common.log('视频操作报错了：', e, e.message);
+                Common.back();
                 Video.next();
             }
         }

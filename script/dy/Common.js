@@ -108,8 +108,15 @@ let Common = {
             times = 1;
         }
         for (let i = 0; i < times; i++) {
+            if (Common.id('title').textContains('@').isVisibleToUser(true).findOne()) {
+                Common.log('-在视频页面，不能返回');
+                return true;
+            }
+
             Gesture.back();
             Common.log('返回一次');
+            //判断是不是在视频页面，是的话，则不能返回
+
             Common.sleep(500);
         }
     },
