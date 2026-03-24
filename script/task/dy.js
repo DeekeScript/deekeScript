@@ -370,6 +370,7 @@ let task = {
                         Common.back(1);
                         Common.sleep(2000);
                         Common.log('没有IP，或者IP不匹配');
+                        return;
                     }
                 }
 
@@ -387,6 +388,7 @@ let task = {
                         Common.back(1);
                         Common.sleep(2000);
                         Common.log('性别不匹配');
+                        return;
                     }
                 }
 
