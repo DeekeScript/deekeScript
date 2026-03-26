@@ -248,6 +248,7 @@ let task = {
                 Common.log('视频操作报错了：', e, e.message);
                 Common.back();
                 Video.next();
+                System.sleep(3000 + Math.random() * 1000);
             }
         }
     },
