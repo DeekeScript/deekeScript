@@ -119,7 +119,8 @@ let task = {
 
         let nickname = Dy.getNickname();
         if (!nickname) {
-            throw new Error('获取昵称失败');//不在视频页面
+            Common.log('获取昵称失败');//不在视频页面
+            return -1;
         }
 
         let zanCount = Video.getZanCount();
@@ -238,13 +239,22 @@ let task = {
     run(config) {
         while (true) {
             //判断是不是在指定页面，不是则尝试返回
+            let e = 0;
             try {
                 // this.backXPage(config.videoType);
                 Common.log('dealVideo');
-                this.dealVideo(config);
+                if (-1 == this.dealVideo(config)) {
+                    e++;
+                    if (e > 3) {
+                        throw e;
+                    }
+                } else {
+                    e = 0;
+                }
                 Video.next();
                 System.sleep(3000 + Math.random() * 1000);
             } catch (e) {
+                e++;
                 Common.log('视频操作报错了：', e, e.message);
                 Common.back();
                 Video.next();
