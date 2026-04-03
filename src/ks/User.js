@@ -1,11 +1,11 @@
 let Common = require('./Common');
 let User = {
     getGender() {
-        if (UiSelector().className('android.widget.TextView').isVisibleToUser(true).textContains('男').findOne()) {
+        if (Common.id('label_name').isVisibleToUser(true).textContains('男').findOne()) {
             return '1';
         }
 
-        if (UiSelector().className('android.widget.TextView').isVisibleToUser(true).textContains('女').findOne()) {
+        if (Common.id('label_name').isVisibleToUser(true).textContains('女').findOne()) {
             return '0';
         }
 
@@ -13,13 +13,13 @@ let User = {
     },
 
     getAge() {
-        let tag = UiSelector().textContains('岁').isVisibleToUser(true).findOne();
+        let tag = Common.id('label_name').textContains('岁').isVisibleToUser(true).findOne();
         let nums = /\d+/.exec(tag.text());
         return nums.length == 1 ? nums[0] : 0;
     },
 
     getIp() {
-        let tag = UiSelector().textContains('IP：').isVisibleToUser(true).findOne();
+        let tag = Common.id('label_name').textContains('IP：').isVisibleToUser(true).findOne();
         return tag ? tag.text().replace('IP：', '') : '';
     },
 
@@ -140,11 +140,7 @@ let User = {
     },
 
     isFocusTag() {
-        return UiSelector().className('android.widget.TextView').isVisibleToUser(true).filter(v => {
-            return v.hintText == '按钮';
-        }).textContains('已关注').findOne() || UiSelector().className('android.widget.TextView').isVisibleToUser(true).filter(v => {
-            return v.hintText == '按钮';
-        }).textContains('互相关注').findOne();
+        return Common.id('header_follow_status_button').isVisibleToUser(true).textContains('已关注').findOne() || Common.id('header_follow_status_button').isVisibleToUser(true).textContains('互相关注').findOne();
     },
 
     /**
@@ -160,19 +156,14 @@ let User = {
      * @returns {boolean}
      */
     focus() {
-        let focusTag = UiSelector().className('android.widget.TextView').isVisibleToUser(true).filter(v => {
-            return v.hintText == '按钮';
-        }).text('关注').findOne() || UiSelector().className('android.widget.TextView').isVisibleToUser(true).filter(v => {
-            return v.hintText == '按钮';
-        }).text('回关').findOne();
-
         if (this.isFocus()) {
             Common.log('已关注');
             return true;
         }
 
+        let focusTag = Common.id('header_follow_button').isVisibleToUser(true).textContains('已关注').findOne();
         if (focusTag) {
-            let res = focusTag.click();
+            let res = Common.click(focusTag);
             Common.sleep(500 + 500 * Math.random());
             return res;
         }
@@ -184,7 +175,7 @@ let User = {
         let i = 5;
         let settingTag;
         do {
-            settingTag = UiSelector().descContains('复制名字').clickable(true).findOne();
+            settingTag = UiSelector().descContains('设置封面').clickable(true).findOne();
             if (!settingTag) {
                 Common.back();
                 System.sleep(1000);

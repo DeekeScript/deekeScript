@@ -1,11 +1,16 @@
 
 let Common = {
     id(name) {
-        return UiSelector().id('com.ss.android.ugc.aweme:id/' + name);
+        return UiSelector().id('com.smile.gifmaker:id/' + name);
     },
 
-    click(tag) {
-        return Gesture.click(tag.bounds().left + tag.bounds().width() * Math.random(), tag.bounds().top + tag.bounds().height() * Math.random());
+    click(tag, rate = 0.1) {
+        if (!rate) {
+            rate = 0.1;
+        }
+        let x = tag.bounds().left + tag.bounds().width() * (rate + Math.random() * (1 - rate));
+        let y = tag.bounds().top + tag.bounds().height() * (rate + Math.random() * (1 - rate));
+        return Gesture.click(x, y);
     },
 
     log(...args) {

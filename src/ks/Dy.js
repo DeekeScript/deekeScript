@@ -17,13 +17,13 @@ let Dy = {
     },
 
     getDesc() {
-        let tag = Common.id('desc').isVisibleToUser(true).findOne();
+        let tag = Common.id('element_caption_label').isVisibleToUser(true).findOne();
         return tag ? tag.text() : '';
     },
 
     getNickname() {
         //com.ss.android.ugc.aweme:id/title
-        let tag = Common.id('title').isVisibleToUser(true).findOne();
+        let tag = Common.id('user_name_text_view').isVisibleToUser(true).findOne();
         if (!tag || !tag.text()) {
             return null;
         }

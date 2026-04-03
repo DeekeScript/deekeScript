@@ -145,31 +145,15 @@ let Comment = {
     },
     containers: [],
     getList(type) {
-        let moreTag = UiSelector().text('已折叠部分评论').isVisibleToUser(true).findOne();
+        let moreTag = UiSelector().text('部分评论被折叠').isVisibleToUser(true).findOne();
         if (moreTag) {
             Common.log('点击展开');
             Common.click(moreTag);
             Common.sleep(3000 + Math.random() * 1500);
         }
 
-        // let secondListTag = UiSelector().descContains('展开').descContains('条回复').isVisibleToUser(true).find();
-        // if (secondListTag.length > 0) {
-        //     Common.log('二级评论数量：', secondListTag.length);
-        //     for (let i in secondListTag) {
-        //         if (secondListTag[i].parent()) {
-        //             secondListTag[i].parent().click();
-        //             Common.sleep(3000 + Math.random() * 1500);
-        //         }
-        //     }
-        // }
-
-        // let contains = UiSelector().className('android.widget.FrameLayout').filter(v => {
-        //     return v.desc() && v.bounds().width() >= Device.width() - 10;
-        // }).isVisibleToUser(true).find();
-        //一级评论和二级评论
-        let contains = UiSelector().className('android.widget.FrameLayout').filter(v => {
-            return !!(v.desc() && v.bounds().width() >= Device.width() - 10 && v.children().findOne(Common.id('avatar')));
-        }).isVisibleToUser(true).find();
+        let parent = Common.id('recycler_view').isVisibleToUser(true).findOne();
+        let contains = parent ? parent.children().find(UiSelector().className('android.widget.FrameLayout').isVisibleToUser(true)) : [];
 
         Common.log("数量：", contains.length);
         let contents = [];
@@ -228,13 +212,13 @@ let Comment = {
      */
     getNicknameTag() {
         // return this.tag.children().findOne(Common.id('title'));
-        let tag = Common.id('title').filter(v => {
+        let tag = Common.id('name').filter(v => {
             return v.bounds().left >= this.tag.bounds().left && v.bounds().right <= this.tag.bounds().right
                 && v.bounds().top >= this.tag.bounds().top && v.bounds().bottom <= this.tag.bounds().bottom;
         }).findOne();
 
         if (!tag) {
-            tag = Common.id('2fj').filter(v => {
+            tag = Common.id('name').filter(v => {
                 return v.bounds().left >= this.tag.bounds().left && v.bounds().right <= this.tag.bounds().right
                     && v.bounds().top >= this.tag.bounds().top && v.bounds().bottom <= this.tag.bounds().bottom;
             }).findOne();
@@ -248,7 +232,7 @@ let Comment = {
      */
     getContentTag() {
         // return this.tag.children().findOne(Common.id('content'));
-        return Common.id('content').filter(v => {
+        return Common.id('comment').filter(v => {
             return v.bounds().left >= this.tag.bounds().left && v.bounds().right <= this.tag.bounds().right
                 && v.bounds().top >= this.tag.bounds().top && v.bounds().bottom <= this.tag.bounds().bottom;
         }).findOne();
@@ -260,7 +244,7 @@ let Comment = {
      */
     getIpTag() {
         // return this.tag.children().findOne(UiSelector().textContains(' · ').isVisibleToUser(true));
-        return UiSelector().textContains(' · ').filter(v => {
+        return Common.id('comment_created_time_and_loc').filter(v => {
             return v.bounds().left >= this.tag.bounds().left && v.bounds().right <= this.tag.bounds().right
                 && v.bounds().top >= this.tag.bounds().top && v.bounds().bottom <= this.tag.bounds().bottom;
         }).findOne();
@@ -268,8 +252,8 @@ let Comment = {
 
     getIp() {
         let ipTag = this.getIpTag();
-        if (ipTag) {
-            return ipTag.text().replace(' · ', '');
+        if (ipTag && ipTag.text()) {
+            return ipTag.text().split(' ')[1];
         }
         return null;
     },
@@ -306,9 +290,9 @@ let Comment = {
      */
     getZanTag(tag) {
         if (tag) {
-            return tag.children().findOne(UiSelector().className('android.widget.LinearLayout').descContains('赞'));
+            return tag.children().findOne(Common.id('cl_like').isVisibleToUser(true));
         }
-        return this.tag.children().findOne(UiSelector().className('android.widget.LinearLayout').descContains('赞'));
+        return this.tag.children().findOne(Common.id('cl_like').isVisibleToUser(true));
     },
 
     /**
@@ -354,7 +338,7 @@ let Comment = {
     },
 
     closeCommentWindow() {
-        let closeTag = UiSelector().desc('关闭').isVisibleToUser(true).clickable(true).findOne();
+        let closeTag = UiSelector().desc('关闭评论区').isVisibleToUser(true).clickable(true).findOne();
         if (!closeTag) {
             return false;
         }

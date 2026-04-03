@@ -2,7 +2,7 @@ const { get } = require('../common/storage');
 let Common = require('./Common');
 let Video = {
     getZanTag() {
-        let tag = UiSelector().className('android.widget.LinearLayout').descContains('点赞').clickable(true).isVisibleToUser(true).findOne();
+        let tag = UiSelector().className('android.widget.FrameLayout').descContains('点赞').clickable(true).isVisibleToUser(true).findOne();
         Log.log(tag);
         if (tag) {
             //900 1208 180 201
@@ -32,7 +32,7 @@ let Video = {
     clickZan() {
         let zanTag = this.getZanTag();
         if (zanTag) {
-            let res = zanTag.click();
+            let res = Common.click(zanTag, 0.2);
             return res;
         }
         Log.log('点赞失败');
@@ -106,7 +106,7 @@ let Video = {
     },
 
     getCommentTag() {
-        let tag = UiSelector().className('android.widget.LinearLayout').descContains('评论').isVisibleToUser(true).findOne();
+        let tag = UiSelector().className('android.widget.FrameLayout').descContains('评论').isVisibleToUser(true).findOne();
         Common.log("评论标签：：：", tag);
         if (tag) {
             return tag;
@@ -134,6 +134,10 @@ let Video = {
     },
 
     isLiving() {
+        if (Common.id('live_audience_count_text').isVisibleToUser(true).findOne()) {
+            return true;
+        }
+
         //两种方式，一种是屏幕上展示，一种是头像
         if (UiSelector().text('点击进入直播间').isVisibleToUser(true).findOne()) {
             return true;
@@ -157,7 +161,7 @@ let Video = {
     },
 
     intoLocalUserPage() {
-        let nicknameTag = Common.id('title').isVisibleToUser(true).findOne();
+        let nicknameTag = Common.id('user_name_text_view').isVisibleToUser(true).findOne();
         Common.log(nicknameTag);
         let res = Common.click(nicknameTag);
         Common.sleep(4000 + 2000 * Math.random());
