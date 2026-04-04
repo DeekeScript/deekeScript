@@ -293,7 +293,7 @@ let config = {
     maxZan: Storage.getInteger('toker_run_zan_max_count'),
     zanRate: Storage.getInteger('toker_run_video_zan_rate') / 100,
     commentRate: Storage.getInteger('toker_run_video_comment_rate') / 100,
-    focesRate: Storage.getInteger('toker_run_video_focus_rate') / 100,
+    focusRate: Storage.getInteger('toker_run_video_focus_rate') / 100,
     privateRate: Storage.getInteger('toker_run_video_private_rate') / 100,
     commentZanRate: Storage.getInteger('toker_run_video_comment_zan_rate') / 100,
     commentIp: Storage.getString('toker_comment_user_ip') && Storage.getString('toker_comment_user_ip').replace(/，/g, ',').split(','),
