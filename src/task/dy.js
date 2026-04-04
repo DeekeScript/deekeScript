@@ -211,6 +211,7 @@ let task = {
         if (config.commentRate >= Math.random()) {
             Video.openComment(!!Video.getCommentCount());
             let msg = this.getMsg(0);
+            Common.log('评论内容', msg);
             if (!msg) {
                 FloatDialogs.toast('没有设置评论话术');
                 Common.log('没有设置评论话术');
@@ -255,7 +256,7 @@ let task = {
                 System.sleep(3000 + Math.random() * 1000);
             } catch (e) {
                 e++;
-                Common.log('视频操作报错了：', e, e.message);
+                Common.log('视频操作报错了：', e.stack, e.message);
                 Common.back();
                 Video.next();
                 System.sleep(3000 + Math.random() * 1000);
@@ -284,7 +285,7 @@ let task = {
 
 let config = {
     videoType: 'tongcheng',
-    distance: Storage.getInteger('toker_run_distance'),
+    distance: Storage.getInteger('toker_run_distance') * 1000,
     gender: Storage.getArray('toker_user_gender'),
     ip: Storage.getString('toker_user_ip') && Storage.getString('toker_user_ip').replace(/，/g, ',').split(','),
     minAge: Storage.getInteger('toker_user_min_age'),
@@ -293,7 +294,7 @@ let config = {
     maxZan: Storage.getInteger('toker_run_zan_max_count'),
     zanRate: Storage.getInteger('toker_run_video_zan_rate') / 100,
     commentRate: Storage.getInteger('toker_run_video_comment_rate') / 100,
-    focesRate: Storage.getInteger('toker_run_video_focus_rate') / 100,
+    focusRate: Storage.getInteger('toker_run_video_focus_rate') / 100,
     privateRate: Storage.getInteger('toker_run_video_private_rate') / 100,
     commentZanRate: Storage.getInteger('toker_run_video_comment_zan_rate') / 100,
     commentIp: Storage.getString('toker_comment_user_ip') && Storage.getString('toker_comment_user_ip').replace(/，/g, ',').split(','),

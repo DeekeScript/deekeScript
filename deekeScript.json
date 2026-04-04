@@ -15,24 +15,24 @@
   "bottomMenusHidden": false,
   "groups": [
     {
-      "title": "DY·智能截流",
+      "title": "KS·智能截流",
       "titleHidden": false,
       "hidden": false,
       "methods": [
         {
-          "title": "DY评论点赞",
+          "title": "KS评论点赞",
           "icon": "images/test/zan.png",
           "jsFile": "script/task/dy.js",
           "autoOpen": true,
-          "packageName": "com.ss.android.ugc.aweme",
+          "packageName": "com.smile.gifmaker",
           "runType": "floatSwitch",
           "settingPage": {
             "params": [
               {
                 "type": "number",
-                "label": "距离最大值（米）（为0则不限制）",
+                "label": "距离最大值（公里，为0则不限制）",
                 "name": "toker_run_distance",
-                "value": 2000
+                "value": 2
               },
               {
                 "type": "number",
