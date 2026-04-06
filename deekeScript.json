@@ -4,6 +4,7 @@
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
+  "packageName": "cn.deeke.test",
   "versionCode": "101",
   "versionName": "1.0.1",
   "host": "https://home.deeke.top",

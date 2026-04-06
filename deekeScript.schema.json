@@ -3,7 +3,20 @@
   "title": "DeekeScript 配置文件",
   "description": "DeekeScript Android 项目配置文件，用于动态渲染页面",
   "type": "object",
-  "required": ["name", "versionCode", "versionName", "icon", "host", "switchSetting", "bottomMenusHidden", "groups", "bottomMenus", "settingLists", "apis"],
+  "required": [
+    "name",
+    "packageName",
+    "versionCode",
+    "versionName",
+    "icon",
+    "host",
+    "switchSetting",
+    "bottomMenusHidden",
+    "groups",
+    "bottomMenus",
+    "settingLists",
+    "apis"
+  ],
   "additionalProperties": false,
   "properties": {
     "$schema": {
@@ -13,6 +26,10 @@
     "name": {
       "type": "string",
       "description": "App安装成功之后，在手机上的名称"
+    },
+    "packageName": {
+      "type": "string",
+      "description": "包名，如：cn.deeke.script"
     },
     "versionCode": {
       "type": "string",
@@ -44,7 +61,7 @@
       "description": "接口请求域名",
       "format": "uri"
     },
-    "bottomMenusHidden": { 
+    "bottomMenusHidden": {
       "type": "boolean",
       "default": false,
       "description": "是否隐藏底部菜单"
@@ -52,7 +69,9 @@
     "switchSetting": {
       "type": "object",
       "description": "功能开关设置",
-      "required": ["alipay"],
+      "required": [
+        "alipay"
+      ],
       "additionalProperties": false,
       "properties": {
         "alipay": {
@@ -85,7 +104,10 @@
       "description": "主界面的功能组，每组都会包含若干个功能",
       "items": {
         "type": "object",
-        "required": ["title", "methods"],
+        "required": [
+          "title",
+          "methods"
+        ],
         "additionalProperties": false,
         "properties": {
           "title": {
@@ -117,7 +139,11 @@
       "description": "App中底部菜单，可以使用系统内置的，也可以自定义",
       "items": {
         "type": "object",
-        "required": ["title", "icon", "type"],
+        "required": [
+          "title",
+          "icon",
+          "type"
+        ],
         "additionalProperties": false,
         "properties": {
           "title": {
@@ -135,7 +161,11 @@
           "type": {
             "type": "string",
             "description": "菜单类型",
-            "enum": ["home", "speech", "setting"]
+            "enum": [
+              "home",
+              "speech",
+              "setting"
+            ]
           }
         }
       }
@@ -145,7 +175,11 @@
       "description": "App中设置页的列表项，可以使用系统内置的，也可以自定义",
       "items": {
         "type": "object",
-        "required": ["title", "icon", "type"],
+        "required": [
+          "title",
+          "icon",
+          "type"
+        ],
         "additionalProperties": false,
         "properties": {
           "title": {
@@ -159,7 +193,16 @@
           "type": {
             "type": "string",
             "description": "设置项类型",
-            "enum": ["customerService", "notice", "settingService", "statistics", "uploadLog", "updateApp", "clear", "qiwei"]
+            "enum": [
+              "customerService",
+              "notice",
+              "settingService",
+              "statistics",
+              "uploadLog",
+              "updateApp",
+              "clear",
+              "qiwei"
+            ]
           },
           "description": {
             "type": "string",
@@ -193,13 +236,23 @@
       "description": "设置相关api，比如激活码api，验证激活码是否有效api等",
       "items": {
         "type": "object",
-        "required": ["type", "url"],
+        "required": [
+          "type",
+          "url"
+        ],
         "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
             "description": "API类型",
-            "enum": ["bind", "checkBind", "aiSpeechToken", "config", "getToken", "createOrder"]
+            "enum": [
+              "bind",
+              "checkBind",
+              "aiSpeechToken",
+              "config",
+              "getToken",
+              "createOrder"
+            ]
           },
           "url": {
             "type": "string",
@@ -212,7 +265,10 @@
   "definitions": {
     "method": {
       "type": "object",
-      "required": ["title", "icon"],
+      "required": [
+        "title",
+        "icon"
+      ],
       "additionalProperties": false,
       "properties": {
         "title": {
@@ -238,7 +294,9 @@
         "runType": {
           "type": "string",
           "description": "如果为floatSwitch则需要手动点击右侧悬浮窗执行",
-          "enum": ["floatSwitch"]
+          "enum": [
+            "floatSwitch"
+          ]
         },
         "packageName": {
           "type": "string",
@@ -297,7 +355,9 @@
     },
     "settingPage": {
       "type": "object",
-      "required": ["params"],
+      "required": [
+        "params"
+      ],
       "additionalProperties": false,
       "properties": {
         "params": {
@@ -313,7 +373,10 @@
       "oneOf": [
         {
           "type": "object",
-          "required": ["type", "title"],
+          "required": [
+            "type",
+            "title"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
@@ -342,7 +405,14 @@
         },
         {
           "type": "object",
-          "required": ["type", "label", "name", "min", "max", "value"],
+          "required": [
+            "type",
+            "label",
+            "name",
+            "min",
+            "max",
+            "value"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
@@ -382,7 +452,11 @@
         },
         {
           "type": "object",
-          "required": ["type", "label", "name"],
+          "required": [
+            "type",
+            "label",
+            "name"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
@@ -422,7 +496,13 @@
         },
         {
           "type": "object",
-          "required": ["type", "label", "name", "children", "values"],
+          "required": [
+            "type",
+            "label",
+            "name",
+            "children",
+            "values"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
@@ -464,7 +544,11 @@
         },
         {
           "type": "object",
-          "required": ["type", "label", "name"],
+          "required": [
+            "type",
+            "label",
+            "name"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
@@ -500,7 +584,11 @@
         },
         {
           "type": "object",
-          "required": ["type", "label", "name"],
+          "required": [
+            "type",
+            "label",
+            "name"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
@@ -536,7 +624,14 @@
         },
         {
           "type": "object",
-          "required": ["type", "label", "name", "min", "max", "value"],
+          "required": [
+            "type",
+            "label",
+            "name",
+            "min",
+            "max",
+            "value"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
@@ -576,7 +671,11 @@
         },
         {
           "type": "object",
-          "required": ["type", "label", "name"],
+          "required": [
+            "type",
+            "label",
+            "name"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
@@ -619,7 +718,11 @@
         },
         {
           "type": "object",
-          "required": ["type", "label", "name"],
+          "required": [
+            "type",
+            "label",
+            "name"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
@@ -659,12 +762,19 @@
         },
         {
           "type": "object",
-          "required": ["type", "label", "name"],
+          "required": [
+            "type",
+            "label",
+            "name"
+          ],
           "additionalProperties": false,
           "properties": {
             "type": {
               "type": "string",
-              "enum": ["radio", "select"]
+              "enum": [
+                "radio",
+                "select"
+              ]
             },
             "label": {
               "type": "string",
@@ -709,4 +819,3 @@
     }
   }
 }
-
