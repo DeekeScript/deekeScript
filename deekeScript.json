@@ -4,6 +4,7 @@
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
+  "packageName": "com.script.gifmaker",
   "versionCode": "111",
   "versionName": "1.1.1",
   "host": "https://home.deeke.top",
