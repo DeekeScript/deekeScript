@@ -14,6 +14,13 @@ interface Device {
     public height(): number;
 
     /**
+     * 获取屏幕像素密度（density）
+     *
+     * 可用于 dp 与 px 的换算：px = dp * density
+     */
+    public pixelDensity(): number;
+
+    /**
      * 获取设备版本，如 26
      */
     public sdkInt(): number;
