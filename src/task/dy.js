@@ -238,13 +238,16 @@ let task = {
         return true;
     },
     run(config) {
+        let refreshCount = config.refreshCount;
         while (true) {
             //判断是不是在指定页面，不是则尝试返回
             let e = 0;
             try {
                 // this.backXPage(config.videoType);
                 Common.log('dealVideo');
-                if (-1 == this.dealVideo(config)) {
+                let res = this.dealVideo(config);
+                Common.log('dealVideo', res);
+                if (-1 == res) {
                     e++;
                     if (e > 3) {
                         throw e;
@@ -252,15 +255,49 @@ let task = {
                 } else {
                     e = 0;
                 }
+
+                if (!res) {
+                    Common.log('不符合条件，刷新');
+                    refreshCount--;
+                } else {
+                    refreshCount = config.refreshCount;
+                }
+
+                if (refreshCount <= 0) {
+                    Common.log('刷新次数已用完');
+                    this.refreshVideo();
+                    refreshCount = config.refreshCount;
+                }
+                
                 Video.next();
                 System.sleep(3000 + Math.random() * 1000);
-            } catch (e) {
+            } catch (ee) {
                 e++;
-                Common.log('视频操作报错了：', e.stack, e.message);
+                Common.log('视频操作报错了：', ee.stack, ee.message);
                 Common.back();
                 Video.next();
                 System.sleep(3000 + Math.random() * 1000);
             }
+        }
+    },
+
+    refreshVideo() {
+        Common.log('刷新视频，准备返回-');
+        Gesture.back();
+        Common.sleep(2000);
+        while (true) {
+            let homeTag = UiSelector().id('android:id/text1').text('首页').findOne();
+            Common.click(homeTag, 0.3);
+            Common.sleep(4000);
+            let tag = UiSelector().className('android.widget.FrameLayout').filter(v => {
+                return !v.children().findOne(UiSelector().textMatches(/聊天中|直播中/));
+            }).descContains('作品').isVisibleToUser(true).findOne();
+            if (!tag) {
+                continue;
+            }
+
+            tag.click();
+            Common.sleep(3000);
         }
     },
 
@@ -299,6 +336,7 @@ let config = {
     commentZanRate: Storage.getInteger('toker_run_video_comment_zan_rate') / 100,
     commentIp: Storage.getString('toker_comment_user_ip') && Storage.getString('toker_comment_user_ip').replace(/，/g, ',').split(','),
     timeout: Storage.getInteger('toker_run_zan_timeout'),
+    refreshCount: Storage.getInteger('toker_run_refresh_count'),
 }
 
 while (true) {

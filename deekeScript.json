@@ -134,6 +134,15 @@
                 "label": "操作最大延迟（秒）",
                 "name": "toker_run_zan_timeout",
                 "value": 5
+              },
+              {
+                "type": "numberRange",
+                "label": "最大几个视频不符合条件就刷新",
+                "name": "toker_run_refresh_count",
+                "value": 5,
+                "step": 1,
+                "min": 5,
+                "max": 50
               }
             ]
           }
