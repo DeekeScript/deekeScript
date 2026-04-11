@@ -239,9 +239,9 @@ let task = {
     },
     run(config) {
         let refreshCount = config.refreshCount;
+        let e = 0;
         while (true) {
             //判断是不是在指定页面，不是则尝试返回
-            let e = 0;
             try {
                 // this.backXPage(config.videoType);
                 Common.log('dealVideo');

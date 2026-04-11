@@ -69,7 +69,10 @@ let Comment = {
 
     commentMsg(msg, atUser, img) {
         let iptTag = UiSelector().id('com.smile.gifmaker:id/text').isVisibleToUser(true).findOne();
-        Common.click(iptTag);
+        // Common.click(iptTag);
+        let x = iptTag.bounds().left + iptTag.bounds().width() * Math.random() * 0.5;
+        let y = iptTag.bounds().top + iptTag.bounds().height() * (Math.random() * 0.6 + 0.2);
+        Gesture.click(x, y);
         Common.sleep(1500 + 500 * Math.random());
         iptTag = UiSelector().className('android.widget.EditText').isVisibleToUser(true).filter(v => {
             return v.isEditable();
