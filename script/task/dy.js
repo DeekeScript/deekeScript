@@ -309,7 +309,7 @@ let config = {
     commentZanRate: Storage.getInteger('toker_run_video_comment_zan_rate') / 100,
     commentIp: Storage.getString('toker_comment_user_ip') && Storage.getString('toker_comment_user_ip').replace(/，/g, ',').split(','),
     timeout: Storage.getInteger('toker_run_zan_timeout'),
-    endTime: Date.now() + 60 * 1000 * Storage.getInteger('toker_run_minute') / 60,//停止时间
+    endTime: Date.now() + 60 * 1000 * Storage.getInteger('toker_run_minute'),//停止时间
 }
 
 while (true) {
