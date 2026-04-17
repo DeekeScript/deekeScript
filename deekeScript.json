@@ -1,6 +1,7 @@
 {
   "$schema": "./deekeScript.schema.json",
   "name": "超级点赞",
+  "packageName": "com.douyin.zan",
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
