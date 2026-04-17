@@ -20,6 +20,11 @@ let task = {
     //cfg是指对评论用户的相关操作
     dealComments(config, firstContinue) {
         while (true) {
+            if (Date.now() > config.endTime) {
+                FloatDialogs.show('操作完成');
+                System.exit();
+                System.sleep(3000);
+            }
             let comments = Comment.getList(0);
             for (let k in comments) {
                 try {
@@ -245,6 +250,11 @@ let task = {
             try {
                 // this.backXPage(config.videoType);
                 Common.log('dealVideo');
+                if (Date.now() > config.endTime) {
+                    FloatDialogs.show('操作完成');
+                    System.exit();
+                    System.sleep(3000);
+                }
                 let res = this.dealVideo(config);
                 Common.log('dealVideo', res);
                 if (-1 == res) {
@@ -268,7 +278,7 @@ let task = {
                     this.refreshVideo();
                     refreshCount = config.refreshCount;
                 }
-                
+
                 Video.next();
                 System.sleep(3000 + Math.random() * 1000);
             } catch (ee) {
@@ -337,6 +347,7 @@ let config = {
     commentIp: Storage.getString('toker_comment_user_ip') && Storage.getString('toker_comment_user_ip').replace(/，/g, ',').split(','),
     timeout: Storage.getInteger('toker_run_zan_timeout'),
     refreshCount: Storage.getInteger('toker_run_refresh_count'),
+    endTime: Date.now() + 1000 * 60 * Storage.getInteger('toker_run_munite'),
 }
 
 while (true) {

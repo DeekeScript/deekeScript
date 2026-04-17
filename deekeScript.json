@@ -144,6 +144,12 @@
                 "step": 1,
                 "min": 5,
                 "max": 50
+              },
+              {
+                "type": "number",
+                "label": "运行时间（分钟）",
+                "name": "toker_run_munite",
+                "value": 5
               }
             ]
           }
