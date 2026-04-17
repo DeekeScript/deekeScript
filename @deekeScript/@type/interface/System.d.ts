@@ -127,6 +127,16 @@ interface System {
      * @param keepOn 是否保持屏幕常亮
      */
     public setKeepScreenOn(keepOn: boolean): void;
+
+    /**
+     * 获取当前系统区域与语言信息（配置中的首个 Locale）
+     * @returns language 为语言码；country 为国家/地区码；tag 为 BCP 47 标签（如 zh-CN）
+     */
+    public getLocaleInfo(): {
+        language: string;
+        country: string;
+        tag: string;
+    };
 }
 
 export { };
