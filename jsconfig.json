@@ -1,12 +1,26 @@
 {
     "compilerOptions": {
         "target": "ES6",
-        "lib": ["es6"],  // 不包含 "dom"
-        "checkJs": true
+        "lib": [
+            "es2016",
+        ],
+        "checkJs": true,
+        "allowJs": true,
+        "module": "commonjs",
+        "moduleResolution": "node10",
+        "types": [
+            "node"
+        ],
+        "ignoreDeprecations": "6.0",
+        "baseUrl": ".",
+        "paths": {
+            "app/*": [
+                "app/*"
+            ]
+        },
     },
     "include": [
-        "src/**/*",
-        "test/**/*",
+        "**/*",
         "@deekeScript/**/*"
     ]
 }
