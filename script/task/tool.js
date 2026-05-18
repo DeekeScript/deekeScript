@@ -1,10 +1,19 @@
-let a = {
-    intoApp() {},
-    backApp() {},
-    task() {},
-    run() {
-        FloatDialogs.show("提示", "请编写业务代码");
-    }
-};
+let myTask = {
+    intoApp() {
+        //打开并进入App
+    },
 
-a.run();
+    backApp() {
+        //退出当前App
+    },
+
+    task(){
+        //任务代码
+    },
+
+    run() {
+        FloatDialogs.show('提示', '请编写业务代码');
+    }
+}
+
+myTask.run();

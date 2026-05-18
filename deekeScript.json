@@ -623,6 +623,12 @@
       "type": "clear"
     },
     {
+      "title": "自定义js",
+      "icon": "images/test/notice.png",
+      "type": "execJs",
+      "jsFile": "script/task/exec_js.js"
+    },
+    {
       "title": "举报中心",
       "icon": "images/test/jubao.png",
       "type": "qiwei",

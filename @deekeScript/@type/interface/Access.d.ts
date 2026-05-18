@@ -162,13 +162,38 @@ interface access {
 
      /**
       * 检查位置权限是否被永久拒绝（用户选择了"不再询问"）
-      * 
+      *
       * 如果返回true，说明用户之前拒绝过权限并选择了"不再询问"，
       * 系统不会再弹出权限对话框，需要引导用户去设置页面手动开启
-      * 
+      *
       * @return true 如果权限被永久拒绝
       */
      public isLocationPermissionPermanentlyDenied(): boolean;
+
+     /**
+      * 检查是否有蓝牙连接权限（Android 12+ 需要 BLUETOOTH_CONNECT）
+      * Android 12 以下始终返回 true
+      */
+     public hasBluetoothConnectionPermission(): boolean;
+
+     /**
+      * 申请蓝牙连接权限（BLUETOOTH_CONNECT + BLUETOOTH_SCAN）
+      * Android 12 以下无需申请
+      * 注意：这是异步操作
+      */
+     public requestBluetoothConnectionPermission(): void;
+
+     /**
+      * 检查蓝牙权限是否被永久拒绝（用户选择了"不再询问"）
+      *
+      * 如果返回true，需要引导用户去设置页面手动开启
+      */
+     public isBluetoothPermissionPermanentlyDenied(): boolean;
+
+     /**
+      * 打开蓝牙权限设置页面（跳转到应用详情设置页）
+      */
+     public openBluetoothPermissionSettings(): void;
 }
 
 export { };

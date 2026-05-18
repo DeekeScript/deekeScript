@@ -201,7 +201,8 @@
               "uploadLog",
               "updateApp",
               "clear",
-              "qiwei"
+              "qiwei",
+              "execJs"
             ]
           },
           "description": {
