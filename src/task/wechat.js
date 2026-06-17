@@ -234,10 +234,10 @@ let task = {
 
         Common.log('文件总数：' + res.length);
         for (let i in files) {
-            if (parseInt(i) >= fileTags.length) {
-                Common.log('删除文件完成');
-                break;
-            }
+            // if (parseInt(i) >= fileTags.length) {
+            //     Common.log('删除文件完成');
+            //     break;
+            // }
 
             Files.delete(files[i]);
             Common.log('删除文件：' + files[i]);
