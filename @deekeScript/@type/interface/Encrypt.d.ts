@@ -47,10 +47,18 @@ interface Encrypt {
     public aesCbcEncode(key: string, iv: string, input: string): string;
 
     /**
+     * HMAC-SHA256 签名
+     * @param key 密钥
+     * @param data 待签名的数据
+     * @returns 十六进制字符串
+     */
+    public hmac_sha256(key: string, data: string): string;
+
+    /**
      * aescbc解密
-     * @param key 
-     * @param iv 
-     * @param input 
+     * @param key
+     * @param iv
+     * @param input
      */
     public aesCbcDecode(key: string, iv: string, input: string): string;
 }

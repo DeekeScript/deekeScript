@@ -1,321 +1,54 @@
 {
   "$schema": "./deekeScript.schema.json",
-  "name": "测试测试",
+  "name": "微信同步",
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
-  "packageName": "cn.deeke.test",
+  "packageName": "cn.deeke.wechat.sync",
   "versionCode": "101",
   "versionName": "1.0.1",
   "host": "https://home.deeke.top",
   "debug": true,
   "switchSetting": {
-    "alipay": true
+    "alipay": false
   },
   "bottomMenusHidden": false,
   "groups": [
     {
-      "title": "DY·万能引流测试",
+      "title": "微信",
       "titleHidden": false,
       "hidden": false,
       "methods": [
         {
-          "title": "推荐营销2",
+          "title": "同步朋友圈",
           "icon": "images/test/finger.png",
-          "jsFile": "script/task/dy.js",
+          "jsFile": "src/task/wechat.js",
           "settingPage": {
             "params": [
               {
                 "type": "numberRange",
-                "label": "观看时长（秒）",
-                "name": "toker_view_video_second",
-                "max": 60,
-                "min": 5,
-                "value": 12,
-                "step": 1
-              },
-              {
-                "type": "textArea",
-                "label": "关键词筛选（多个使用逗号隔开）",
-                "name": "toker_view_video_keywords",
-                "value": "",
-                "notice": "* 关键词不填则操作所有"
-              },
-              {
-                "type": "numberRange",
-                "label": "点赞频率（%）",
-                "name": "toker_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "评论频率（%）",
-                "name": "toker_comment_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "关注频率（%）",
-                "name": "toker_focus_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "私信频率（%）",
-                "name": "toker_private_msg_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "评论区五连赞频率（%）",
-                "name": "toker_comment_area_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "性别",
-                "name": "toker_run_sex",
-                "columnCount": 6,
-                "children": [
-                  "女",
-                  "男",
-                  "未知"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2"
-                ]
-              },
-              {
-                "type": "numberRange",
-                "label": "最小年龄",
-                "name": "toker_run_min_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 0
-              },
-              {
-                "type": "numberRange",
-                "label": "最大年龄",
-                "name": "toker_run_max_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 60
-              },
-              {
-                "type": "switch",
-                "value": true,
-                "name": "switch",
-                "label": "开启后，子表单也开启",
-                "childrenParams": [
-                  {
-                    "type": "text",
-                    "label": "子表单1",
-                    "name": "child_text1",
-                    "value": ""
-                  },
-                  {
-                    "type": "number",
-                    "label": "子表单2",
-                    "name": "child_number1",
-                    "value": 0
-                  }
-                ]
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "运行时间",
-                "name": "toker_run_hour",
-                "columnCount": 6,
-                "children": [
-                  "0时",
-                  "1时",
-                  "2时",
-                  "3时",
-                  "4时",
-                  "5时",
-                  "6时",
-                  "7时",
-                  "8时",
-                  "9时",
-                  "10时",
-                  "11时",
-                  "12时",
-                  "13时",
-                  "14时",
-                  "15时",
-                  "16时",
-                  "17时",
-                  "18时",
-                  "19时",
-                  "20时",
-                  "21时",
-                  "22时",
-                  "23时"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "7",
-                  "8",
-                  "9",
-                  "10",
-                  "11",
-                  "12",
-                  "13",
-                  "14",
-                  "15",
-                  "16",
-                  "17",
-                  "18",
-                  "19",
-                  "20",
-                  "21",
-                  "22",
-                  "23"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "title": "同城营销",
-          "icon": "images/test/city.png",
-          "jsFile": "script/task/dyCity.js",
-          "settingPage": {
-            "params": [
-              {
-                "type": "numberRange",
-                "label": "观看时长（秒）",
-                "name": "toker_city_view_video_second",
-                "max": 30,
-                "min": 5,
-                "value": 12,
-                "step": 1
-              },
-              {
-                "type": "textArea",
-                "label": "关键词筛选（多个使用逗号隔开）",
-                "name": "toker_city_view_video_keywords",
-                "value": "",
-                "notice": "* 关键词不填则操作所有"
-              },
-              {
-                "type": "numberRange",
-                "label": "点赞频率（%）",
-                "name": "toker_city_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "评论频率（%）",
-                "name": "toker_city_comment_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "关注频率（%）",
-                "name": "toker_city_focus_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "私信频率（%）",
-                "name": "toker_city_private_msg_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 1
-              },
-              {
-                "type": "numberRange",
-                "label": "评论区五连赞频率（%）",
-                "name": "toker_city_comment_area_zan_rate",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
-              },
-              {
-                "type": "numberRange",
-                "label": "同城距离（公里内）",
-                "name": "toker_city_distance",
-                "max": 100,
+                "label": "每天执行次数",
+                "name": "toker_times",
+                "max": 24,
                 "min": 1,
                 "step": 1,
-                "value": 100
-              },
-              {
-                "type": "checkboxGroup",
-                "label": "性别",
-                "name": "toker_city_run_sex",
-                "columnCount": 6,
-                "children": [
-                  "女",
-                  "男",
-                  "未知"
-                ],
-                "values": [
-                  "0",
-                  "1",
-                  "2"
-                ]
+                "value": 1
               },
               {
                 "type": "numberRange",
-                "label": "最小年龄",
-                "name": "toker_city_run_min_age",
-                "max": 100,
-                "min": 0,
+                "label": "每次间隔时间（分钟）",
+                "name": "toker_munite",
+                "max": 120,
+                "min": 1,
                 "step": 1,
-                "value": 0
-              },
-              {
-                "type": "numberRange",
-                "label": "最大年龄",
-                "name": "toker_city_run_max_age",
-                "max": 100,
-                "min": 0,
-                "step": 1,
-                "value": 100
+                "value": 30
               },
               {
                 "type": "checkboxGroup",
-                "label": "运行时间",
-                "name": "toker_city_run_hour",
+                "label": "启动时间",
+                "name": "toker_run_hour",
                 "columnCount": 6,
+                "hidden": true,
                 "children": [
                   "0时",
                   "1时",
@@ -368,141 +101,10 @@
                   "22",
                   "23"
                 ]
-              }
-            ]
-          }
-        },
-        {
-          "title": "工具箱",
-          "hidden": false,
-          "icon": "images/test/tool.png",
-          "activity": {
-            "notice": "暂无功能~",
-            "title": "工具箱",
-            "minVersion": 10001,
-            "groups": [
-              {
-                "title": "工具箱",
-                "titleHidden": true,
-                "methods": [
-                  {
-                    "title": "一键取赞",
-                    "hidden": false,
-                    "icon": "images/test/cancel_zan.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "帮助你快速取消视频点赞~"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "title": "一键取关",
-                    "hidden": false,
-                    "icon": "images/test/cancel_focus.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "帮助你快速取消单向关注（你关注他，他没有关注你）的用户~"
-                        },
-                        {
-                          "type": "switch",
-                          "label": "互相关注取关",
-                          "name": "task_dy_cancel_focus_mutual_switch"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "title": "粉丝回访",
-                    "hidden": false,
-                    "icon": "images/test/view_back.png",
-                    "jsFile": "script/task/tool.js",
-                    "settingPage": {
-                      "params": [
-                        {
-                          "type": "notice",
-                          "title": "粉丝回访，能增加粉丝粘性~"
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "title": "其他功能",
-      "titleHidden": false,
-      "hidden": false,
-      "methods": [
-        {
-          "title": "直接运行",
-          "icon": "images/test/ai.png",
-          "jsFile": "script/task/redirect.js"
-        }
-      ]
-    },
-    {
-      "title": "新功能",
-      "titleHidden": false,
-      "hidden": false,
-      "methods": [
-        {
-          "title": "直接运行1",
-          "columns": 12,
-          "icon": "images/test/score.png",
-          "jsFile": "src/task/douyin_zan.js",
-          "settingPage": {
-            "params": [
-              {
-                "type": "numberRange",
-                "label": "点赞次数",
-                "name": "task_douyin_zan_count",
-                "max": 60,
-                "min": 5,
-                "value": 5,
-                "step": 1
               },
               {
-                "type": "number",
-                "label": "评论次数",
-                "name": "task_douyin_zan_comment",
-                "value": 5
-              }
-            ]
-          }
-        },
-        {
-          "title": "手动运行",
-          "columns": 12,
-          "runType": "floatSwitch",
-          "icon": "images/test/score.png",
-          "jsFile": "src/task/douyin_zan.js",
-          "settingPage": {
-            "params": [
-              {
-                "type": "numberRange",
-                "label": "点赞次数",
-                "name": "task_douyin_zan_count",
-                "max": 60,
-                "min": 5,
-                "value": 5,
-                "step": 1
-              },
-              {
-                "type": "number",
-                "label": "评论次数",
-                "name": "task_douyin_zan_comment",
-                "value": 5
+                "type": "notice",
+                "title": "* 自动同步昨日到当前的朋友圈 \n\n * 当前时间在启动时间内才执行 \n\n * 请在系统设置里面配置Cos图片上传和上传Api"
               }
             ]
           }
@@ -518,17 +120,70 @@
       "type": "home"
     },
     {
-      "title": "话术设置",
-      "icon": "images/test/speech.png",
-      "type": "speech"
-    },
-    {
       "title": "系统设置",
       "icon": "images/test/setting.png",
       "type": "setting"
     }
   ],
   "settingLists": [
+    {
+      "icon": "images/test/wechat-upload.png",
+      "title": "上传设置",
+      "type": "settingService",
+      "settingPage": {
+        "params": [
+          {
+            "label": "朋友圈上报Api地址",
+            "name": "upload_api",
+            "type": "text",
+            "value": "https://test.chejijipiche.com",
+            "notice": "如：https://test.chejijipiche.com"
+          },
+          {
+            "label": "appKey",
+            "name": "upload_app_key",
+            "type": "text",
+            "value": "",
+            "notice": "朋友圈数据上传Key"
+          },
+          {
+            "label": "appSecret",
+            "name": "upload_app_secret",
+            "type": "text",
+            "value": "",
+            "notice": "朋友圈数据上传密钥"
+          },
+          {
+            "label": "Cos SecretId",
+            "name": "cos_secret_id",
+            "type": "text",
+            "value": "",
+            "notice": "如：AKIDrfMsrfGfuysmeL2b0FMHyTnunQtCLI8u"
+          },
+          {
+            "label": "Cos SecretKey",
+            "name": "cos_secret_key",
+            "type": "text",
+            "value": "",
+            "notice": "如：dFhy7B6rQp3962Up33J8oKdkgQzObnBV"
+          },
+          {
+            "label": "Cos Region",
+            "name": "cos_region",
+            "type": "text",
+            "value": "",
+            "notice": "如：ap-shanghai"
+          },
+          {
+            "label": "Cos Bucket",
+            "name": "cos_bucket",
+            "type": "text",
+            "value": "",
+            "notice": "如：jiangqiao-1252432685"
+          }
+        ]
+      }
+    },
     {
       "title": "联系客服",
       "icon": "images/test/kefu.png",
@@ -537,138 +192,16 @@
       "hidden": false
     },
     {
-      "title": "功能说明",
-      "icon": "images/test/manual.png",
-      "type": "notice",
-      "file": "script/task.html"
-    },
-    {
-      "title": "智能话术",
-      "icon": "images/test/ai.png",
-      "type": "settingService",
-      "settingPage": {
-        "params": [
-          {
-            "type": "switch",
-            "label": "开启{NAME}智能AI话术",
-            "value": false,
-            "name": "setting_baidu_wenxin_switch"
-          },
-          {
-            "type": "radio",
-            "label": "请选择角色",
-            "name": "setting_baidu_wenxin_role",
-            "value": "1",
-            "dataFrom": "role",
-            "options": []
-          },
-          {
-            "type": "text",
-            "label": "{NAME} Key",
-            "value": "如：NZmgn5urWoHhKWe8XbGMdbUp",
-            "name": "setting_baidu_wenxin_key"
-          },
-          {
-            "type": "text",
-            "label": "{NAME} Secret",
-            "name": "setting_baidu_wenxin_secret",
-            "value": "如：brIq133KaAPNEkn109avxl7MXUHHW0kg"
-          },
-          {
-            "type": "notice",
-            "title": "如果开启超级霸屏，请配置账号收藏的表情图",
-            "hidden": true
-          },
-          {
-            "type": "numberRange",
-            "label": "超级霸屏(%)",
-            "name": "setting_comment_with_photo",
-            "value": 0,
-            "min": 0,
-            "max": 100,
-            "hidden": false
-          },
-          {
-            "type": "notice",
-            "title": "* 开启后，将使用{NAME}官方AI角色（可自定义）进行评论和私信，让拓客变得更简单~",
-            "textColor": "#AA0000",
-            "textSize": 16
-          }
-        ]
-      },
-      "hidden": false
-    },
-    {
-      "title": "数据统计",
-      "icon": "images/test/statistics.png",
-      "type": "statistics",
-      "jsFile": "script/statistics/statistics.js"
-    },
-    {
       "title": "上传日志",
       "icon": "images/test/upload.png",
       "type": "uploadLog",
       "url": "/dke/uploadLog"
     },
     {
-      "title": "系统升级",
-      "icon": "images/test/update.png",
-      "type": "updateApp",
-      "url": "/dke/updateApp"
-    },
-    {
       "title": "清理数据",
       "icon": "images/test/clear.png",
       "description": "确定清理嘛？",
       "type": "clear"
-    },
-    {
-      "title": "自定义js",
-      "icon": "images/test/notice.png",
-      "type": "execJs",
-      "jsFile": "script/task/exec_js.js"
-    },
-    {
-      "title": "举报中心",
-      "icon": "images/test/jubao.png",
-      "type": "qiwei",
-      "url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=910d7c7c-d74a-4ce5-a070-0f3383b1f6ee",
-      "hidden": false,
-      "settingPage": {
-        "params": [
-          {
-            "type": "notice",
-            "title": "如果我们的代理商有侵犯到你的权益，请立即举报！",
-            "hidden": false
-          },
-          {
-            "type": "text",
-            "label": "举报人",
-            "value": "",
-            "name": "qiwei_name"
-          },
-          {
-            "type": "text",
-            "label": "举报人手机号",
-            "value": "",
-            "name": "qiwei_mobile"
-          },
-          {
-            "type": "text",
-            "label": "举报人身份证号码",
-            "value": "",
-            "name": "qiwei_card_no"
-          },
-          {
-            "type": "text",
-            "label": "举报内容",
-            "value": "",
-            "hint": "请详细描述你举报该软件的原因，请不要恶意举报！",
-            "name": "qiwei_content",
-            "lines": 3
-          }
-        ]
-      }
     }
   ],
   "apis": [
