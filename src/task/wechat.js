@@ -40,7 +40,7 @@ let task = {
      */
     uploadData(wechat, title, imagesUrl, videoUrl, publishTime) {
         //appKey={appKey}&bodyHash={bodyHash}&nonce={nonce}&timestamp={timestamp}
-        let timestamp = Date.now();
+        let timestamp = Date.now().toString();
         let appKey = Storage.get('upload_app_key');
         let appSecret = Storage.get('upload_app_secret');
         let api = Storage.get('upload_api');
