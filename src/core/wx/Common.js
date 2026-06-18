@@ -288,12 +288,14 @@ const Common = {
      */
     format(date) {
         const pad = n => String(n).padStart(2, '0');
-        return date.getFullYear() + '-' +
+        let res = date.getFullYear() + '-' +
             pad(date.getMonth() + 1) + '-' +
             pad(date.getDate()) + ' ' +
             pad(date.getHours()) + ':' +
             pad(date.getMinutes()) + ':' +
             pad(date.getSeconds());
+        Common.log('朋友圈发布时间：' + res);
+        return res;
     },
 
     /**

@@ -136,8 +136,8 @@
             "label": "朋友圈上报Api地址",
             "name": "upload_api",
             "type": "text",
-            "value": "https://test.chejijipiche.com",
-            "notice": "如：https://test.chejijipiche.com"
+            "value": "https://app.chejijipiche.com/sqx_fast/open/trends/syncFriendCircle",
+            "notice": "如：https://app.chejijipiche.com/sqx_fast/open/trends/syncFriendCircle"
           },
           {
             "label": "appKey",

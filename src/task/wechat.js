@@ -4,7 +4,7 @@ let Index = require('../core/wx/Index.js');
 let task = {
     nickname: '',
     wechatNo: '',
-    hour: 24 * 15,//默认超过24小时不采集，测试改成15天
+    hour: 24,//默认超过24小时不采集，测试改成5天
     log() {
         let d = new Date();
         let file = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
@@ -40,7 +40,7 @@ let task = {
      */
     uploadData(wechat, title, imagesUrl, videoUrl, publishTime) {
         //appKey={appKey}&bodyHash={bodyHash}&nonce={nonce}&timestamp={timestamp}
-        let timestamp = Math.floor(new Date().getTime() / 1000);
+        let timestamp = Date.now();
         let appKey = Storage.get('upload_app_key');
         let appSecret = Storage.get('upload_app_secret');
         let api = Storage.get('upload_api');
@@ -52,11 +52,11 @@ let task = {
             publishTime: publishTime,
         }
 
-        let nonce = Math.floor(Math.random() * 1000000000);
+        let nonce = Math.floor(Math.random() * 1000000000) + '';
         let bodyHash = Encrypt.sha256(JSON.stringify(body));
         let stringToSign = `appKey=${appKey}&bodyHash=${bodyHash}&nonce=${nonce}&timestamp=${timestamp}`;
         let sign = Encrypt.hmac_sha256(appSecret, stringToSign);
-
+        Common.log('stringToSign:' + stringToSign);
         Common.log('请求参数：', api, body, { 'X-App-Key': appKey, 'X-Timestamp': timestamp, 'X-Nonce': nonce, 'X-Sign': sign });
         let res = Http.post(api, body, {
             'X-App-Key': appKey,
@@ -214,7 +214,8 @@ let task = {
             Common.click(saveTag, 0.15);
             Common.sleep(2000 + 1000 * Math.random());
             if (saveTag.text() == '保存视频') {
-                Common.sleep(5000);
+                FloatDialogs.toast('保存视频，等待10秒');
+                Common.sleep(10000);
             }
 
             Common.back();
@@ -267,6 +268,7 @@ let task = {
             //查看当前内容是否点赞，如果点赞则不操作（已经操作过了）
             let tags = Common.id('n95').className('android.widget.LinearLayout').isVisibleToUser(true).find();
             Common.log('当前内容数量：' + tags.length);
+            let _continue = false;
             for (let i in tags) {
                 let nicknameTag = tags[i].children().findOne(Common.id('kbq').className('android.widget.TextView'));
                 let titleTag = tags[i].children().findOne(Common.id('cut').className('android.widget.TextView'));
@@ -279,12 +281,12 @@ let task = {
 
                 Common.log('昵称：' + nickname, '标题：' + title, '时间：' + publishTime);
                 //如果时间超过24小时，则跳过// 转 Date（注意兼容性：把 "-" 换成 "/" 更稳）
-                const publishTimestamp = new Date(publishTime.replace(/-/g, '/')).getTime();
-                const now = Date.now();
+                let publishTimestamp = new Date(publishTime.replace(/-/g, '/')).getTime();
+                let now = Date.now();
                 Common.log('发布时间戳：' + publishTimestamp, '当前时间戳：' + now);
                 if (now - publishTimestamp > this.hour * 60 * 60 * 1000) {
                     Common.log('超过24小时，朋友圈已采集完成');
-                    break;
+                    return true;
                 }
 
                 let zanTag = tags[i].children().findOne(Common.id('r33'));
@@ -322,6 +324,11 @@ let task = {
                 Common.back();
                 Common.sleep(1000 + 1000 * Math.random());
                 let zTag = tags[i].children().findOne(Common.id('r2'));
+                if (zTag.isVisibleToUser() == false) {
+                    Gesture.swipe(500, 500, 550, 250, 200);
+                    _continue = true;
+                    break;
+                }
 
                 //朋友圈类型
 
@@ -352,6 +359,9 @@ let task = {
                 Common.log('点赞完成，结束本次循环');
                 tags = Common.id('n95').className('android.widget.LinearLayout').isVisibleToUser(true).find();
                 continue;//这里不执行break，否则会遗漏
+            }
+            if (_continue) {
+                continue;
             }
         } while (this.scroll());
     },
@@ -386,7 +396,7 @@ while (true) {
         task.run();
         errorCount = 0;
         Common.log('任务完成');
-        Common.back(3);
+        Common.back(2);
         Common.sleep(2000);
         Common.backApp();
         times--;
