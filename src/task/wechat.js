@@ -66,6 +66,19 @@ let task = {
             'Content-Type': 'application/json'
         });
         Common.log('请求返回结果：', res);
+        if (!res) {
+            FloatDialogs.toastLong('数据上报异常');
+            return false;
+        }
+
+        let result = JSON.parse(res);
+        if (result.code != 0) {
+            FloatDialogs.toastLong('数据上报异常：' + result.msg);
+            return false;
+        }
+
+        FloatDialogs.toastLong('数据上报异常：' + result.msg);
+        return true;
     },
 
     /**
