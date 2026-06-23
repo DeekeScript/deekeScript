@@ -389,6 +389,24 @@ let errorCount = 0;
 let date = getDate();
 let times = Storage.getInteger('toker_times');
 
+//判断是否有文件读写权限
+if (!Access.hasStoragePermission()) {
+    console.log('没有权限');
+    FloatDialogs.show('提示', '请开启图片和视频权限');
+    Common.sleep(1000);
+    if (Access.isStoragePermissionPermanentlyDenied()) {
+        console.log('禁止了权限');
+        Access.openPermissionSettings();//永久禁止，需要用户进入当前设置页手动打开
+    } else {
+        Access.requestStoragePermission();//请求权限
+        console.log('请求权限');
+    }
+    System.exit();
+    Common.sleep(1000);
+} else {
+    console.log('有权限');
+}
+
 while (true) {
     try {
         if (getDate() != date) {

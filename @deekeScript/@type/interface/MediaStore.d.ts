@@ -16,6 +16,13 @@ interface MediaStore {
     public getImages(): any[];
 
     /**
+     * 根据相对目录获取图片
+     * @param path 相对路径，例如 "/storage/emulated/0/Pictures/WeiXin"、"Pictures/WeiXin"、"DCIM/Camera"、"Screenshots"
+     * @return JavaScript 数组，包含图片信息对象 {id, name, size, date, relativePath, uri}
+     */
+    public getImagesByPath(path: string): any[];
+
+    /**
      * 保存图片到相册
      * @param sourcePath 源图片路径
      * @param displayName 显示名称（可选）
