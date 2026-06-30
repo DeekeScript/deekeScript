@@ -161,7 +161,20 @@ let task = {
         return true;
     },
 
+    startWechat() {
+        App.openAppSetting('com.tencent.mm');
+        Common.sleep(2000);
+        let tag = UiSelector().descContains('强').isVisibleToUser(true).findOne() || UiSelector().textContains('强').isVisibleToUser(true).findOne() || UiSelector().descContains('停').isVisibleToUser(true).findOne() || UiSelector().textContains('停').isVisibleToUser(true).findOne();
+        Common.click(tag, 0.2);
+
+        Common.sleep(2000);
+        let submitTag = UiSelector().isVisibleToUser(true).desc('确定').findOne() || UiSelector().isVisibleToUser(true).textContains('确定').findOne();
+        Common.click(submitTag, 0.2);
+    },
+
     run() {
+        this.startWechat();
+        Common.sleep(3000);
         Common.openApp();
         Common.backHome();
         Common.log('进入了主页');
