@@ -209,7 +209,7 @@ let task = {
 
         this.backTop();
         this.getData();
-        this.backTop();
+        //this.backTop();
         Common.log('一轮完成');
     },
 
