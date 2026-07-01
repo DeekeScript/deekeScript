@@ -165,6 +165,9 @@ let task = {
         App.openAppSetting('com.tencent.mm');
         Common.sleep(2000);
         let tag = UiSelector().descContains('强').isVisibleToUser(true).findOne() || UiSelector().textContains('强').isVisibleToUser(true).findOne() || UiSelector().descContains('停').isVisibleToUser(true).findOne() || UiSelector().textContains('停').isVisibleToUser(true).findOne();
+        if (!tag) {
+            tag = UiSelector().descContains('结').isVisibleToUser(true).findOne() || UiSelector().textContains('结').isVisibleToUser(true).findOne();
+        }
         Common.click(tag, 0.2);
 
         Common.sleep(2000);

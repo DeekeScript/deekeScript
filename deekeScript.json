@@ -144,42 +144,42 @@
             "label": "appKey",
             "name": "upload_app_key",
             "type": "text",
-            "value": "",
+            "value": "chejiji",
             "notice": "朋友圈数据上传Key"
           },
           {
             "label": "appSecret",
             "name": "upload_app_secret",
             "type": "text",
-            "value": "",
+            "value": "8f3a2c1e9b7d4f6a5e0c3b8d1a7f4e2",
             "notice": "朋友圈数据上传密钥"
           },
           {
             "label": "Cos SecretId",
             "name": "cos_secret_id",
             "type": "text",
-            "value": "",
+            "value": "AKIDY6SeeR2SgibJo6CD3g8NQFtJVVI2ZCi5",
             "notice": "如：AKIDrfMsrfGfuysmeL2b0FMHyTnunQtCLI8u"
           },
           {
             "label": "Cos SecretKey",
             "name": "cos_secret_key",
             "type": "text",
-            "value": "",
+            "value": "FG5rRnvtiNUWOfqslUCi4GG2e6NuStBH",
             "notice": "如：dFhy7B6rQp3962Up33J8oKdkgQzObnBV"
           },
           {
             "label": "Cos Region",
             "name": "cos_region",
             "type": "text",
-            "value": "",
+            "value": "ap-guangzhou",
             "notice": "如：ap-shanghai"
           },
           {
             "label": "Cos Bucket",
             "name": "cos_bucket",
             "type": "text",
-            "value": "",
+            "value": "chejiji-1359588484",
             "notice": "如：jiangqiao-1252432685"
           }
         ]
