@@ -73,7 +73,7 @@ declare global {
          * @param right 右边距  整数
          * @param bottom 下边距  整数
          */
-        public bounds(left: Number, top: Number, right: Number, bottom: Number): UiSelector;
+        public bounds(left: number, top: number, right: number, bottom: number): UiSelector;
 
         /**
          * 
@@ -171,7 +171,7 @@ declare global {
          * 查找某个控件选择器，在timeout时间内，如果找不到，则返回null；如果找到立马返回
          * @param timeout 查找时间（毫秒数）
          */
-        public findBy(timeout: Number): UiObject[];
+        public findBy(timeout: number): UiObject[];
 
         /**
          * 返回一个符合当前选择器条件的控件
@@ -193,7 +193,7 @@ declare global {
          * 查找某个控件选择器，在timeout时间内，如果找不到，则返回null；如果找到立马返回
          * @param timeout 查找时间（毫秒数）
          */
-        public findOneBy(timeout: Number): UiObject;
+        public findOneBy(timeout: number): UiObject;
     }
 }
 

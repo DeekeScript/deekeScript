@@ -4,12 +4,12 @@ global {
 
 interface socketIoClient {
   /**
-   * 获取socketIOClient实例
+   * 获取socketIoClient实例
    * @param serverUrl  socketIOServer地址
    * @param reconnect  是否自动重连（默认为true）
    * @param timeout  重连超时时间（毫秒）（默认为5000毫秒）
    */
-  public getInstance(serverUrl: string, reconnect: boolean = true, timeout: number = 5000): socketIOClient;
+  public getInstance(serverUrl: string, reconnect: boolean = true, timeout: number = 5000): socketIoClient;
 
   /**
    * 连接socketIOServer
