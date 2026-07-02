@@ -164,15 +164,30 @@ let task = {
     startWechat() {
         App.openAppSetting('com.tencent.mm');
         Common.sleep(2000);
-        let tag = UiSelector().descContains('强').isVisibleToUser(true).findOne() || UiSelector().textContains('强').isVisibleToUser(true).findOne() || UiSelector().descContains('停').isVisibleToUser(true).findOne() || UiSelector().textContains('停').isVisibleToUser(true).findOne();
-        if (!tag) {
-            tag = UiSelector().descContains('结').isVisibleToUser(true).findOne() || UiSelector().textContains('结').isVisibleToUser(true).findOne();
-        }
-        Common.click(tag, 0.2);
 
-        Common.sleep(2000);
+        let i = 2;
+        while (i-- > 0) {
+            let tag = UiSelector().descContains('强').isVisibleToUser(true).findOne() || UiSelector().textContains('强').isVisibleToUser(true).findOne() || UiSelector().descContains('停').isVisibleToUser(true).findOne() || UiSelector().textContains('停').isVisibleToUser(true).findOne();
+            if (!tag) {
+                tag = UiSelector().descContains('结').isVisibleToUser(true).findOne() || UiSelector().textContains('结').isVisibleToUser(true).findOne();
+            }
+
+            if (!tag) {
+                Common.log('没有强行停止');
+                continue;
+            }
+
+            Common.click(tag, 0.2);
+            Common.log('强行停止');
+            Common.sleep(2000);
+        }
+
         let submitTag = UiSelector().isVisibleToUser(true).desc('确定').findOne() || UiSelector().isVisibleToUser(true).textContains('确定').findOne();
-        Common.click(submitTag, 0.2);
+        if (submitTag) {
+            Common.click(submitTag, 0.2);
+        } else {
+            Common.log('没有确认按钮');
+        }
     },
 
     run() {
