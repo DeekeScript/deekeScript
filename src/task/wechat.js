@@ -47,7 +47,7 @@ let task = {
         let body = {
             wechatNo: wechat,
             trendsContent: title,
-            trendsImage: imagesUrl.length > 0 ? imagesUrl.concat(',') : '',
+            trendsImage: imagesUrl.length > 0 ? imagesUrl.join(',') : '',
             videoUrl: videoUrl,
             publishTime: publishTime,
         }
