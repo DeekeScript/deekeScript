@@ -97,12 +97,6 @@ const Common = {
     },
 
     openApp() {
-        this.log('openApp', System.currentPackage(), cStorage.getPackage());
-        if (cStorage.getPackage() && System.currentPackage() !== cStorage.getPackage() && cStorage.getPackage() !== 'top.deeke.script') {
-            App.launch(cStorage.getPackage());
-            this.sleep(2000);
-        }
-
         App.launch('com.tencent.mm');//打开抖音
         this.sleep(8000);
     },
