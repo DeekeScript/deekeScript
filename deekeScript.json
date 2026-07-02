@@ -1,16 +1,17 @@
 {
   "$schema": "./deekeScript.schema.json",
-  "name": "测试测试",
-  "icon": "images/test/app.png",
-  "head": "images/test/app.png",
-  "settingTopBg": "images/test/setting-top.png",
+  "name": "测试",
+  "icon": "src/images/test/app.png",
+  "head": "src/images/test/app.png",
+  "settingTopBg": "src/images/test/setting-top.png",
   "packageName": "cn.deeke.test",
   "versionCode": "101",
   "versionName": "1.0.1",
   "host": "https://home.deeke.top",
   "debug": true,
   "switchSetting": {
-    "alipay": true
+    "alipay": true,
+    "showAd": true
   },
   "bottomMenusHidden": false,
   "groups": [
@@ -21,8 +22,8 @@
       "methods": [
         {
           "title": "推荐营销2",
-          "icon": "images/test/finger.png",
-          "jsFile": "script/task/dy.js",
+          "icon": "src/images/test/finger.png",
+          "jsFile": "src/task/dy.js",
           "settingPage": {
             "params": [
               {
@@ -203,8 +204,8 @@
         },
         {
           "title": "同城营销",
-          "icon": "images/test/city.png",
-          "jsFile": "script/task/dyCity.js",
+          "icon": "src/images/test/city.png",
+          "jsFile": "src/task/dyCity.js",
           "settingPage": {
             "params": [
               {
@@ -375,7 +376,7 @@
         {
           "title": "工具箱",
           "hidden": false,
-          "icon": "images/test/tool.png",
+          "icon": "src/images/test/tool.png",
           "activity": {
             "notice": "暂无功能~",
             "title": "工具箱",
@@ -388,8 +389,8 @@
                   {
                     "title": "一键取赞",
                     "hidden": false,
-                    "icon": "images/test/cancel_zan.png",
-                    "jsFile": "script/task/tool.js",
+                    "icon": "src/images/test/cancel_zan.png",
+                    "jsFile": "src/task/tool.js",
                     "settingPage": {
                       "params": [
                         {
@@ -402,8 +403,8 @@
                   {
                     "title": "一键取关",
                     "hidden": false,
-                    "icon": "images/test/cancel_focus.png",
-                    "jsFile": "script/task/tool.js",
+                    "icon": "src/images/test/cancel_focus.png",
+                    "jsFile": "src/task/tool.js",
                     "settingPage": {
                       "params": [
                         {
@@ -421,8 +422,8 @@
                   {
                     "title": "粉丝回访",
                     "hidden": false,
-                    "icon": "images/test/view_back.png",
-                    "jsFile": "script/task/tool.js",
+                    "icon": "src/images/test/view_back.png",
+                    "jsFile": "src/task/tool.js",
                     "settingPage": {
                       "params": [
                         {
@@ -446,8 +447,8 @@
       "methods": [
         {
           "title": "直接运行",
-          "icon": "images/test/ai.png",
-          "jsFile": "script/task/redirect.js"
+          "icon": "src/images/test/ai.png",
+          "jsFile": "src/task/redirect.js"
         }
       ]
     },
@@ -459,7 +460,7 @@
         {
           "title": "直接运行1",
           "columns": 12,
-          "icon": "images/test/score.png",
+          "icon": "src/images/test/score.png",
           "jsFile": "src/task/douyin_zan.js",
           "settingPage": {
             "params": [
@@ -485,7 +486,7 @@
           "title": "手动运行",
           "columns": 12,
           "runType": "floatSwitch",
-          "icon": "images/test/score.png",
+          "icon": "src/images/test/score.png",
           "jsFile": "src/task/douyin_zan.js",
           "settingPage": {
             "params": [
@@ -513,38 +514,38 @@
   "bottomMenus": [
     {
       "title": "{NAME}",
-      "icon": "images/test/home.png",
-      "banner": "images/test/home-top.png",
+      "icon": "src/images/test/home.png",
+      "banner": "src/images/test/home-top.png",
       "type": "home"
     },
     {
       "title": "话术设置",
-      "icon": "images/test/speech.png",
+      "icon": "src/images/test/speech.png",
       "type": "speech"
     },
     {
       "title": "系统设置",
-      "icon": "images/test/setting.png",
+      "icon": "src/images/test/setting.png",
       "type": "setting"
     }
   ],
   "settingLists": [
     {
       "title": "联系客服",
-      "icon": "images/test/kefu.png",
+      "icon": "src/images/test/kefu.png",
       "type": "customerService",
       "description": "客服微信：DeekeScript",
       "hidden": false
     },
     {
       "title": "功能说明",
-      "icon": "images/test/manual.png",
+      "icon": "src/images/test/manual.png",
       "type": "notice",
-      "file": "script/task.html"
+      "file": "src/task.html"
     },
     {
       "title": "智能话术",
-      "icon": "images/test/ai.png",
+      "icon": "src/images/test/ai.png",
       "type": "settingService",
       "settingPage": {
         "params": [
@@ -600,37 +601,37 @@
     },
     {
       "title": "数据统计",
-      "icon": "images/test/statistics.png",
+      "icon": "src/images/test/statistics.png",
       "type": "statistics",
-      "jsFile": "script/statistics/statistics.js"
+      "jsFile": "src/statistics/statistics.js"
     },
     {
       "title": "上传日志",
-      "icon": "images/test/upload.png",
+      "icon": "src/images/test/upload.png",
       "type": "uploadLog",
       "url": "/dke/uploadLog"
     },
     {
       "title": "系统升级",
-      "icon": "images/test/update.png",
+      "icon": "src/images/test/update.png",
       "type": "updateApp",
       "url": "/dke/updateApp"
     },
     {
       "title": "清理数据",
-      "icon": "images/test/clear.png",
+      "icon": "src/images/test/clear.png",
       "description": "确定清理嘛？",
       "type": "clear"
     },
     {
       "title": "自定义js",
-      "icon": "images/test/notice.png",
+      "icon": "src/images/test/notice.png",
       "type": "execJs",
-      "jsFile": "script/task/exec_js.js"
+      "jsFile": "src/task/exec_js.js"
     },
     {
       "title": "举报中心",
-      "icon": "images/test/jubao.png",
+      "icon": "src/images/test/jubao.png",
       "type": "qiwei",
       "url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=910d7c7c-d74a-4ce5-a070-0f3383b1f6ee",
       "hidden": false,

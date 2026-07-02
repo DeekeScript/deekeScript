@@ -1,26 +1,13 @@
 {
     "compilerOptions": {
-        "target": "ES6",
-        "lib": [
-            "es2016",
-        ],
         "checkJs": true,
-        "allowJs": true,
-        "module": "commonjs",
-        "moduleResolution": "node10",
-        "types": [
-            "node"
-        ],
-        "ignoreDeprecations": "6.0",
-        "baseUrl": ".",
-        "paths": {
-            "app/*": [
-                "app/*"
-            ]
-        },
+        "target": "ES2022",
+        "lib": [
+            "es2022"
+        ]
     },
     "include": [
-        "**/*",
-        "@deekeScript/**/*"
+        ".vscode/*.d.ts",
+        "**/*.js"
     ]
 }

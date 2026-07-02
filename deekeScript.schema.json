@@ -70,13 +70,18 @@
       "type": "object",
       "description": "功能开关设置",
       "required": [
-        "alipay"
+        "alipay",
+        "showAd"
       ],
       "additionalProperties": false,
       "properties": {
         "alipay": {
           "type": "boolean",
           "description": "支持支付宝支付"
+        },
+        "showAd": {
+          "type": "boolean",
+          "description": "是否展示开屏广告"
         }
       }
     },
