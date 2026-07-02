@@ -186,13 +186,6 @@
       }
     },
     {
-      "title": "联系客服",
-      "icon": "images/test/kefu.png",
-      "type": "customerService",
-      "description": "客服微信：DeekeScript",
-      "hidden": false
-    },
-    {
       "title": "上传日志",
       "icon": "images/test/upload.png",
       "type": "uploadLog",
