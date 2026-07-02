@@ -167,9 +167,9 @@ let task = {
 
         let i = 2;
         while (i-- > 0) {
-            let tag = UiSelector().descContains('强').isVisibleToUser(true).findOne() || UiSelector().textContains('强').isVisibleToUser(true).findOne() || UiSelector().descContains('停').isVisibleToUser(true).findOne() || UiSelector().textContains('停').isVisibleToUser(true).findOne();
+            let tag = UiSelector(false).descContains('强').isVisibleToUser(true).findOne() || UiSelector(false).textContains('强').isVisibleToUser(true).findOne() || UiSelector(false).descContains('停').isVisibleToUser(true).findOne() || UiSelector(false).textContains('停').isVisibleToUser(true).findOne();
             if (!tag) {
-                tag = UiSelector().descContains('结').isVisibleToUser(true).findOne() || UiSelector().textContains('结').isVisibleToUser(true).findOne();
+                tag = UiSelector(false).descContains('结').isVisibleToUser(true).findOne() || UiSelector(false).textContains('结').isVisibleToUser(true).findOne();
             }
 
             if (!tag) {
