@@ -53,6 +53,8 @@ let task = {
             'Content-Type': 'application/json'
         });
 
+        Common.log('请求返回结果：', res);
+
         let result = JSON.parse(res);
         if (result.code != 0) {
             FloatDialogs.toastLong('微信会员判断接口异常：' + result.msg);
@@ -414,6 +416,7 @@ let task = {
                 Common.sleep(1000 + 1000 * Math.random());
                 //检查微信是否符合
                 if (!this.checkWechat(wechat)) {
+                    Common.log('不是会员，跳过');
                     FloatDialogs.toast('不是会员，跳过');
                     continue;
                 }

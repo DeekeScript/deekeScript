@@ -5,8 +5,8 @@
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
   "packageName": "cn.deeke.wechat.sync",
-  "versionCode": "107",
-  "versionName": "1.0.7",
+  "versionCode": "108",
+  "versionName": "1.0.8",
   "host": "https://home.deeke.top",
   "debug": true,
   "switchSetting": {
