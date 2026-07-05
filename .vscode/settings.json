@@ -5,5 +5,11 @@
     "files.exclude": {
         "**/@deekeScript": true, // 隐藏 DeekeScript文件夹
         "**/@deekeScript.backup": true, // 隐藏 DeekeScript.backup文件夹
+    },
+    "[javascript]": {
+        "editor.maxTokenizationLineLength": 2500,
+        "editor.defaultFormatter": "vscode.typescript-language-features",
+        "editor.wordBasedSuggestions": "off",
+        "javascript.suggest.enabled": false
     }
 }

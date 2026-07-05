@@ -141,6 +141,13 @@
             "notice": "如：https://test.chejijipiche.com/sqx_fast/open/trends/syncFriendCircle"
           },
           {
+            "label": "检查微信是否是会员",
+            "name": "check_api",
+            "type": "text",
+            "value": "https://test.chejijipiche.com/sqx_fast/open/trends/checkVipByWechatNo",
+            "notice": "如：https://test.chejijipiche.com/sqx_fast/open/trends/checkVipByWechatNo"
+          },
+          {
             "label": "appKey",
             "name": "upload_app_key",
             "type": "text",

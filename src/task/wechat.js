@@ -22,12 +22,44 @@ let task = {
     },
 
     apiCheck() {
-        if (!Storage.get('upload_api') || !Storage.get('upload_app_key') || !Storage.get('upload_app_secret')) {
+        if (!Storage.get('upload_api') || !Storage.get('check_api') || !Storage.get('upload_app_key') || !Storage.get('upload_app_secret')) {
             FloatDialogs.show("提示", '请配置COS信息');
             System.exit();
             System.sleep(5000);
             return;
         }
+    },
+
+    checkWechat(wechat) {
+        let timestamp = Date.now().toString();
+        let appKey = Storage.get('upload_app_key');
+        let appSecret = Storage.get('upload_app_secret');
+        let api = Storage.get('check_api');
+        let body = {
+            wechatNo: wechat,
+        }
+
+        let nonce = Math.floor(Math.random() * 1000000000) + '';
+        let bodyHash = Encrypt.sha256(JSON.stringify(body));
+        let stringToSign = `appKey=${appKey}&bodyHash=${bodyHash}&nonce=${nonce}&timestamp=${timestamp}`;
+        let sign = Encrypt.hmac_sha256(appSecret, stringToSign);
+        Common.log('stringToSign:' + stringToSign);
+        Common.log('请求参数：', api, body, { 'X-App-Key': appKey, 'X-Timestamp': timestamp, 'X-Nonce': nonce, 'X-Sign': sign });
+        let res = Http.post(api, body, {
+            'X-App-Key': appKey,
+            'X-Timestamp': timestamp,
+            'X-Nonce': nonce,
+            'X-Sign': sign,
+            'Content-Type': 'application/json'
+        });
+
+        let result = JSON.parse(res);
+        if (result.code != 0) {
+            FloatDialogs.toastLong('微信会员判断接口异常：' + result.msg);
+            return false;
+        }
+
+        return result.data;
     },
 
     /**
@@ -349,6 +381,12 @@ let task = {
                 console.log(wechatTag.text());
                 Common.back();
                 Common.sleep(1000 + 1000 * Math.random());
+                //检查微信是否符合
+                if (!this.checkWechat(wechat)) {
+                    FloatDialogs.toast('不是会员，跳过');
+                    continue;
+                }
+
                 let zTag = tags[i].children().findOne(Common.id('r2'));
                 if (zTag.isVisibleToUser() == false) {
                     Gesture.swipe(500, 500, 550, 250, 200);
