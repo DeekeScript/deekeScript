@@ -423,7 +423,7 @@ let task = {
 
                 let zTag = tags[i].children().findOne(Common.id('r2'));
                 if (zTag.isVisibleToUser() == false) {
-                    Gesture.swipe(500, 500, 550, 250, 200);
+                    Gesture.swipe(500, 250 + Storage.getInteger('move_y') * 25, 550, 250, 200);
                     _continue = true;
                     break;
                 }

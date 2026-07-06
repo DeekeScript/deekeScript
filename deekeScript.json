@@ -45,6 +45,15 @@
                 "value": 30
               },
               {
+                "type": "numberRange",
+                "name": "move_y",
+                "value": 5,
+                "min": 1,
+                "max": 10,
+                "step": 1,
+                "label": "滑动灵敏度"
+              },
+              {
                 "type": "checkboxGroup",
                 "label": "启动时间",
                 "name": "toker_run_hour",
