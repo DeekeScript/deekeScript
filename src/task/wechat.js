@@ -272,7 +272,7 @@ let task = {
         Index.intoFriendArea();
         Common.log('进入了朋友圈');
 
-        this.backTop();
+        //this.backTop();
         this.getData();
         //this.backTop();
         Common.log('一轮完成');
