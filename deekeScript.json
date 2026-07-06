@@ -5,8 +5,8 @@
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
   "packageName": "cn.deeke.wechat.sync",
-  "versionCode": "109",
-  "versionName": "1.0.9",
+  "versionCode": "111",
+  "versionName": "1.1.1",
   "host": "https://home.deeke.top",
   "debug": true,
   "switchSetting": {
@@ -27,13 +27,10 @@
           "settingPage": {
             "params": [
               {
-                "type": "numberRange",
+                "type": "number",
                 "label": "每天执行次数",
                 "name": "toker_times",
-                "max": 24,
-                "min": 1,
-                "step": 1,
-                "value": 1
+                "value": 3
               },
               {
                 "type": "numberRange",
