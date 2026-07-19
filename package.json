@@ -1,0 +1,12 @@
+{
+  "name": "deeke-script-app",
+  "version": "2.0.1",
+  "description": "DeekeScript application template",
+  "license": "ISC",
+  "files": [
+    "src",
+    "deekeScript.json",
+    "deekeScript.schema.json",
+    "jsconfig.json"
+  ]
+}
