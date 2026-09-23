@@ -23,7 +23,7 @@
         {
           "title": "推荐营销2",
           "icon": "src/images/test/finger.png",
-          "jsFile": "src/task/dy.js",
+          "jsFile": "src/background.js",
           "settingPage": {
             "params": [
               {
