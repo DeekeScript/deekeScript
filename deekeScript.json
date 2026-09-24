@@ -1,13 +1,14 @@
 {
   "$schema": "./deekeScript.schema.json",
-  "name": "智能截流",
+  "packageName": "com.script.program",
+  "name": "DeekePro",
   "icon": "images/test/app.png",
   "head": "images/test/app.png",
   "settingTopBg": "images/test/setting-top.png",
-  "versionCode": "127",
-  "versionName": "1.2.7",
-  "host": "https://home.deeke.top",
-  "debug": true,
+  "versionCode": "128",
+  "versionName": "1.2.8",
+  "host": "https://home.deeke.cn/api",
+  "debug": false,
   "showAd": false,
   "switchSetting": {
     "alipay": false
@@ -500,70 +501,16 @@
       "hidden": false
     },
     {
-      "title": "数据统计",
-      "icon": "images/test/statistics.png",
-      "type": "statistics",
-      "jsFile": "script/statistics/statistics.js"
-    },
-    {
       "title": "上传日志",
       "icon": "images/test/upload.png",
       "type": "uploadLog",
       "url": "/dke/uploadLog"
     },
     {
-      "title": "系统升级",
-      "icon": "images/test/update.png",
-      "type": "updateApp",
-      "url": "/dke/updateApp"
-    },
-    {
       "title": "清理数据",
       "icon": "images/test/clear.png",
       "description": "确定清理嘛？",
       "type": "clear"
-    },
-    {
-      "title": "举报中心",
-      "icon": "images/test/jubao.png",
-      "type": "qiwei",
-      "url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=910d7c7c-d74a-4ce5-a070-0f3383b1f6ee",
-      "hidden": false,
-      "settingPage": {
-        "params": [
-          {
-            "type": "notice",
-            "title": "如果我们的代理商有侵犯到你的权益，请立即举报！",
-            "hidden": false
-          },
-          {
-            "type": "text",
-            "label": "举报人",
-            "value": "",
-            "name": "qiwei_name"
-          },
-          {
-            "type": "text",
-            "label": "举报人手机号",
-            "value": "",
-            "name": "qiwei_mobile"
-          },
-          {
-            "type": "text",
-            "label": "举报人身份证号码",
-            "value": "",
-            "name": "qiwei_card_no"
-          },
-          {
-            "type": "text",
-            "label": "举报内容",
-            "value": "",
-            "hint": "请详细描述你举报该软件的原因，请不要恶意举报！",
-            "name": "qiwei_content",
-            "lines": 3
-          }
-        ]
-      }
     }
   ],
   "apis": [

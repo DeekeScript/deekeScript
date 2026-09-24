@@ -463,7 +463,7 @@ let task = {
 
         if (alert) {
             Common.log('找到关键词，等待', config.videoWaitSecond, '秒');
-            let nextVideo = FloatDialogs.confirm('不包含关键词提示', config.videoWaitSecond + '秒后关闭，执行下一个作品', '下一个作品', '操作当前作品', (dialog) => {
+            let nextVideo = FloatDialogs.confirm('不符合条件提示', config.videoWaitSecond + '秒后关闭，执行下一个作品', '下一个作品', '操作当前作品', (dialog) => {
                 let i = 0;
                 while (i++ < config.videoWaitSecond) {
                     System.sleep(1000);

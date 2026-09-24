@@ -275,8 +275,8 @@ let Comment = {
     },
 
     getTimeTag() {
-        // return this.tag.children().findOne(Common.id('erw'));
-        return Common.id('erw').filter(v => {
+        // return this.tag.children().findOne(Common.id('e1o'));
+        return Common.id('e1o').filter(v => {
             return v.bounds().left >= this.tag.bounds().left && v.bounds().right <= this.tag.bounds().right
                 && v.bounds().top >= this.tag.bounds().top && v.bounds().bottom <= this.tag.bounds().bottom;
         }).findOne();

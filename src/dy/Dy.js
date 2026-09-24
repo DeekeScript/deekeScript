@@ -87,8 +87,9 @@ let Dy = {
 
     getIp() {
         //拆分获取
-        let t1 = Common.id('2js').isVisibleToUser(true).findOne();
-        let t2 = Common.id('4hn').isVisibleToUser(true).findOne();
+        let t1 = Common.id('2gp').isVisibleToUser(true).findOne();
+        let t2 = Common.id('4ek').isVisibleToUser(true).findOne();
+        console.log(t1, t2);
 
         let str = '';
         if (t1 && t1.text()) {
@@ -96,7 +97,7 @@ let Dy = {
         }
 
         if (t2 && t2.text()) {
-            str += t2.text();
+            //str += t2.text();
         }
         return str;
     }

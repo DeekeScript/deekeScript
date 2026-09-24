@@ -1,12 +1,15 @@
 {
     "compilerOptions": {
-        "target": "ES6",
-        "lib": ["es6"],  // 不包含 "dom"
-        "checkJs": true
+        "checkJs": true,
+        "target": "ES2022",
+        "baseUrl": ".",
+        "module": "commonjs",
+        "lib": [
+            "es2022"
+        ]
     },
     "include": [
-        "src/**/*",
-        "test/**/*",
-        "@deekeScript/**/*"
+        ".vscode/deekeScriptPro.d.ts",
+        "**/*.js"
     ]
 }
