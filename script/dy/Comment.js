@@ -192,6 +192,11 @@ let Comment = {
                 continue;
             }
 
+            if(data.isAuthor){
+                Common.log('作者');
+                continue;
+            }
+
             if (this.containers && this.containers.length > 100) {
                 this.containers.shift();
             }
